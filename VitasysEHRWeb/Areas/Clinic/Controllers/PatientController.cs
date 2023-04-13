@@ -9,6 +9,7 @@ using VitasysEHR.DataAccess.Repository.IRepository;
 using VitasysEHR.Models;
 using VitasysEHR.Models.ViewModels;
 using VitasysEHR.Utility;
+using VitasysEHRWeb.Service.IService;
 using VitasysEHRWeb.Utility;
 
 namespace VitasysEHRWeb.Areas.Clinic.Controllers
@@ -17,20 +18,26 @@ namespace VitasysEHRWeb.Areas.Clinic.Controllers
     public class PatientController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserService _userService;
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public PatientController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment, SignInManager<ApplicationUser> signInManager)
+        public PatientController(
+            IUnitOfWork unitOfWork, 
+            IUserService userService,
+            IWebHostEnvironment hostEnvironment, 
+            SignInManager<ApplicationUser> signInManager)
         {
             _unitOfWork = unitOfWork;
+            _userService = userService;
             _hostEnvironment = hostEnvironment;
             _signInManager = signInManager;
         }
 
         [Authorize(Roles = SD.Role_Owner + "," + SD.Role_Dentist + "," + SD.Role_Assistant)]
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            ApplicationUser user = GetCurrentUser();
+            var user = await _userService.GetCurrentUser();
             if (user.AdminVerified == "Pending")
             {
                 return RedirectToPage("/Account/Manage/VerifiedError", new { area = "Identity" });
@@ -63,13 +70,13 @@ namespace VitasysEHRWeb.Areas.Clinic.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = SD.Role_Owner + "," + SD.Role_Dentist + "," + SD.Role_Assistant)]
-        public IActionResult Create(Patient obj, IFormFile? file)
+        public async Task<IActionResult> CreateAsync(Patient obj, IFormFile? file)
         {
             string wwwRootPath = _hostEnvironment.WebRootPath;
 
             if (ModelState.IsValid)
             {
-                var user = GetCurrentUser();
+                var user = await _userService.GetCurrentUser();
                 var clinic = _unitOfWork.Clinic.GetFirstOrDefault(x => x.Id == user.ClinicId);
                 var userCheck = _unitOfWork.Patient.GetFirstOrDefault(x => x.Email == obj.Email);
                 var imageExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
@@ -155,7 +162,7 @@ namespace VitasysEHRWeb.Areas.Clinic.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = SD.Role_Owner + "," + SD.Role_Dentist + "," + SD.Role_Assistant)]
-        public IActionResult Update(Patient obj, IFormFile file)
+        public async Task<IActionResult> UpdateAsync(Patient obj, IFormFile file)
         {
             string wwwRootPath = _hostEnvironment.WebRootPath;
             ModelState.ClearValidationState("file");
@@ -216,10 +223,10 @@ namespace VitasysEHRWeb.Areas.Clinic.Controllers
                 _unitOfWork.Save();
 
 
-                ApplicationUser user = GetCurrentUser();
+                var user = await _userService.GetCurrentUser();
                 InsertLog("Update Patient", user.Id, user.ClinicId, SD.AuditUpdate);
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(IndexAsync));
             }
             return View(obj);
         }
@@ -231,7 +238,7 @@ namespace VitasysEHRWeb.Areas.Clinic.Controllers
         {
             try
             {
-                ApplicationUser user = GetCurrentUser();
+                var user = await _userService.GetCurrentUser();
                 user.Clinic = _unitOfWork.Clinic.GetFirstOrDefault(x => x.Id == user.ClinicId);
                 Patient objFromDb = _unitOfWork.Patient.GetFirstOrDefault(x => x.Id == id);
                 Patient patient = new Patient()
@@ -279,7 +286,7 @@ namespace VitasysEHRWeb.Areas.Clinic.Controllers
         {
             try
             {
-                ApplicationUser user = GetCurrentUser();
+                var user = await _userService.GetCurrentUser();
                 user.Clinic = _unitOfWork.Clinic.GetFirstOrDefault(x => x.Id == user.ClinicId);
                 Patient objFromDb = _unitOfWork.Patient.GetFirstOrDefault(x => x.Id == id);
                 Patient patient = new Patient()
@@ -324,7 +331,7 @@ namespace VitasysEHRWeb.Areas.Clinic.Controllers
         {
             try
             {
-                ApplicationUser user = GetCurrentUser();
+                var user = await _userService.GetCurrentUser();
                 user.Clinic = _unitOfWork.Clinic.GetFirstOrDefault(x => x.Id == user.ClinicId);
                 Patient objFromDb = _unitOfWork.Patient.GetFirstOrDefault(x => x.Id == id);
                 Patient patient = new Patient()
@@ -436,7 +443,7 @@ namespace VitasysEHRWeb.Areas.Clinic.Controllers
 
 
         [Authorize(Roles = SD.Role_Owner + "," + SD.Role_Dentist + "," + SD.Role_Assistant)]
-        public IActionResult Update(string id)
+        public async Task<IActionResult> UpdateAsync(string id)
         {
             try
             {
@@ -467,7 +474,7 @@ namespace VitasysEHRWeb.Areas.Clinic.Controllers
                     ProfPicUrl = AesOperation.DecryptString(objFromDb.ProfPicUrl),
                 };
 
-                ApplicationUser user = GetCurrentUser();
+                var user = await _userService.GetCurrentUser();
                 InsertLog("View Edit Patient Form", user.Id, user.ClinicId, SD.AuditView);
 
                 return View(patient);
@@ -651,7 +658,7 @@ namespace VitasysEHRWeb.Areas.Clinic.Controllers
                 string? firstname = AesOperation.DecryptString(patient.FirstName);
                 string? lastname = AesOperation.DecryptString(patient.LastName);
                 TempData["error"] = $"Patient {firstname} {lastname} already has portal access";
-                return View(nameof(Index));
+                return View(nameof(IndexAsync));
             }
 
             if (obj.Email != patient.Email)
@@ -673,10 +680,10 @@ namespace VitasysEHRWeb.Areas.Clinic.Controllers
 
             TempData["success"] = $"Successfully sent email to {obj.Email}";
 
-            ApplicationUser user = GetCurrentUser();
+            var user = await _userService.GetCurrentUser();
             InsertLog("Send Patient Portal Registration Link", user.Id, user.ClinicId, SD.AuditEmail);
 
-            return View(nameof(Index));
+            return View(nameof(IndexAsync));
         }
 
         [HttpGet]
@@ -855,9 +862,9 @@ namespace VitasysEHRWeb.Areas.Clinic.Controllers
         #region API CALLS
         [HttpGet]
         [Authorize(Roles = SD.Role_Owner + "," + SD.Role_Dentist + "," + SD.Role_Assistant)]
-        public string GetAll(string status)
+        public async Task<string> GetAllAsync(string status)
         {
-            ApplicationUser user = GetCurrentUser();
+            var user = await _userService.GetCurrentUser();
 
             IEnumerable<ClinicPatient> clinicPatients = _unitOfWork.ClinicPatient.GetAll(x => x.ClinicId == user.ClinicId);
             List<Patient> patientsFromDb = new List<Patient>();
@@ -906,16 +913,16 @@ namespace VitasysEHRWeb.Areas.Clinic.Controllers
 
         [HttpGet]
         [Authorize(Roles = SD.Role_Owner + "," + SD.Role_Dentist + "," + SD.Role_Assistant)]
-        public IActionResult LoadAddForm()
+        public async Task<IActionResult> LoadAddFormAsync()
         {
-            ApplicationUser user = GetCurrentUser();
+            var user = await _userService.GetCurrentUser();
             InsertLog("View Add Patient Form", user.Id, user.ClinicId, SD.AuditView);
             return PartialView("_AddPatientForm");
         }
 
         [HttpGet]
         [Authorize(Roles = SD.Role_Owner + "," + SD.Role_Dentist + "," + SD.Role_Assistant)]
-        public IActionResult GetPatient(int id)
+        public async Task<IActionResult> GetPatientAsync(int id)
         {
             Patient objFromDb = _unitOfWork.Patient.GetFirstOrDefault(x => x.Id == id);
 
@@ -938,14 +945,14 @@ namespace VitasysEHRWeb.Areas.Clinic.Controllers
                 IsVerified = objFromDb.IsVerified,
             };
 
-            ApplicationUser user = GetCurrentUser();
+            var user = await _userService.GetCurrentUser();
             InsertLog("View Patient", user.Id, user.ClinicId, SD.AuditView);
             return PartialView("_ViewPatient", patient);
         }
 
         [HttpGet]
         [Authorize(Roles = SD.Role_Owner + "," + SD.Role_Dentist + "," + SD.Role_Assistant)]
-        public IActionResult LoadEditForm(int id)
+        public async Task<IActionResult> LoadEditFormAsync(int id)
         {
 
             Patient objFromDb = _unitOfWork.Patient.GetFirstOrDefault(x => x.Id == id);
@@ -968,7 +975,7 @@ namespace VitasysEHRWeb.Areas.Clinic.Controllers
                 ProfPicUrl = AesOperation.DecryptString(objFromDb.ProfPicUrl),
             };
 
-            ApplicationUser user = GetCurrentUser();
+            var user = await _userService.GetCurrentUser();
             InsertLog("View Edit Patient Form", user.Id, user.ClinicId, SD.AuditView);
 
             return PartialView("_EditPatientForm", patient);
@@ -976,7 +983,7 @@ namespace VitasysEHRWeb.Areas.Clinic.Controllers
 
         [HttpGet]
         [Authorize(Roles = SD.Role_Owner + "," + SD.Role_Dentist + "," + SD.Role_Assistant)]
-        public IActionResult LoadEditPatientRequestForm(int id)
+        public async Task<IActionResult> LoadEditPatientRequestFormAsync(int id)
         {
             Patient objFromDb = _unitOfWork.Patient.GetFirstOrDefault(x => x.Id == id);
 
@@ -989,13 +996,13 @@ namespace VitasysEHRWeb.Areas.Clinic.Controllers
                 Email = objFromDb.Email,
             };
 
-            ApplicationUser user = GetCurrentUser();
+            var user = await _userService.GetCurrentUser();
             InsertLog("View Edit Patient Request Form", user.Id, user.ClinicId, SD.AuditView);
 
             return PartialView("_EditPatientRequestForm", patient);
         }
 
-        public IActionResult LoadArchivePatientRequestForm(int id)
+        public async Task<IActionResult> LoadArchivePatientRequestFormAsync(int id)
         {
             Patient objFromDb = _unitOfWork.Patient.GetFirstOrDefault(x => x.Id == id);
 
@@ -1008,13 +1015,13 @@ namespace VitasysEHRWeb.Areas.Clinic.Controllers
                 Email = objFromDb.Email,
             };
 
-            ApplicationUser user = GetCurrentUser();
+            var user = await _userService.GetCurrentUser();
             InsertLog("View Archive Patient Request Form", user.Id, user.ClinicId, SD.AuditView);
 
             return PartialView("_ArchivePatientRequestForm", patient);
         }
 
-        public IActionResult LoadDeletePatientRequestForm(int id)
+        public async Task<IActionResult> LoadDeletePatientRequestFormAsync(int id)
         {
             Patient objFromDb = _unitOfWork.Patient.GetFirstOrDefault(x => x.Id == id);
 
@@ -1027,7 +1034,7 @@ namespace VitasysEHRWeb.Areas.Clinic.Controllers
                 Email = objFromDb.Email,
             };
 
-            ApplicationUser user = GetCurrentUser();
+            var user = await _userService.GetCurrentUser();
             InsertLog("View Delete Patient Request Form", user.Id, user.ClinicId, SD.AuditView);
 
             return PartialView("_DeletePatientRequestForm", patient);
@@ -1035,7 +1042,7 @@ namespace VitasysEHRWeb.Areas.Clinic.Controllers
 
         [HttpGet]
         [Authorize(Roles = SD.Role_Owner + "," + SD.Role_Dentist + "," + SD.Role_Assistant)]
-        public IActionResult LoadEmailLinkForm(int id)
+        public async Task<IActionResult> LoadEmailLinkFormAsync(int id)
         {
             if (AuthorizeAccess() == false) return View("Error");
 
@@ -1049,7 +1056,7 @@ namespace VitasysEHRWeb.Areas.Clinic.Controllers
                 Email = objFromDb.Email,
             };
 
-            ApplicationUser user = GetCurrentUser();
+            var user = await _userService.GetCurrentUser();
             InsertLog("View Send Link Form", user.Id, user.ClinicId, SD.AuditView);
 
             return PartialView("_EmailLinkForm", patient);
@@ -1085,13 +1092,6 @@ namespace VitasysEHRWeb.Areas.Clinic.Controllers
             _unitOfWork.Save();
         }
 
-        public ApplicationUser GetCurrentUser()
-        {
-            ClaimsIdentity? claimsIdentity = (ClaimsIdentity)User.Identity;
-            Claim? claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-            string? userid = claim.Value;
-            return _unitOfWork.ApplicationUser.GetFirstOrDefault(x => x.Id == userid);
-        }
         public string? GetSubscriptionMessage(Subscription subscription)
         {
             if (subscription.Type == "Free") return null;
