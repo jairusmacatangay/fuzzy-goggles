@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using VitasysEHR.Utility;
 using VitasysEHR.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using VitasysEHRWeb.Service.IService;
+using VitasysEHRWeb.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +37,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 //builder.Services.AddSingleton<IEmailSender, EmailSender>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 builder.Services.ConfigureApplicationCookie(options =>
 {
