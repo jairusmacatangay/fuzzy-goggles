@@ -1,0 +1,81 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="card shadow-sm mt-3 mx-auto" style="width: 30rem">
+    <div class="card-body">
+            
+            <div class="alert alert-info d-flex align-items-center" role="alert">
+                <i class="fas fa-exclamation-circle me-3" style="font-size: 32px;"></i>
+                <div>
+                    <strong>Notice!</strong> This page is for clinic owners who want to create an EHR account. 
+                    If you are a patient, please contact your clinic to have a patient portal account set up for you.
+                </div>
+            </div>
+
+        <h1 class="fw-bolder text-center mb-3">Register for an EHR account</h1>
+
+        <div asp-validation-summary="All"></div> 
+        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <div class="mb-3">
+                <label asp-for="Input.Email" class="form-label"></label>
+                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Input.Password" class="form-label"></label>
+                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Input.ConfirmPassword" class="form-label"></label>
+                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            
+            <!--DOB-->
+            <div class="mb-3">
+                <label asp-for="Input.DOB" class="form-label"></label>
+                <div class="input-group date">
+                    <input type="text" asp-for="Input.DOB" class="form-control" data-provide="datepicker" data-date-start-date="-100y" data-date-end-date="-22y" placeholder="mm/dd/yyyy"/>
+                </div>
+                <span asp-validation-for="Input.DOB" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating mb-3">
+                <div>
+                    <label id="checkboxLabel" for="checkbox">
+                        <input id="checkbox" aria-labelledby="checkboxLabel" type="checkbox" onchange="document.getElementById('registerSubmit').disabled = !this.checked;" />
+                    <span>
+                        I agree to the <a href="/Clinic/Home/Privacy" style="color:#1A5599" target="_blank">Privacy Policy</a> and
+                        <a href="/Clinic/Home/TermsConditions" style="color:#1A5599" target="_blank">Terms and Conditions</a>
+                    </span>
+                </div>
+            </div>
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-primary" disabled>Register</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<script>
+    $(function(){
+    var dtToday = new Date();
+    
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+    
+    var maxDate = year + '-' + month + '-' + day;
+
+    $('#date').attr('Max', maxDate);
+});
+</script>
+}

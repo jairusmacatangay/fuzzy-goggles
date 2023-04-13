@@ -1,0 +1,39 @@
+﻿@model VitasysEHR.Models.ViewModels.DocumentsFolderVM
+@{
+    Layout = "/Areas/PatientPortal/Views/_PatientPortalLayout.cshtml";
+}
+
+<div class="d-flex justify-content-center">
+    <div class="card shadow-sm mt-3 pp-card-75-100">
+        <div class="card-body">
+            <div class="flex-wrap mb-4">
+
+                <div class="d-flex align-items-center mb-3">
+                    <i class="fas fa-folder me-2" style="font-size: 2rem"></i>
+                    <h1 class="m-0 fw-bolder">Folders</h1>
+                </div>
+                <div class="table-responsive-lg">
+
+                    <table id="folderTable" class="table table-striped border w-100 table-rounded">
+                        <thead class="bg-primary text-white">
+                            <tr class="th-letter-spacing">
+                                <th>FOLDER NAME</th>
+                                <th>TYPE</th>
+                                <th>CLINIC</th>
+                                <th>DATE ADDED</th>
+                                <th>LAST MODIFIED</th>
+                                <th>ACTIONS</th>
+                            </tr>
+                        </thead>
+                        <tbody class="align-middle"></tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/portal-folder.js"></script>
+}

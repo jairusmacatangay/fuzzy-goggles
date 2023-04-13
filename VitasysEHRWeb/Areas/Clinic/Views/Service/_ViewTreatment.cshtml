@@ -1,0 +1,31 @@
+﻿@model VitasysEHR.Models.Treatment
+
+<table class="table table-borderless">
+    <tbody>
+        <tr>
+            <td class="rd-width"><b>Treatment Name</b></td>
+            <td>@Model.Name</td>
+        </tr>
+        <tr>
+            <td><b>Treatment Type</b></td>
+            <td>@Model.TreatmentType.Type</td>
+        </tr>
+        <tr>
+            <td><b>Price</b></td>
+            <td>@Model.Price</td>
+        </tr>
+        <tr>
+            <td><b>Date Added</b></td>
+            <td>@Model.DateAdded</td>
+        </tr>
+        <tr>
+            <td><b>Last Modified</b></td>
+            @if (@Model.LastModified == null)
+            {
+                <td>N/A</td>
+            } else {
+                <td>@Model.LastModified</td>
+            }
+        </tr>
+    </tbody>
+</table>

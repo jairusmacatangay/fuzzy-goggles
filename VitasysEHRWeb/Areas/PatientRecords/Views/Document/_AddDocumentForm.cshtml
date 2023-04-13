@@ -1,0 +1,72 @@
+﻿@model VitasysEHR.Models.ViewModels.DocumentsFolderVM
+@using VitasysEHR.Utility
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<form method="post" asp-action="CreateDocument" enctype="multipart/form-data">
+    <label asp-for="PatientId" hidden> </label>
+    <input asp-for="PatientId" value="@HttpContextAccessor.HttpContext.Session.GetInt32(SD.SessionKeyPatientId)" hidden />
+    <label asp-for="Folder.PatientId" hidden> </label>
+    <input asp-for="Folder.PatientId" value="@HttpContextAccessor.HttpContext.Session.GetInt32(SD.SessionKeyPatientId)" hidden />
+    <label asp-for="Folder.Id" hidden> </label>
+    <input asp-for="Folder.Id" value="@Model.Folder.Id" hidden />
+    <label asp-for="Folder.FolderTypeId" hidden> </label>
+    <input asp-for="Folder.FolderTypeId" value="@Model.Folder.FolderTypeId" hidden />
+    <label asp-for="Folder.FolderType.Type" hidden> </label>
+    <input asp-for="Folder.FolderType.Type" value="@Model.Folder.FolderType.Type" hidden />
+    <label asp-for="Folder.Name" hidden> </label>
+    <input asp-for="Folder.Name" value="@Model.Folder.Name" hidden />
+    <label asp-for="Document.FolderId" hidden> </label>
+    <input asp-for="Document.FolderId" value="@Model.Folder.Id" hidden />
+
+    <div class="row">
+        <div class="col">
+            <!--Document Name-->
+            <div class="mb-3">
+                <label asp-for="Document.Name" class="form-label"></label>
+                <input asp-for="Document.Name" class="form-control" />
+                <span asp-validation-for="Document.Name" class="text-danger"></span>
+            </div>
+
+            @if(Model.Folder.FolderTypeId == 1) // accept files for radiographs - image
+            {
+                <!--Upload File-->
+                <div class="mb-3">
+                    <label for="file" class="form-label">Upload File</label>
+                    <label asp-for="Document.DocumentUrl" hidden></label>
+                    <input asp-for="Document.DocumentUrl" value="placeholder" hidden />
+                    <input type="file" name="file" class="form-control" accept="image/*" id="file" />
+                </div>
+            } 
+            else if (Model.Folder.FolderTypeId == 2) // accept files for photos - image
+            {
+                <!--Upload File-->
+                <div class="mb-3">
+                    <label for="file" class="form-label">Upload File</label>
+                    <label asp-for="Document.DocumentUrl" hidden></label>
+                    <input asp-for="Document.DocumentUrl" value="placeholder" hidden />
+                    <input type="file" name="file" class="form-control" accept="image/*" id="file" />
+                </div>
+            }
+            else // accept files for other documents - docx or pdf
+            {
+                <!--Upload File-->
+                <div class="mb-3">
+                    <label for="file" class="form-label">Upload File</label>
+                    <label asp-for="Document.DocumentUrl" hidden></label>
+                    <input asp-for="Document.DocumentUrl" value="placeholder" hidden />
+                    <input type="file" name="file" class="form-control" accept=".doc, .docx, .pdf" id="file" />
+                </div>
+            }
+        </div>
+    </div>
+    <div class="d-flex justify-content-between mt-2">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times me-2"></i>Cancel</button>
+        <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save</button>
+    </div>
+
+</form>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.1/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation/dist/additional-methods.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>

@@ -1,0 +1,100 @@
+﻿@using VitasysEHR.Utility
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model VitasysEHR.Models.ViewModels.DocumentsFolderVM
+
+@{
+    Layout = "_SideNavLayout";
+    ViewData["Title"] = "Document";
+
+    int? patientId = HttpContextAccessor.HttpContext.Session.GetInt32(SD.SessionKeyPatientId);
+}
+
+<div class="d-flex justify-content-center">
+    <div class="card shadow-sm mt-3 pp-card-75-100">
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between flex-wrap mb-4">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-folder me-2" style="font-size: 2rem"></i>
+                    <h1 class="m-0 fw-bolder">Documents</h1>
+                </div>
+
+                <div>
+                    <button class="btn btn-success" onclick="loadAddFolderForm()">
+                        <i class="fas fa-plus me-2"></i> Create Folder
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-responsive-sm">
+                <table id="myTable" class="table table-striped table-borderless w-100 table-rounded">
+                    <thead class="bg-primary text-white">
+                        <tr style="letter-spacing: 1.4px;">
+                            <th>FOLDER NAME</th>
+                            <th>FOLDER TYPE</th>
+                            <th>DATE ADDED</th>
+                            <th>LAST MODIFIED</th>
+                            <th>ACTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-middle"></tbody>
+                </table>
+            </div>
+
+            <form>
+                <label hidden for="patientId">Patient ID</label>
+                <input name="Patient ID" id="patientId" value="@patientId" hidden><br>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- Add Folder Modal -->
+<div class="modal fade" id="addFolderModal" tabindex="-1" aria-labelledby="addFolderModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-24" id="addFolderModalLabel">Add Folder</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="addFolderModalBodyDiv">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Folder Modal -->
+<div class="modal fade" id="editFolderModal" tabindex="-1" aria-labelledby="editFolderModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-24" id="editFolderModalLabel">Edit Folder</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="editFolderModalBodyDiv">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- View Document Modal -->
+<div class="modal fade" id="viewDocumentModal" tabindex="-1" aria-labelledby="viewDocumentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-24" id="viewDocumentModalLabel">View Document</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="viewDocumentModalBodyDiv">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+<script src="~/js/folder.js"></script>
+}

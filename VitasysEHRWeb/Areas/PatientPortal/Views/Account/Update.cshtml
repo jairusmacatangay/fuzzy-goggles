@@ -1,0 +1,143 @@
+﻿@model Patient
+
+@{
+    Layout = "/Areas/PatientPortal/Views/_PatientPortalLayout.cshtml";
+}
+
+<div class="d-flex justify-content-center">
+    <div class="card shadow-sm mt-3 pp-card-50-75-100">
+        <div class="card-body">
+            <div class="row">
+                <h1 class="fw-bolder">Update Profile</h1>
+                <form method="post" asp-action="Update" enctype="multipart/form-data">
+                    <h4>Personal Information</h4>
+                    <div class="row">
+                        <label asp-for="Id" hidden></label>
+                        <input asp-for="Id" hidden />
+                        <label asp-for="ProfPicUrl" hidden></label>
+                        <input asp-for="ProfPicUrl" hidden />
+                        <label asp-for="DOB" hidden></label>
+                        <input asp-for="DOB" hidden />
+                        <label asp-for="Gender" hidden></label>
+                        <input asp-for="Gender" hidden />
+                        <label asp-for="LastName" hidden></label>
+                        <input asp-for="LastName" hidden />
+                        <label asp-for="FirstName" hidden></label>
+                        <input asp-for="FirstName" hidden />
+
+                        <div class="col-sm-6">
+                            <!--First Name-->
+                            <div class="mb-3">
+                                <label asp-for="FirstName" class="form-label"></label>
+                                <input asp-for="FirstName" class="form-control" disabled />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+
+                            <!--Middle Name-->
+                            <div class="mb-3">
+                                <label asp-for="MiddleName" class="form-label"></label>
+                                <input asp-for="MiddleName" class="form-control" disabled />
+                                <span asp-validation-for="MiddleName" class="text-danger"></span>
+                            </div>
+
+                            <!--Last Name-->
+                            <div class="mb-3">
+                                <label asp-for="LastName" class="form-label"></label>
+                                <input asp-for="LastName" class="form-control" disabled />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+
+                            <!--DOB-->
+                            <div class="mb-3">
+                                <label asp-for="DOB" class="form-label"></label>
+                                <div class="input-group date">
+                                    <input type="text" asp-for="DOB" class="form-control" data-provide="datepicker" placeholder="mm/dd/yyyy" disabled />
+                                </div>
+                                <span asp-validation-for="DOB" class="text-danger"></span>
+                            </div>
+
+                            <!--ProfPic-->
+                            <div class="mb-3">
+                                <div class="d-flex">
+                                    <label for="profPic" class="form-label">Profile Picture</label>
+                                    <div class="text-muted ms-1">(optional)</div>
+                                </div>
+                                <input type="file" name="file" class="form-control" id="profPic" />
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <!--Email-->
+                            <div class="mb-3">
+                                <label asp-for="Email" class="form-label"></label>
+                                <input asp-for="Email" class="form-control" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+
+                            <!--Phone No-->
+                            <div class="mb-3">
+                                <label asp-for="MobileNumber" class="form-label"></label>
+                                <input asp-for="MobileNumber" pattern="[0-9]{11}" title="ex. 09171234567" class="form-control" />
+                                <span asp-validation-for="MobileNumber" class="text-danger"></span>
+                            </div>
+                            <!--Home No-->
+                            <div class="mb-3">
+                                <label asp-for="HomeNumber" class="form-label"></label>
+                                <input asp-for="HomeNumber" pattern="\([0-9]{1,3}\)[0-9]{3}-?[0-9]{4}" title="ex. (02)123-4567 or (02)123-4567" class="form-control" />
+                                <span asp-validation-for="HomeNumber" class="text-danger"></span>
+                            </div>
+
+                            <!--Gender-->
+                            <div class="mb-3">
+                                <label asp-for="Gender" class="form-label"></label>
+                                <input asp-for="Gender" class="form-control" disabled/>
+                            </div>
+
+                        </div>
+                    </div>
+                    <hr />
+                    <h4>Address</h4>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <!--Address-->
+                            <div class="mb-3">
+                                <label asp-for="Address" class="form-label"></label>
+                                <input asp-for="Address" class="form-control" />
+                                <span asp-validation-for="Address" class="text-danger"></span>
+                            </div>
+                            <!--City-->
+                            <div class="mb-3">
+                                <label asp-for="City" class="form-label"></label>
+                                <input asp-for="City" pattern="[A-z]{1,15}" title="This field should not have Numbers or Symbols" class="form-control" />
+                                <span asp-validation-for="City" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <!--Province-->
+                            <div class="mb-3">
+                                <label asp-for="Province" class="form-label"></label>
+                                <input asp-for="Province" pattern="[A-z]{1,15}" title="This field should not have Numbers or Symbols" class="form-control" />
+                                <span asp-validation-for="Province" class="text-danger"></span>
+                            </div>
+                            <!--ZipCode-->
+                            <div class="mb-3">
+                                <label asp-for="ZipCode" class="form-label"></label>
+                                <input asp-for="ZipCode" pattern="[0-9]{4}" class="form-control" />
+                                <span asp-validation-for="ZipCode" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <a href="Index" type="button" class="btn btn-secondary"><i class="fas fa-times me-2"></i>Cancel</a>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.1/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation/dist/additional-methods.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>

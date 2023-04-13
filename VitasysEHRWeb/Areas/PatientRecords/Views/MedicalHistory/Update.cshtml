@@ -1,0 +1,542 @@
+﻿@model VitasysEHR.Models.ViewModels.MedicalHistoryVM
+
+<div class="d-flex justify-content-center">
+    <div class="card shadow-sm mt-3 pp-card-75-100">
+        <div class="card-body">
+            <h1 class="fw-bolder fs-24">Edit Medical History</h1>
+            <form asp-action="Update" id="updateForm">
+                <label asp-for="Allergy.Id" hidden></label>
+                <input asp-for="Allergy.Id" hidden />
+                <label asp-for="ReviewOfSystem.Id" hidden></label>
+                <input asp-for="ReviewOfSystem.Id" hidden />
+                <label asp-for="MedicalHistory.Id" hidden></label>
+                <input asp-for="MedicalHistory.Id" hidden />
+                <label asp-for="MedicalHistory.AllergyId" hidden></label>
+                <input asp-for="MedicalHistory.AllergyId" hidden />
+                <label asp-for="MedicalHistory.ROSId" hidden></label>
+                <input asp-for="MedicalHistory.ROSId" hidden />
+                <label asp-for="MedicalHistory.PatientId" hidden></label>
+                <input asp-for="MedicalHistory.PatientId" hidden />
+                <label asp-for="PatientId" hidden></label>
+                <input asp-for="PatientId" hidden />
+                <label asp-for="Gender" hidden></label>
+                <input asp-for="Gender" hidden />
+
+                <div class="accordion" id="editMedicalHistoryAccordion">
+                    <!--Medical History-->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="editMedicalHistoryH1">
+                            <button class="accordion-button" type="button" id="medicalHistory" data-bs-toggle="collapse" data-bs-target="#editMedicalHistoryCollapse1" aria-expanded="true" aria-controls="editMedicalHistoryCollapse1">
+                                <span class="fw-bold">Medical History</span>
+                            </button>
+                        </h2>
+                        <div id="editMedicalHistoryCollapse1" class="accordion-collapse collapse show" aria-labelledby="editMedicalHistoryH1" data-bs-parent="#editMedicalHistoryAccordion">
+                            <div class="accordion-body">
+
+                                <!--IsGoodHealth-->
+                                <fieldset class="form-group">
+                                    <legend class="col-form-label fw-bold text-muted" style="font-size: 1rem;">Are you in good health?</legend>
+                                    <div class="col-form-label">
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" asp-for="MedicalHistory.IsGoodHealth" value="True" class="form-check-input" id="isGoodHealthYes" />
+                                            <label class="form-check-label" for="isGoodHealthYes">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" asp-for="MedicalHistory.IsGoodHealth" value="False" class="form-check-input" id="isGoodHealthNo" />
+                                            <label class="form-check-label" for="isGoodHealthNo">No</label>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+
+
+                                <!--IsMedTreatment-->
+                                <fieldset class="form-group">
+                                    <legend class="col-form-label fw-bold text-muted" style="font-size: 1rem;">Are you under medical treatment now?</legend>
+                                    <div class="col-form-label">
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" asp-for="MedicalHistory.IsMedTreatment" value="true" class="form-check-input" id="IsMedTreatmentYes" />
+                                            <label class="form-check-label" for="IsMedTreatmentYes">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" asp-for="MedicalHistory.IsMedTreatment" value="false" class="form-check-input" id="IsMedTreatmentNo" />
+                                            <label class="form-check-label" for="IsMedTreatmentNo">No</label>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <!--IsConditionTreated-->
+                                <div class="mb-2 mt-2">
+                                    <label class="form-label" for="MedicalHistory_IsConditionTreated">If so, what is the condition being treated?</label>
+                                    <input asp-for="MedicalHistory.IsConditionTreated" class="form-control" />
+                                </div>
+
+                                <!--IsIllnessOperation-->
+                                <fieldset class="form-group">
+                                    <legend class="col-form-label fw-bold text-muted" style="font-size: 1rem;">Have you ever had a serious illness or surgical operation?</legend>
+                                    <div class="col-form-label">
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" asp-for="MedicalHistory.IsIllnessOperation" value="true" class="form-check-input" id="IsIllnessOperationYes" />
+                                            <label class="form-check-label" for="IsIllnessOperationYes">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" asp-for="MedicalHistory.IsIllnessOperation" value="false" class="form-check-input" id="IsIllnessOperationNo" />
+                                            <label class="form-check-label" for="IsIllnessOperationNo">No</label>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <!--IllnessOperation-->
+                                <div class="mb-2 mt-2">
+                                    <label class="form-label" for="MedicalHistory_IllnessOperation">If so, what illness or operation?</label>
+                                    <input asp-for="MedicalHistory.IllnessOperation" class="form-control" />
+                                </div>
+
+                                <!--IsHospitalized-->
+                                <fieldset class="form-group">
+                                    <legend class="col-form-label fw-bold text-muted" style="font-size: 1rem;">Have you ever been hospitalized?</legend>
+                                    <div class="col-form-label">
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" asp-for="MedicalHistory.IsHospitalized" value="true" class="form-check-input" id="IsHospitalizedYes" />
+                                            <label class="form-check-label" for="IsHospitalizedYes">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" asp-for="MedicalHistory.IsHospitalized" value="false" class="form-check-input" id="IsHospitalizedNo" />
+                                            <label class="form-check-label" for="IsHospitalizedNo">No</label>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <!--Hospitalized-->
+                                <div class="mb-2 mt-2">
+                                    <label class="form-label" for="MedicalHistory_Hospitalized">If so, when and why?</label>
+                                    <input asp-for="MedicalHistory.Hospitalized" class="form-control" />
+                                </div>
+
+                                <!--IsMedication-->
+                                <fieldset class="form-group">
+                                    <legend class="col-form-label fw-bold text-muted" style="font-size: 1rem;">Are you taking any prescription or non-prescription medication?</legend>
+                                    <div class="col-form-label">
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" asp-for="MedicalHistory.IsMedication" value="true" class="form-check-input" id="IsMedicationYes" />
+                                            <label class="form-check-label" for="IsMedicationYes">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" asp-for="MedicalHistory.IsMedication" value="false" class="form-check-input" id="IsMedicationNo" />
+                                            <label class="form-check-label" for="IsMedicationNo">No</label>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <!--Medication-->
+                                <div class="mb-2 mt-2">
+                                    <label class="form-label" for="MedicalHistory_Medication">If so, please specify?</label>
+                                    <input asp-for="MedicalHistory.Medication" class="form-control" />
+                                </div>
+
+                                <!--IsTobacco-->
+                                <fieldset class="form-group">
+                                    <legend class="col-form-label fw-bold text-muted" style="font-size: 1rem;">Do you use tobacco products?</legend>
+                                    <div class="col-form-label">
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" asp-for="MedicalHistory.IsTobacco" value="true" class="form-check-input" id="IsTobaccoYes" />
+                                            <label class="form-check-label" for="IsTobaccoYes">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" asp-for="MedicalHistory.IsTobacco" value="false" class="form-check-input" id="IsTobaccoNo" />
+                                            <label class="form-check-label" for="IsTobaccoNo">No</label>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <!--IsDrugs-->
+                                <fieldset class="form-group">
+                                    <legend class="col-form-label fw-bold text-muted" style="font-size: 1rem;">Do you use alcohol, cocaine or other dangerous drugs?</legend>
+                                    <div class="col-form-label">
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" asp-for="MedicalHistory.IsDrugs" value="true" class="form-check-input" id="IsDrugsYes" />
+                                            <label class="form-check-label" for="IsDrugsYes">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" asp-for="MedicalHistory.IsDrugs" value="false" class="form-check-input" id="IsDrugsNo" />
+                                            <label class="form-check-label" for="IsDrugsNo">No</label>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                @if (Model.Gender == "Female")
+                                {
+                                    <!--IsPregnant-->
+                                    <fieldset class="form-group">
+                                        <legend class="col-form-label fw-bold text-muted" style="font-size: 1rem;">Are you pregnant?</legend>
+                                        <div class="col-form-label">
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" asp-for="MedicalHistory.IsPregnant" value="true" class="form-check-input" id="IsPregnantYes" />
+                                                <label class="form-check-label" for="IsPregnantYes">Yes</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" asp-for="MedicalHistory.IsPregnant" value="false" class="form-check-input" id="IsPregnantNo" />
+                                                <label class="form-check-label" for="IsPregnantNo">No</label>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                    <!--IsNursing-->
+                                    <fieldset class="form-group">
+                                        <legend class="col-form-label fw-bold text-muted" style="font-size: 1rem;">Are you nursing?</legend>
+                                        <div class="col-form-label">
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" asp-for="MedicalHistory.IsNursing" value="true" class="form-check-input" id="IsNursingYes" />
+                                                <label class="form-check-label" for="IsNursingYes">Yes</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" asp-for="MedicalHistory.IsNursing" value="false" class="form-check-input" id="IsNursingNo" />
+                                                <label class="form-check-label" for="IsNursingNo">No</label>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                    <!--IsBirthControl-->
+                                    <fieldset class="form-group">
+                                        <legend class="col-form-label fw-bold text-muted" style="font-size: 1rem;">Are you taking birth control pills?</legend>
+                                        <div class="col-form-label">
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" asp-for="MedicalHistory.IsBirthControl" value="true" class="form-check-input" id="IsBirthControlYes" />
+                                                <label class="form-check-label" for="IsBirthControlYes">Yes</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" asp-for="MedicalHistory.IsBirthControl" value="false" class="form-check-input" id="IsBirthControlNo" />
+                                                <label class="form-check-label" for="IsBirthControlNo">No</label>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                }
+
+                                <!--BloodType-->
+                                <div class="row mb-3 mt-2">
+                                    <label asp-for="MedicalHistory.BloodType" class="col-lg-2 col-form-label fw-bold text-muted"></label>
+                                    <div class="col-lg-10">
+                                        <select asp-for="MedicalHistory.BloodType" asp-items="Model.BloodTypes" class="form-select">
+                                            <option disabled selected value="0">Select Blood Type</option>
+                                        </select>
+                                        <span asp-validation-for="MedicalHistory.BloodType" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <!--BloodPressure-->
+                                <div class="row mb-3">
+                                    <label asp-for="MedicalHistory.BloodPressure" class="col-lg-2 col-form-label fw-bold text-muted"></label>
+                                    <div class="col-lg-10">
+                                        <input asp-for="MedicalHistory.BloodPressure" class="form-control" required pattern="^(29[0-9]|2[0-9][0-9]|[01]?[0-9][0-9]?)\/(29[0-9]|2[0-9][0-9]|[01]?[0-9][0-9]?)$" title="Systolic Pressure Value / Diastolic Pressure Value (Example: 120/80)" />
+                                        <span asp-validation-for="MedicalHistory.BloodPressure" class="text-danger" id="bpValidation"></span>
+                                    </div>
+                                </div>
+
+                                <!--BleedingTime-->
+                                <div class="row mb-3">
+                                    <label asp-for="MedicalHistory.BleedingTime" class="col-lg-2 col-form-label fw-bold text-muted"></label>
+                                    <div class="col-lg-10">
+                                        <input asp-for="MedicalHistory.BleedingTime" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Allergy-->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="editMedicalHistoryH2">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#editMedicalHistoryCollapse2" aria-expanded="false" aria-controls="editMedicalHistoryCollapse2">
+                                <span class="fw-bold">Allergies</span>
+                            </button>
+                        </h2>
+                        <div id="editMedicalHistoryCollapse2" class="accordion-collapse collapse" aria-labelledby="editMedicalHistoryH2" data-bs-parent="#editMedicalHistoryAccordion">
+                            <div class="accordion-body">
+                                <p class="fw-bold text-muted">Are you allergic to any of the following?</p>
+
+                                <div class="d-flex flex-row mb-2">
+                                    <div class="me-3">
+                                        <!--IsAnesthesia-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="Allergy.IsAnesthesia">
+                                            <label class="form-check-label" asp-for="Allergy.IsAnesthesia"></label>
+                                        </div>
+
+                                        <!--IsAntibiotics-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="Allergy.IsAntibiotics">
+                                            <label class="form-check-label" asp-for="Allergy.IsAntibiotics"></label>
+                                        </div>
+
+                                        <!--IsSulfa-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="Allergy.IsSulfa">
+                                            <label class="form-check-label" asp-for="Allergy.IsSulfa"></label>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <!--IsAspirin-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="Allergy.IsAspirin">
+                                            <label class="form-check-label" asp-for="Allergy.IsAspirin"></label>
+                                        </div>
+
+                                        <!--IsLatex-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="Allergy.IsLatex">
+                                            <label class="form-check-label" asp-for="Allergy.IsLatex"></label>
+                                        </div>
+                                    </div>
+                                </div> <!--End of flex row-->
+                                <!--Others-->
+                                <div class="mb-3">
+                                    <label asp-for="Allergy.Other" class="form-label"></label>
+                                    <textarea class="form-control" asp-for="Allergy.Other" rows="2"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!--Record of Illnesses-->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="editMedicalHistoryH3">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#editMedicalHistoryCollapse3" aria-expanded="false" aria-controls="editMedicalHistoryCollapse3">
+                                <span class="fw-bold">Record of Illnesses</span>
+                            </button>
+                        </h2>
+                        <div id="editMedicalHistoryCollapse3" class="accordion-collapse collapse" aria-labelledby="editMedicalHistoryH3" data-bs-parent="#editMedicalHistoryAccordion">
+                            <div class="accordion-body">
+                                <p class="fw-bold text-muted">Do you have or have you had any of the following? Check which apply:</p>
+
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <!--IsHbp-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsHbp">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsHbp"></label>
+                                        </div>
+
+                                        <!--IsLbp-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsLbp">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsLbp"></label>
+                                        </div>
+
+                                        <!--IsEpilepsy-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsEpilepsy">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsEpilepsy"></label>
+                                        </div>
+
+                                        <!--IsAids-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsAids">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsAids"></label>
+                                        </div>
+                                        <!--IsStd-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsStd">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsStd"></label>
+                                        </div>
+                                        <!--IsStomach-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsStomach">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsStomach"></label>
+                                        </div>
+                                        <!--IsFainting-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsFainting">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsFainting"></label>
+                                        </div>
+                                        <!--IsWeightLoss-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsWeightLoss">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsWeightLoss"></label>
+                                        </div>
+
+                                        <!--IsRadiation-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsRadiation">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsRadiation"></label>
+                                        </div>
+                                        <!--IsJointReplacement-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsJointReplacement">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsJointReplacement"></label>
+                                        </div>
+
+                                        <!--IsHeartSurgery-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsHeartSurgery">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsHeartSurgery"></label>
+                                        </div>
+                                        <!--IsHeartAttack-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsHeartAttack">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsHeartAttack"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <!--IsThyroid-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsThyroid">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsThyroid"></label>
+                                        </div>
+                                        <!--IsHeartDisease-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsHeartDisease">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsHeartDisease"></label>
+                                        </div>
+                                        <!--IsHeartMurmur-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsHeartMurmur">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsHeartMurmur"></label>
+                                        </div>
+
+                                        <!--IsHepa-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsHepa">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsHepa"></label>
+                                        </div>
+
+                                        <!--IsRheumatic-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsRheumatic">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsRheumatic"></label>
+                                        </div>
+
+                                        <!--IsHayFever-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsHayFever">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsHayFever"></label>
+                                        </div>
+                                        <!--IsRespiratory-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsRespiratory">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsRespiratory"></label>
+                                        </div>
+                                        <!--IsJaundice-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsJaundice">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsJaundice"></label>
+                                        </div>
+                                        <!--IsTuberculosis-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsTuberculosis">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsTuberculosis"></label>
+                                        </div>
+                                        <!--IsSwollenAnkles-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsSwollenAnkles">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsSwollenAnkles"></label>
+                                        </div>
+                                        <!--IsKidney-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsKidney">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsKidney"></label>
+                                        </div>
+                                        <!--IsDiabetes-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsDiabetes">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsDiabetes"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <!--IsChestPain-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsChestPain">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsChestPain"></label>
+                                        </div>
+                                        <!--IsStroke-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsStroke">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsStroke"></label>
+                                        </div>
+                                        <!--IsCancer-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsCancer">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsCancer"></label>
+                                        </div>
+
+                                        <!--IsAnemia-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsAnemia">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsAnemia"></label>
+                                        </div>
+
+                                        <!--IsAngina-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsAngina">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsAngina"></label>
+                                        </div>
+                                        <!--IsAsthma-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsAsthma">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsAsthma"></label>
+                                        </div>
+                                        <!--IsEmphysema-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsEmphysema">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsEmphysema"></label>
+                                        </div>
+                                        <!--IsBleeding-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsBleeding">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsBleeding"></label>
+                                        </div>
+                                        <!--IsBloodDisease-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsBloodDisease">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsBloodDisease"></label>
+                                        </div>
+                                        <!--IsHeadInjury-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsHeadInjury">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsHeadInjury"></label>
+                                        </div>
+                                        <!--IsArthritis-->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" asp-for="ReviewOfSystem.IsArthritis">
+                                            <label class="form-check-label" asp-for="ReviewOfSystem.IsArthritis"></label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Others-->
+                                <div class="mb-3 mt-3">
+                                    <label asp-for="ReviewOfSystem.Other" class="form-label">Others</label>
+                                    <textarea class="form-control" asp-for="ReviewOfSystem.Other" rows="2"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!--End of Record of Illnesses-->
+                </div>
+
+                <button type="button" class="btn btn-primary mt-3" onclick="submitForm()"><i class="fas fa-save me-2"></i>Save</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function submitForm() {
+        const updateform = document.getElementById('updateForm');
+        const header = document.getElementById('medicalHistory');
+        const bp = document.getElementById('MedicalHistory_BloodPressure');
+        const bpValidation = document.getElementById('bpValidation');
+        const bpRegex = /^(29[0-9]|2[0-9][0-9]|[01]?[0-9][0-9]?)\/(29[0-9]|2[0-9][0-9]|[01]?[0-9][0-9]?)$/;
+
+        if (!bpRegex.test(bp.value) || bp.value == "") {
+            header.style.backgroundColor = '#F88379';
+            bpValidation.innerHTML = 'This field is required (Example: 120/80)';
+        } else {
+            bpValidation.innerHTML = '';
+            header.style.backgroundColor = '#fff';
+            updateform.submit();
+        }
+    }
+</script>
+
+

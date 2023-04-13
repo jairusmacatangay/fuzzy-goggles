@@ -1,0 +1,83 @@
+﻿@model VitasysEHR.Models.ViewModels.InvoiceVM
+
+<div class="rd-margin">
+
+    <div class="row">
+        <div class="col-6">
+            <p class="fw-bold m-0">@Model.ClinicName</p>
+            <p class="m-0">@Model.ClinicAddress</p>
+            <p class="m-0">@Model.ClinicCity, @Model.ClinicProvince, @Model.ClinicZipCode</p>
+        </div>
+        <div class="col-6">
+            <p class="m-0">@(Model.ClinicEmailAddress != null ? Model.ClinicEmailAddress: "")</p>
+            <p class="m-0">@(Model.ClinicMobilePhone != null ? Model.ClinicMobilePhone: "")</p>
+            <p class="m-0">@(Model.ClinicOfficePhone != null ? Model.ClinicOfficePhone: "")</p>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-6">
+            <p class="fw-bold m-0">Billed To</p>
+            <p class="m-0">@Model.PatientName</p>
+
+            <p class="fw-bold m-0 mt-3">Invoice Details</p>
+            <p class="m-0">Invoice # @Model.Invoice.Id</p>
+            <p class="m-0">Date: @Model.Invoice.InvoiceDate</p>
+        </div>
+        <div class="col-6">
+            <p class="fw-bold m-0">Payment Details</p>
+            <p class="m-0">Status: @(Model.Invoice.PaymentStatusId != null ? Model.Invoice.PaymentStatus.Status : "-")</p>
+            <p class="m-0">Method: @(Model.Invoice.PaymentMethodId != null ? Model.Invoice.PaymentMethod.Method : "-")</p>
+            <p class="m-0">Date: @(Model.Invoice.PaymentDate != null ? Model.Invoice.PaymentDate : "-")</p>
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <div class="table-responsive-lg">
+            <table class="table border border-1 w-100">
+                <thead class="bg-secondary text-white border border-secondary">
+                    <tr>
+                        <th>Treatment</th>
+                        <th>Tooth No./s</th>
+                        <th>Dentist/s</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in @Model.TreatmentRecordList)
+                    {
+                        <tr class="align-middle">
+                            <td>@item.Treatment.Name</td>
+                            <td>@item.ToothNumbers</td>
+                            <td>@item.Dentists</td>
+                            <td>@item.Quantity</td>
+                            <td>&#8369; @item.TotalPrice</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-end">
+        <div class="card" style="width: 250px">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <p class="fw-bold m-0">Total Amount</p>
+                        <p class="fw-bold m-0">Amount Paid</p>
+                        <p class="fw-bold m-0">Change</p>
+                    </div>
+                    <div class="col-6 text-end">
+                        <p class="m-0">&#8369; @Model.Invoice.TotalAmount</p>
+                        <p class="m-0">&#8369; @Model.Invoice.AmountPaid</p>
+                        <p class="m-0">&#8369; @Model.Invoice.Change</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

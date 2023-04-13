@@ -1,0 +1,76 @@
+﻿@{
+    Layout = "/Areas/PatientPortal/Views/_PatientPortalLayout.cshtml";
+    ViewData["Title"] = "Dental Chart";
+}
+
+<div class="d-flex justify-content-center">
+    <div class="card shadow-sm mt-3 pp-card-75-100">
+        <div class="card-body">
+
+            <div class="flex-wrap mb-4">
+                <div class="d-flex align-items-center mb-3">
+                    <i class="fas fa-tooth me-2" style="font-size: 2rem"></i>
+                    <h1 class="m-0 fw-bolder">Dental Charts</h1>
+                </div>
+
+                <div class="table-responsive-lg">
+                    <table class="table table-striped w-100 table-rounded" id="dentalChartTable">
+                        <thead class="bg-primary text-white">
+                            <tr style="letter-spacing: 1.4px;">
+                                <th>ID</th>
+                                <th>DATE OF ENCOUNTER</th>
+                                <th>CLINIC</th>
+                                <th>LAST MODIFIED</th>
+                                <th>ACTION</th>
+                            </tr>
+                        </thead>
+                        <tbody class="align-middle">
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    let dataTable
+
+    $(document).ready(function () {
+        loadDataTable()
+    })
+
+    let loadDataTable = () => {
+        dataTable = $('#dentalChartTable').DataTable({
+            "ajax": {
+                "url": "/PatientPortal/Records/GetDentalCharts",
+                "dataSrc": ""
+            },
+            "oLanguage": {
+                "sSearch": '<i class="fa fa-search me-1"></i>Search:',
+            },
+            "columns": [
+                { "data": "Id" },
+                { "data": "EncounterDate" },
+                { "data": "Clinic" },
+                {
+                    "data": "LastModified",
+                    "render": (LastModified) => {
+                        if (LastModified == null)
+                            return 'N/A'
+                        return `${LastModified}`
+                    }
+                },
+                {
+                    "data": "Id",
+                    "render": (data) => {
+                        return `<a href="/PatientPortal/Records/DentalChart?id=${data}" class="btn btn-outline-primary"><i class="fas fa-search-plus me-2"></i>View</a>`
+                    }
+                }
+            ]
+        })
+    }
+</script>
+

@@ -1,0 +1,52 @@
+﻿<p>Select a patient for whom you want to create an invoice:</p>
+
+<div class="table-responsive-sm">
+    <table id="patientTable" class="table table-striped table-borderless w-100 table-rounded">
+        <thead class="bg-primary text-white">
+            <tr class="th-letter-spacing">
+                <th>PATIENT NAME</th>
+                <th>ACTION</th>
+            </tr>
+        </thead>
+        <tbody class="align-middle">
+        </tbody>
+    </table>
+</div>
+
+<script>
+let patientDataTable
+
+$(document).ready(function () {
+    loadPatientDataTable()
+})
+
+let loadPatientDataTable = () => {
+    patientDataTable = $('#patientTable').DataTable({
+        "ajax": {
+            "url": "/Clinic/Invoice/GetAllPatients"
+        },
+        "oLanguage": {
+            "sSearch": '<i class="fa fa-search me-1"></i>Search:',
+        },
+        "columns": [
+            { "data": "name" },
+            {
+                "data": "id",
+                "render": (data) => {
+                    return `
+                        <button class="btn btn-outline-success rounded-3" onclick="createInvoice(${data})">
+                            <i class="fas fa-plus me-2"></i>Select
+                        </button>                        
+                        `
+                }
+            }
+        ]
+    })
+}
+
+let createInvoice = (id) => {
+    $.post("/Clinic/Invoice/CreateInitialInvoice", { patientId: id }, (data) => {
+        window.location.replace(data.url);
+    });
+};
+</script>

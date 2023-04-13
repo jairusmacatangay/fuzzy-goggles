@@ -1,0 +1,201 @@
+﻿@model Patient
+
+<div class="text-center">
+    @if (Model.ProfPicUrl != null)
+    {
+        <img src="@Model.ProfPicUrl" class="img-fluid w-50 rounded-3 shadow-sm" alt="Patient profile picture" />
+    }
+    else
+    {
+        <img src="~/img/patients/prof-pic-placeholder.png" class="img-fluid w-50 rounded-3 shadow-sm" alt="Patient profile picture" />
+    }
+</div>
+
+<h3 class="mt-3">@Model.FirstName @(Model.MiddleName != null ? Model.MiddleName : "") @Model.LastName</h3>
+
+<ul class="list-unstyled">
+    <li class="mb-2">
+        <div class="row">
+            <div class="col-2 d-flex align-items-center justify-content-end">
+                <i class="fas fa-venus-mars p-2 bg-light fs-20 text-muted"></i>
+            </div>
+            <div class="col-10">
+                <div class="d-flex flex-column">
+                    <p class="m-0 text-muted fw-bold">Gender</p>
+                    <p class="m-0">@Model.Gender</p>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="mb-2">
+        <div class="row">
+            <div class="col-2 d-flex align-items-center justify-content-end">
+                <i class="fas fa-birthday-cake p-2 bg-light fs-20 text-muted"></i>
+            </div>
+            <div class="col-10">
+                <div class="d-flex flex-column">
+                    <p class="m-0 text-muted fw-bold">Date of Birth</p>
+                    <p class="m-0">@Model.DOB</p>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="mb-2">
+        <div class="row">
+            <div class="col-2 d-flex align-items-center justify-content-end">
+                <i class="fas fa-map-marker-alt p-2 bg-light fs-20 text-muted"></i>
+            </div>
+            <div class="col-10">
+                <div class="d-flex flex-column">
+                    <p class="m-0 text-muted fw-bold">Address</p>
+                    <p class="m-0">@Model.Address, @Model.City, @Model.Province, @Model.ZipCode</p>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>
+
+<hr />
+
+<p class="fw-bold">Contact Information</p>
+
+<ul class="list-unstyled">
+    <li class="mb-2">
+        <div class="row">
+            <div class="col-2 d-flex align-items-center justify-content-end">
+                <i class="fas fa-envelope p-2 bg-light fs-20 text-muted"></i>
+            </div>
+            <div class="col-10">
+                <div class="d-flex flex-column">
+                    <p class="m-0 text-muted fw-bold">Email Address</p>
+                    <p class="m-0">@Model.Email</p>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="mb-2">
+        <div class="row">
+            <div class="col-2 d-flex align-items-center justify-content-end">
+                <i class="fas fa-phone p-2 bg-light fs-20 text-muted"></i>
+            </div>
+            <div class="col-10">
+                <div class="d-flex flex-column">
+                    <p class="m-0 text-muted fw-bold">Mobile Number</p>
+                    <p class="m-0">@Model.MobileNumber</p>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="mb-2">
+        <div class="row">
+            <div class="col-2 d-flex align-items-center justify-content-end">
+                <i class="fas fa-phone p-2 bg-light fs-20 text-muted"></i>
+            </div>
+            <div class="col-10">
+                <div class="d-flex flex-column">
+                    <p class="m-0 text-muted fw-bold">Home Number</p>
+                    <p class="m-0">@(Model.HomeNumber != null ? Model.HomeNumber : "N/A")</p>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>
+
+<hr />
+
+<p class="fw-bold">Patient Portal Account</p>
+
+<ul class="list-unstyled">
+    <li class="mb-2">
+        <div class="row">
+            <div class="col-2 d-flex align-items-center justify-content-end">
+                <i class="fas fa-cog p-2 bg-light fs-20 text-muted"></i>
+            </div>
+            <div class="col-10">
+                <div class="d-flex flex-column">
+                    <p class="m-0 text-muted fw-bold">Has Access</p>
+                    <p class="m-0">@(Model.PortalAccess == true ? "Yes" : "No")</p>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="mb-2">
+        <div class="row">
+            <div class="col-2 d-flex align-items-center justify-content-end">
+                <i class="fas fa-check p-2 bg-light fs-20 text-muted"></i>
+            </div>
+            <div class="col-10">
+                <div class="d-flex flex-column">
+                    <p class="m-0 text-muted fw-bold">Verified Account</p>
+                    <p class="m-0">@(Model.IsVerified == true ? "Yes" : "No")</p>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>
+
+@*<table class="table table-borderless">
+    <tbody>
+        <tr>
+            <td class="rd-width"><b>Profile Picture</b></td>
+            <td>
+                @if (Model.ProfPicUrl != null)
+                {
+                    <img src="@Model.ProfPicUrl" class="img-fluid w-50" alt="Patient profile picture" />
+                } 
+                else
+                {
+                    <img src="~/img/patients/prof-pic-placeholder.png" class="img-fluid w-50" alt="Patient profile picture" />
+                }
+            </td>
+        </tr>
+        <tr>
+            <td><b>Name</b></td>
+            <td>@Model.FirstName @(Model.MiddleName != null ? Model.MiddleName : "") @Model.LastName</td>
+        </tr>
+        <tr>
+            <td><b>Date Of Birth</b></td>
+            <td>@Model.DOB</td>
+        </tr>
+        <tr>
+            <td><b>Gender</b></td>
+            <td>@Model.Gender</td>
+        </tr>
+        <tr>
+            <td><b>Address</b></td>
+            <td>@(Model.Address != null ? Model.Address : "N/A")</td>
+        </tr>
+        <tr>
+            <td><b>City</b></td>
+            <td>@(Model.City != null ? Model.City : "N/A")</td>
+        </tr>
+        <tr>
+            <td><b>Province</b></td>
+            <td>@(Model.Province != null ? Model.Province : "N/A")</td>
+        </tr>
+        <tr>
+            <td><b>Zip Code</b></td>
+            <td>@(Model.ZipCode != null ? Model.ZipCode : "N/A")</td>
+        </tr>
+        <tr>
+            <td><b>Email</b></td>
+            <td>@(Model.Email != null ? Model.Email : "N/A")</td>
+        </tr>
+        <tr>
+            <td><b>Home Number</b></td>
+            <td>@(Model.HomeNumber != null ? Model.HomeNumber : "N/A")</td>
+        </tr>
+        <tr>
+            <td><b>Mobile Number</b></td>
+            <td>@(Model.MobileNumber != null ? Model.MobileNumber : "N/A")</td>
+        </tr>
+        <tr>
+            <td><b>Patient Portal Access</b></td>
+            <td>@(Model.PortalAccess == true ? "Yes" : "No")</td>
+        </tr>
+        <tr>
+            <td><b>Verified Account</b></td>
+            <td>@(Model.IsVerified == true ? "Yes" : "No")</td>
+        </tr>
+    </tbody>
+</table>*@

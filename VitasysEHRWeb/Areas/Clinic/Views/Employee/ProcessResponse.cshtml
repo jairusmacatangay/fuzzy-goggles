@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Process Response";
+}
+
+<div class="card message-card-sm mx-auto mt-3 shadow-sm">
+    <div class="card-body">
+        @Html.Raw(ViewData["icon"])
+        <h1 class="text-center fw-bolder">@ViewData["header"]</h1>
+        <hr />
+        <p class="m-0 text-center">
+            @ViewData["message"]
+        </p>
+    </div>
+</div>

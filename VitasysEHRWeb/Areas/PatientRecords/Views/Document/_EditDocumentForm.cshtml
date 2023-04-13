@@ -1,0 +1,74 @@
+﻿@model VitasysEHR.Models.ViewModels.DocumentsFolderVM
+@using VitasysEHR.Utility
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<form method="post" asp-action="UpdateDocument" enctype="multipart/form-data">
+    <label asp-for="PatientId" hidden> </label>
+    <input asp-for="PatientId" value="@HttpContextAccessor.HttpContext.Session.GetInt32(SD.SessionKeyPatientId)" hidden />
+
+    <label asp-for="Folder.PatientId" hidden> </label>
+    <input asp-for="Folder.PatientId" value="@HttpContextAccessor.HttpContext.Session.GetInt32(SD.SessionKeyPatientId)" hidden />
+
+    <label asp-for="Document.Id" hidden> </label>
+    <input asp-for="Document.Id" value="@Model.Document.Id" hidden />
+
+    <label asp-for="Document.FolderId" hidden> </label>
+    <input asp-for="Document.FolderId" value="@Model.Document.FolderId" hidden />
+
+    <label asp-for="Document.Folder.Id" hidden> </label>
+    <input asp-for="Document.Folder.Id" value="@Model.Document.FolderId" hidden />
+
+    <label asp-for="Document.Folder.Name" hidden> </label>
+    <input asp-for="Document.Folder.Name" value="@Model.Document.Folder.Name" hidden />
+
+    <label asp-for="Document.Folder.FolderTypeId" hidden> </label>
+    <input asp-for="Document.Folder.FolderTypeId" value="@Model.Document.Folder.FolderTypeId" hidden />
+
+    <label asp-for="Document.Folder.PatientId" hidden> </label>
+    <input asp-for="Document.Folder.PatientId" value="@Model.Document.Folder.PatientId" hidden />
+
+    <label asp-for="Document.Folder.DateAdded" hidden> </label>
+    <input asp-for="Document.Folder.DateAdded" hidden />
+
+    <label asp-for="Document.Folder.LastModified" hidden> </label>
+    <input asp-for="Document.Folder.LastModified" hidden />
+
+    <label asp-for="Document.DocumentUrl" hidden></label>
+    <input asp-for="Document.DocumentUrl" value="@Model.Document.DocumentUrl" hidden />
+
+    <label asp-for="Document.IsArchived" hidden></label>
+    <input asp-for="Document.IsArchived" value="@Model.Document.IsArchived" hidden />
+
+    <label asp-for="Document.IsShared" hidden></label>
+    <input asp-for="Document.IsShared" value="@Model.Document.IsShared" hidden />
+
+    <label asp-for="Document.DateAdded" hidden></label>
+    <input asp-for="Document.DateAdded" hidden />
+
+    <label asp-for="Document.LastModified" hidden></label>
+    <input asp-for="Document.LastModified" hidden />
+
+    <label asp-for="Folder.Name" hidden></label>
+    <input asp-for="Folder.Name" value="@Model.Folder.Name" hidden />
+
+    <div class="row">
+        <div class="col">
+            <!--Document Name-->
+            <div class="mb-3">
+                <label asp-for="Document.Name" class="form-label"></label>
+                <input asp-for="Document.Name" class="form-control" />
+                <span asp-validation-for="Document.Name" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times me-2"></i>Cancel</button>
+        <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save Changes</button>
+    </div>
+
+</form>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.1/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation/dist/additional-methods.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>

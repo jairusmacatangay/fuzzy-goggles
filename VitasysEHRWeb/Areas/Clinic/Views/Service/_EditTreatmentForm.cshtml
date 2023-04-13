@@ -1,0 +1,43 @@
+﻿@model VitasysEHR.Models.ViewModels.TreatmentVM
+
+<form method="post" asp-action="Update">
+    <label asp-for="ClinicId" hidden></label>
+    <input asp-for="ClinicId" value="@Model.Clinic.Id" hidden />
+    <label asp-for="Treatment.ClinicId" hidden></label>
+    <input asp-for="Treatment.ClinicId" value="@Model.Clinic.Id" hidden />
+    <label asp-for="Treatment.Id" hidden></label>
+    <input asp-for="Treatment.Id" hidden />
+    <label asp-for="Treatment.DateAdded" hidden></label>
+    <input asp-for="Treatment.DateAdded" hidden />
+    <!--Treatment Name-->
+    <div class="mb-3">
+        <label asp-for="Treatment.Name" class="form-label"></label>
+        <input asp-for="Treatment.Name" class="form-control" />
+        <span asp-validation-for="Treatment.Name" class="text-danger"></span>
+    </div>
+
+    <!--Treatment Type-->
+    <div class="mb-3">
+        <label asp-for="Treatment.TreatmentTypeId" class="form-label"></label>
+        <select asp-for="Treatment.TreatmentTypeId" asp-items="@Model.TreatmentTypeList" class="form-select">
+            <option disabled selected>Select Type</option>
+        </select>
+        <span asp-validation-for="Treatment.TreatmentTypeId" class="text-danger"></span>
+    </div>
+
+    <!--Price-->
+    <div class="mb-3">
+        <label asp-for="Treatment.Price" class="form-label"></label>
+        <input asp-for="Treatment.Price" class="form-control" />
+        <span asp-validation-for="Treatment.Price" class="text-danger"></span>
+    </div>
+
+    <div class="d-flex justify-content-between mt-2">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times me-2"></i>Cancel</button>
+        <button type="submit" class="btn btn-primary" id="updateBtn"><i class="fas fa-save me-2"></i>Save</button>
+    </div>
+</form>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.1/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation/dist/additional-methods.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>

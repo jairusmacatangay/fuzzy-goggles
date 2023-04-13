@@ -1,0 +1,114 @@
+﻿@{
+    ViewData["Title"] = "Service";
+    var status = Context.Request.Query["status"];
+    var archived = "text-primary";
+    var active = "text-primary";
+
+    switch (status)
+    {
+        case "archived":
+            archived = "active text-white";
+            break;
+        default:
+            active = "active text-white";
+            break;
+    }
+}
+
+<div class="card shadow-sm mt-3">
+    <div class="card-body">
+        <div class="d-flex justify-content-between flex-wrap mb-4">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-hand-holding-medical me-2" style="font-size: 2rem"></i>
+                <h1 class="m-0 fw-bolder">Treatments List</h1>
+            </div>
+
+
+            <div class="d-flex">
+                <div>
+                    <button class="btn btn-success me-3" onclick="addTreatment()">
+                        <i class="fas fa-hand-holding-medical me-2"></i> Add Treatment
+                    </button>
+                </div>
+                <ul class="list-group list-group-horizontal">
+                    <a style="text-decoration: none;" asp-Controller="Service" asp-action="Index"
+                       asp-route-status="active">
+                    <li class="list-group-item @active list-group-rounded-left"><i class="fas fa-check me-2"></i>Active</li>
+                    </a>
+                    <a style="text-decoration: none;" asp-Controller="Service" asp-action="Index"
+                       asp-route-status="archived">
+                    <li class="list-group-item @archived list-group-rounded-right"><i class="fas fa-archive me-2"></i>Archived</li>
+                    </a>
+                </ul>
+            </div>
+        </div>
+
+        <div class="table-responsive-sm">
+            <table id="myTable" class="table table-hover table-striped table-borderless w-100 table-rounded">
+                <thead class="bg-primary text-white">
+                    <tr style="letter-spacing: 1.4px;">
+                        <th>TREATMENT NAME</th>
+                        <th>TREATMENT TYPE</th>
+                        <th>PRICE</th>
+                        <th>DATE ADDED</th>
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+                <tbody class="align-middle"></tbody>
+            </table>
+        </div>
+
+
+
+        <!--Add Treatment Modal-->
+        <div class="modal fade" id="addTreatmentModal" tabindex="-1" aria-labelledby="addTreatmentModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-24" id="addTreatmentModalLabel">Add Treatment</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="addTreatmentModalBodyDiv">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Edit Treatment Modal-->
+        <div class="modal fade" id="editTreatmentModal" tabindex="-1" aria-labelledby="editTreatmentModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-24" id="editTreatmentModalLabel">Edit Treatment</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="editTreatmentModalBodyDiv">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--View Treatment Modal-->
+        <div class="modal fade" id="viewTreatmentModal" tabindex="-1" aria-labelledby="viewTreatmentModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-24" id="viewTreatmentModalLabel">View Treatment</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="viewTreatmentModalBodyDiv">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    @{
+    <partial name="_ValidationScriptsPartial" />
+    }
+<script src="~/js/service.js"></script>
+<script src="~/js/tooltip.js"></script>
+}

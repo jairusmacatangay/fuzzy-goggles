@@ -1,0 +1,43 @@
+﻿@model VitasysEHR.Models.ViewModels.DocumentsFolderVM
+@using VitasysEHR.Utility
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<form method="post" asp-action="UpdateFolder">
+    <label asp-for="PatientId" hidden> </label>
+    <input asp-for="PatientId" value="@HttpContextAccessor.HttpContext.Session.GetInt32(SD.SessionKeyPatientId)" hidden />
+    <label asp-for="Folder.PatientId" hidden> </label>
+    <input asp-for="Folder.PatientId" value="@HttpContextAccessor.HttpContext.Session.GetInt32(SD.SessionKeyPatientId)" hidden />
+    <label asp-for="Folder.Id" hidden> </label>
+    <input asp-for="Folder.Id" hidden />
+    <label asp-for="Folder.DateAdded" hidden> </label>
+    <input asp-for="Folder.DateAdded" hidden />
+
+    <div class="row">
+        <div class="col">
+            <!--Folder Name-->
+            <div class="mb-3">
+                <label asp-for="Folder.Name" class="form-label"></label>
+                <input asp-for="Folder.Name" class="form-control" />
+                <span asp-validation-for="Folder.Name" class="text-danger"></span>
+            </div>
+            <!--Folder Type-->
+            <div class="mb-3">
+                <label asp-for="Folder.FolderTypeId" class="form-label"></label>
+                <select asp-for="Folder.FolderTypeId" asp-items="@Model.FolderTypeList" class="form-select">
+                    <option disabled selected>Select Type</option>
+                </select>
+                <span asp-validation-for="Folder.FolderTypeId" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between mt-2">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times me-2"></i>Cancel</button>
+        <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Update</button>
+    </div>
+
+</form>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.1/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation/dist/additional-methods.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>

@@ -1,0 +1,143 @@
+﻿@model Patient
+
+<div class="card mt-3">
+    <div class="card-body">
+        <h1 class="fw-bolder fs-24">Edit Patient</h1>
+        <form method="post" asp-action="Update" enctype="multipart/form-data" id="editForm">
+            <div class="row">
+                <label asp-for="Id" hidden ></label>
+                <input asp-for="Id" value="@Model.Id" hidden/>
+                <label asp-for="ProfPicUrl" for="ProfPicUrl" hidden></label>
+                <input asp-for="ProfPicUrl" hidden />
+
+                <div class="col-sm-6">
+                    <!--First Name-->
+                    <div class="mb-3">
+                        <label asp-for="FirstName" class="form-label"></label>
+                        <input asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+
+                    <!--Middle Name-->
+                    <div class="mb-3">
+                        <div class="d-flex">
+                            <label asp-for="MiddleName" class="form-label"></label>
+                            <p class="m-0 ms-1 text-muted">(optional)</p>
+                        </div>
+                        <input asp-for="MiddleName" class="form-control" />
+                        <span asp-validation-for="MiddleName" class="text-danger"></span>
+                    </div>
+
+                    <!--Last Name-->
+                    <div class="mb-3">
+                        <label asp-for="LastName" class="form-label"></label>
+                        <input asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+
+                    <!--DOB-->
+                    <div class="mb-3">
+                        <label asp-for="DOB" class="form-label" for="date"></label>
+                        <div class="input-group date">
+                            <input type="text" asp-for="DOB" id="date" class="form-control" data-provide="datepicker" data-date-start-date="-100y" data-date-end-date="-1y" placeholder="mm/dd/yyyy" />
+                        </div>
+                        <span asp-validation-for="DOB" class="text-danger"></span>
+                    </div>
+
+                    <!--ProfPic-->
+                    <div class="mb-3">
+                        <div class="d-flex">
+                            <label asp-for="ProfPicUrl" class="form-label" for="file"></label>
+                            <p class="m-0 text-muted ms-1">(optional)</p>
+                        </div>
+                        <input type="file" name="file" class="form-control" id="file" accept="image/*" />
+                        @*<div class="form-text">Please upload .jpg .jpeg .png files only.</div>*@
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <!--Email-->
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <!--Home No-->
+                    <div class="mb-3">
+                        <div class="d-flex">
+                            <label asp-for="HomeNumber" class="form-label"></label>
+                            <p class="m-0 text-muted ms-1">(optional)</p>
+                        </div>
+                        <input asp-for="HomeNumber" class="form-control" />
+                        <span asp-validation-for="HomeNumber" class="text-danger"></span>
+                    </div>
+
+                    <!--Mobile No-->
+                    <div class="mb-3">
+                        <label asp-for="MobileNumber" class="form-label"></label>
+                        <input asp-for="MobileNumber" class="form-control" />
+                        <span asp-validation-for="MobileNumber" class="text-danger"></span>
+                    </div>
+
+                    <!--Gender-->
+                    <div class="mb-3">
+                        <label asp-for="Gender" class="form-label"></label>
+                        <select asp-for="Gender" class="form-select">
+                            <option selected disabled>Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="LGBTQIA+">LGBTQIA+</option>
+                            <option value="Prefer not to say">Prefer not to say</option>
+                        </select>
+                        <span asp-validation-for="Gender" class="text-danger"></span>
+                    </div>
+
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-sm-6">
+                    <!--Address-->
+                    <div class="mb-3">
+                        <label asp-for="Address" class="form-label"></label>
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <!--City-->
+                    <div class="mb-3">
+                        <label asp-for="City" class="form-label"></label>
+                        <input asp-for="City" class="form-control" />
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <!--Province-->
+                    <div class="mb-3">
+                        <label asp-for="Province" class="form-label"></label>
+                        <input asp-for="Province" class="form-control" />
+                        <span asp-validation-for="Province" class="text-danger"></span>
+                    </div>
+                    <!--ZipCode-->
+                    <div class="mb-3">
+                        <label asp-for="ZipCode" class="form-label"></label>
+                        <input asp-for="ZipCode" maxlength="4" class="form-control" />
+                        <span asp-validation-for="ZipCode" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between mt-2">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times me-2"></i>Cancel</button>
+                <button type="submit" class="btn btn-primary" id="updateBtn"><i class="fas fa-save me-2"></i>Save</button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.1/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation/dist/additional-methods.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>

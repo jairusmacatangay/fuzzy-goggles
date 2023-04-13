@@ -1,0 +1,23 @@
+﻿@model ApplicationUser
+
+<div class="alert alert-info d-flex align-items-center" role="alert">
+    <i class="fas fa-info-circle me-3 fs-24"></i>
+    <p class="m-0">
+        The following information below will be sent to the employee via email. They can approve or deny your request 
+        based on the reason you provide.
+    </p>
+</div>
+
+<div class="fw-bold text-muted">Employee Name</div>
+<div class="mb-3">@Model.FirstName @(Model.MiddleName != null ? Model.MiddleName : "") @Model.LastName </div>
+
+<form method="post" asp-action="EditRequest">
+    <input asp-for="Id" hidden />
+    <label class="form-label">Reason for Editing</label>
+    <textarea class="form-control" name="reason" required></textarea>
+
+    <div class="d-flex justify-content-between mt-4">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times me-2"></i>Cancel</button>
+        <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane me-2"></i>Send</button>
+    </div>
+</form>

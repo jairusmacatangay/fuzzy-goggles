@@ -1,0 +1,295 @@
+﻿@model VitasysEHR.Models.ViewModels.ToothFormVM
+
+
+@if (Model != null && Model.Tooth != null)
+{
+    if (Model.Tooth.Type == "Molar")
+    {
+        if (Model.Tooth.Condition == 1)
+        {
+            <form asp-action="SaveTooth" method="post">
+                <input type="hidden" asp-for="@Model.Tooth.DentalChartId" />
+                <input type="hidden" asp-for="@Model.Tooth.ToothNo" />
+                <input type="hidden" asp-for="@Model.Tooth.Type" />
+                <input type="hidden" asp-for="@Model.Tooth.Id" />
+
+                <!--Condition Select List-->
+                <div class="mb-3">
+                    <label class="form-label" for="conditionSelect">Condition</label>
+                    <select asp-for="@Model.Tooth.Condition" asp-items="@Model.LabelWholeList" class="form-select" id="conditionSelect">
+                        <option disabled selected>Select</option>
+                    </select>
+                    <span asp-validation-for="@Model.Tooth.Condition" class="text-danger"></span>
+                </div>
+
+                <div id="toothLabelPartSelect">
+                    <div class="row">
+                        <div class="col-6">
+                            <!--Buccal Select-->
+                            <div class="mb-3">
+                                <label class="form-label" for="Tooth_BuccalOrLabial">Buccal</label>
+                                <select asp-for="@Model.Tooth.BuccalOrLabial" asp-items="@Model.LabelPartList" class="form-select">
+                                    <option disabled selected>Select</option>
+                                </select>
+                                <span asp-validation-for="@Model.Tooth.BuccalOrLabial" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <!--Lingual Select-->
+                            <div class="mb-3">
+                                <label class="form-label" for="Tooth_Lingual">Lingual</label>
+                                <select asp-for="@Model.Tooth.Lingual" asp-items="@Model.LabelPartList" class="form-select">
+                                    <option disabled selected>Select</option>
+                                </select>
+                                <span asp-validation-for="@Model.Tooth.Lingual" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <!--Distal Select-->
+                            <div class="mb-3">
+                                <label class="form-label" for="Tooth_Distal">Distal</label>
+                                <select asp-for="@Model.Tooth.Distal" asp-items="@Model.LabelPartList" class="form-select">
+                                    <option disabled selected>Select</option>
+                                </select>
+                                <span asp-validation-for="@Model.Tooth.Distal" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <!--Mesial Select-->
+                            <div class="mb-3">
+                                <label class="form-label" for="Tooth_Mesial">Mesial</label>
+                                <select asp-for="@Model.Tooth.Mesial" asp-items="@Model.LabelPartList" class="form-select">
+                                    <option disabled selected>Select</option>
+                                </select>
+                                <span asp-validation-for="@Model.Tooth.Mesial" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <!--Occlusal Select-->
+                            <div class="mb-3">
+                                <label class="form-label" for="Tooth_Occlusal">Occlusal</label>
+                                <select asp-for="@Model.Tooth.Occlusal" asp-items="@Model.LabelPartList" class="form-select">
+                                    <option disabled selected>Select</option>
+                                </select>
+                                <span asp-validation-for="@Model.Tooth.Occlusal" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save</button>
+            </form>
+        }
+        else
+        {
+            <form asp-action="SaveTooth" method="post">
+                <input type="hidden" asp-for="@Model.Tooth.DentalChartId" />
+                <input type="hidden" asp-for="@Model.Tooth.ToothNo" />
+                <input type="hidden" asp-for="@Model.Tooth.Type" />
+                <input type="hidden" asp-for="@Model.Tooth.Id" />
+
+                <!--Condition Select List-->
+                <div class="mb-3">
+                    <label class="form-label" for="conditionSelect">Condition</label>
+                    <select asp-for="@Model.Tooth.Condition" asp-items="@Model.LabelWholeList" class="form-select" id="conditionSelect">
+                        <option disabled selected>Select</option>
+                    </select>
+                    <span asp-validation-for="@Model.Tooth.Condition" class="text-danger"></span>
+                </div>
+
+                <div style="display: none" id="toothLabelPartSelect">
+                    <div class="row">
+                        <div class="col-6">
+                            <!--Buccal Select-->
+                            <div class="mb-3">
+                                <label class="form-label" for="Tooth_BuccalOrLabial">Buccal</label>
+                                <select asp-for="@Model.Tooth.BuccalOrLabial" asp-items="@Model.LabelPartList" class="form-select">
+                                    <option disabled selected>Select</option>
+                                </select>
+                                <span asp-validation-for="@Model.Tooth.BuccalOrLabial" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <!--Lingual Select-->
+                            <div class="mb-3">
+                                <label class="form-label" for="Tooth_Lingual">Lingual</label>
+                                <select asp-for="@Model.Tooth.Lingual" asp-items="@Model.LabelPartList" class="form-select">
+                                    <option disabled selected>Select</option>
+                                </select>
+                                <span asp-validation-for="@Model.Tooth.Lingual" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <!--Distal Select-->
+                            <div class="mb-3">
+                                <label class="form-label" for="Tooth_Distal">Distal</label>
+                                <select asp-for="@Model.Tooth.Distal" asp-items="@Model.LabelPartList" class="form-select">
+                                    <option disabled selected>Select</option>
+                                </select>
+                                <span asp-validation-for="@Model.Tooth.Distal" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <!--Mesial Select-->
+                            <div class="mb-3">
+                                <label class="form-label" for="Tooth_Mesial">Mesial</label>
+                                <select asp-for="@Model.Tooth.Mesial" asp-items="@Model.LabelPartList" class="form-select">
+                                    <option disabled selected>Select</option>
+                                </select>
+                                <span asp-validation-for="@Model.Tooth.Mesial" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <!--Occlusal Select-->
+                            <div class="mb-3">
+                                <label class="form-label" for="Tooth_Occlusal">Occlusal</label>
+                                <select asp-for="@Model.Tooth.Occlusal" asp-items="@Model.LabelPartList" class="form-select">
+                                    <option disabled selected>Select</option>
+                                </select>
+                                <span asp-validation-for="@Model.Tooth.Occlusal" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save</button>
+            </form>
+        }
+    }
+    else
+    {
+        if (Model.Tooth.Condition == 1)
+        {
+            <form asp-action="SaveTooth" method="post">
+                <input type="hidden" asp-for="@Model.Tooth.DentalChartId" />
+                <input type="hidden" asp-for="@Model.Tooth.ToothNo" />
+                <input type="hidden" asp-for="@Model.Tooth.Type" />
+                <input type="hidden" asp-for="@Model.Tooth.Id" />
+
+                <!--Condition Select List-->
+                <div class="mb-3">
+                    <label class="form-label">Condition</label>
+                    <select asp-for="@Model.Tooth.Condition" asp-items="@Model.LabelWholeList" class="form-select" id="conditionSelect">
+                        <option disabled selected>Select Condition</option>
+                    </select>
+                    <span asp-validation-for="@Model.Tooth.Condition" class="text-danger"></span>
+                </div>
+
+                <div id="toothLabelPartSelect">
+                    <div class="row">
+                        <div class="col-6">
+                            <!--Buccal Select-->
+                            <div class="mb-3">
+                                <label class="form-label">Labial</label>
+                                <select asp-for="@Model.Tooth.BuccalOrLabial" asp-items="@Model.LabelPartList" class="form-select">
+                                    <option disabled selected>Select</option>
+                                </select>
+                                <span asp-validation-for="@Model.Tooth.BuccalOrLabial" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <!--Lingual Select-->
+                            <div class="mb-3">
+                                <label class="form-label">Lingual</label>
+                                <select asp-for="@Model.Tooth.Lingual" asp-items="@Model.LabelPartList" class="form-select">
+                                    <option disabled selected>Select</option>
+                                </select>
+                                <span asp-validation-for="@Model.Tooth.Lingual" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <!--Distal Select-->
+                            <div class="mb-3">
+                                <label class="form-label">Distal</label>
+                                <select asp-for="@Model.Tooth.Distal" asp-items="@Model.LabelPartList" class="form-select">
+                                    <option disabled selected>Select</option>
+                                </select>
+                                <span asp-validation-for="@Model.Tooth.Distal" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <!--Mesial Select-->
+                            <div class="mb-3">
+                                <label class="form-label">Mesial</label>
+                                <select asp-for="@Model.Tooth.Mesial" asp-items="@Model.LabelPartList" class="form-select">
+                                    <option disabled selected>Select</option>
+                                </select>
+                                <span asp-validation-for="@Model.Tooth.Mesial" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary"><i class="fas fa-save me-2"></i>Save</button>
+            </form>
+        }
+        else
+        {
+            <form asp-action="SaveTooth" method="post">
+                <input type="hidden" asp-for="@Model.Tooth.DentalChartId" />
+                <input type="hidden" asp-for="@Model.Tooth.ToothNo" />
+                <input type="hidden" asp-for="@Model.Tooth.Type" />
+                <input type="hidden" asp-for="@Model.Tooth.Id" />
+
+                <!--Condition Select List-->
+                <div class="mb-3">
+                    <label class="form-label">Condition</label>
+                    <select asp-for="@Model.Tooth.Condition" asp-items="@Model.LabelWholeList" class="form-select" id="conditionSelect">
+                        <option disabled selected>Select Condition</option>
+                    </select>
+                    <span asp-validation-for="@Model.Tooth.Condition" class="text-danger"></span>
+                </div>
+
+                <div style="display: none" id="toothLabelPartSelect">
+                    <div class="row">
+                        <div class="col-6">
+                            <!--Buccal Select-->
+                            <div class="mb-3">
+                                <label class="form-label">Labial</label>
+                                <select asp-for="@Model.Tooth.BuccalOrLabial" asp-items="@Model.LabelPartList" class="form-select">
+                                    <option disabled selected>Select</option>
+                                </select>
+                                <span asp-validation-for="@Model.Tooth.BuccalOrLabial" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <!--Lingual Select-->
+                            <div class="mb-3">
+                                <label class="form-label">Lingual</label>
+                                <select asp-for="@Model.Tooth.Lingual" asp-items="@Model.LabelPartList" class="form-select">
+                                    <option disabled selected>Select</option>
+                                </select>
+                                <span asp-validation-for="@Model.Tooth.Lingual" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <!--Distal Select-->
+                            <div class="mb-3">
+                                <label class="form-label">Distal</label>
+                                <select asp-for="@Model.Tooth.Distal" asp-items="@Model.LabelPartList" class="form-select">
+                                    <option disabled selected>Select</option>
+                                </select>
+                                <span asp-validation-for="@Model.Tooth.Distal" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <!--Mesial Select-->
+                            <div class="mb-3">
+                                <label class="form-label">Mesial</label>
+                                <select asp-for="@Model.Tooth.Mesial" asp-items="@Model.LabelPartList" class="form-select">
+                                    <option disabled selected>Select</option>
+                                </select>
+                                <span asp-validation-for="@Model.Tooth.Mesial" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary"><i class="fas fa-save me-2"></i>Save</button>
+            </form>
+        }
+    }
+
+}

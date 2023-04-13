@@ -1,0 +1,150 @@
+﻿@model VitasysEHR.Models.ViewModels.ClinicVM
+
+@{
+    ViewData["Title"] = "Clinic Details";
+    Layout = "/Views/Shared/_Registration_Layout.cshtml";
+}
+
+<form method="post" enctype="multipart/form-data">
+    <div class="card shadow-sm mt-3 mx-auto message-card">
+        <div class="card-body">
+
+            <div class="alert alert-info d-flex align-items-center" role="alert">
+                <i class="fas fa-info-circle me-2 fs-24"></i>
+                <p class="m-0">
+                    Please complete the fields below so that we can set up your EHR account.
+                </p>
+            </div>
+
+            <h1 class="fs-24 fw-bolder">Clinic Details</h1>
+
+            <!--Clinic Name-->
+            <div class="mb-3">
+                <label asp-for="Clinic.Name" class="form-label"></label>
+                <input asp-for="Clinic.Name" class="form-control" />
+                <span asp-validation-for="Clinic.Name" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                 <!--StartTime-->
+                <div class="col-sm-6">
+                    <label asp-for="Clinic.StartTime" class="form-label"></label>
+                    <select asp-for="Clinic.StartTime" asp-items="Model.StartTimeList" class="form-select" id="startTime">
+                        <option selected disabled>Select Start Time</option>
+                    </select>
+                    <span asp-validation-for="Clinic.StartTime" class="text-danger"></span>
+                </div>
+
+                <!--EndTime-->
+                <div class="col-sm-6">
+                    <label asp-for="Clinic.EndTime" class="form-label"></label>
+                    <select asp-for="Clinic.EndTime" asp-items="Model.EndTimeList" class="form-select" id="endTime">
+                        <option selected disabled>Select End Time</option>
+                    </select>
+                    <span asp-validation-for="Clinic.EndTime" class="text-danger"></span>
+                </div>
+                <span class="text-danger" id="timeError"></span>
+            </div>
+           
+            <br/>
+
+            <!--Logo-->
+            <div class="mb-3">
+                <div class="d-flex">
+                    <label for="uploadBox" class="form-label">Logo</label>
+                    <p class="m-0 text-muted ms-2">(optional)</p>
+                </div>
+                <input type="file" name="file" id="uploadBox" class="form-control" />
+            </div>
+
+            <hr class="mt-4" />
+
+            <h1 class="fs-24 fw-bolder">Address</h1>
+
+            <!--Address-->
+            <div class="mb-3 col-sm-12">
+                <label asp-for="Clinic.Address" class="form-label"></label>
+                <input asp-for="Clinic.Address" class="form-control" />
+                <span asp-validation-for="Clinic.Address" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+
+                <!--City-->
+                <div class="col-sm-4">
+                    <label asp-for="Clinic.City" class="form-label"></label>
+                    <input asp-for="Clinic.City" class="form-control" />
+                    <span asp-validation-for="Clinic.City" class="text-danger"></span>
+                </div>
+
+                <!--Province-->
+                <div class="col-sm-4">
+                    <label asp-for="Clinic.Province" class="form-label"></label>
+                    <input asp-for="Clinic.Province" class="form-control" />
+                    <span asp-validation-for="Clinic.Province" class="text-danger"></span>
+                </div>
+
+                <!--Province-->
+                <div class="col-sm-4">
+                    <label asp-for="Clinic.ZipCode" class="form-label"></label>
+                    <input asp-for="Clinic.ZipCode" maxlength="4" class="form-control" />
+                    <span asp-validation-for="Clinic.ZipCode" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <hr class="mt-4" />
+
+            <h1 class="fs-24 fw-bolder">Contact Information</h1>
+
+            <div class="row">
+                <!--Office Phone-->
+                <div class="mb-3 col-sm-6">
+                    <div class="d-flex">
+                        <label asp-for="Clinic.OfficePhone" class="form-label"></label>
+                        <p class="m-0 text-muted ms-2">(optional)</p>
+                    </div>
+                    <input asp-for="Clinic.OfficePhone" class="form-control" />
+                    <span asp-validation-for="Clinic.OfficePhone" class="text-danger"></span>
+                </div>
+
+                <!--Mobile Phone-->
+                <div class="mb-3 col-sm-6">
+                    <label asp-for="Clinic.MobilePhone" class="form-label"></label>
+                    <input asp-for="Clinic.MobilePhone" class="form-control" />
+                    <span asp-validation-for="Clinic.MobilePhone" class="text-danger"></span>
+                </div>
+            </div>
+
+            <!--Email-->
+            <div class="mb-3">
+                <label asp-for="Clinic.EmailAddress" class="form-label"></label>
+                <input asp-for="Clinic.EmailAddress" class="form-control" />
+                <span asp-validation-for="Clinic.EmailAddress" class="text-danger"></span>
+            </div>
+
+
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save</button>
+            
+
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    @{
+    <partial name="_ValidationScriptsPartial" />
+    }
+    <script>
+        function ValidateInput() {
+            if (document.getElementById("uploadBox").value == "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                })
+                return false;
+            }
+            return true;
+        }
+    </script>
+} 

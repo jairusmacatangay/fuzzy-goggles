@@ -1,0 +1,39 @@
+﻿@page
+@model PermitReverifyModel
+@{
+    ViewData["Title"] = "Permit Reverification";
+    Layout = "/Views/Shared/_Registration_Layout.cshtml";
+}
+
+<div class="card shadow-sm mt-3 mx-auto" style="width: 30rem">
+    <div class="card-body">
+        <h4>@ViewData["Title"]</h4>
+        <partial name="_StatusMessage" for="StatusMessage" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        
+        <div class="alert alert-danger d-flex align-items-center" role="alert">
+            <i class="fas fa-exclamation-circle me-3" style="font-size: 32px;"></i>
+            <div>
+                <strong>Your application has been denied.</strong> This may be due to the picture being unclear. Please take a new picture and resubmit it for verification.
+            </div>
+        </div>
+        <form id="profile-form" enctype="multipart/form-data" method="post">
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" disabled />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="Input_Permit">Business Permit</label>
+                <input type="file" name="permit" asp-for="Input.Permit" class="form-control" required />
+                <span asp-validation-for="Input.Permit" class="text-danger"></span>
+            </div>
+
+            <button id="update-profile-button" type="submit" class="btn btn-primary"><i class="fas fa-paper-plane me-2"></i>Submit</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

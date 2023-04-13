@@ -1,0 +1,23 @@
+﻿@model VitasysEHR.Models.ViewModels.CollectPaymentVM
+
+<p>Total Amount: &#8369; @Model.Invoice.TotalAmount</p>
+
+<form method="post" asp-action="CollectPayment">
+    <input type="hidden" value="@Model.Invoice.Id" asp-for="@Model.Invoice.Id"/>
+
+    <div class="mb-3">
+        <label class="form-label" for="Invoice_PaymentMethodId">Payment Method</label>
+        <select asp-for="@Model.Invoice.PaymentMethodId" asp-items="@Model.PaymentMethods" class="form-select" required>
+            <option disabled selected>Select Type</option>
+        </select>
+        <span asp-validation-for="@Model.Invoice.PaymentMethodId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="Invoice_AmountPaid">Amount Paid</label>
+        <input type="number" asp-for="@Model.Invoice.AmountPaid" class="form-control" />
+        <span asp-validation-for="@Model.Invoice.AmountPaid" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save</button>
+</form>

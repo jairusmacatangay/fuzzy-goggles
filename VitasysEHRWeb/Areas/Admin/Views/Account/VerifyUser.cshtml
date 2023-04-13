@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Account Verification";
+}
+
+<div class="card shadow-sm mt-3">
+    <div class="card-body">
+        
+        <div class="d-flex align-items-center mb-4">
+            <i class="fas fa-user-check me-2" style="font-size: 2rem"></i>
+            <h1 class="m-0 fw-bolder">Account Verification</h1>
+        </div>
+
+        <div class="table-responsive-md">
+            <table id="myTable" class="table table-hover table-striped table-borderless w-100 table-rounded">
+                <thead class="bg-primary text-white">
+                    <tr class="th-letter-spacing">
+                        <th>NAME</th>
+                        <th>DATE OF BIRTH</th>
+                        <th>GENDER</th>
+                        <th>DATE ADDED</th>
+                        <th>LAST MODIFIED</th>
+                        <th>STATUS</th>
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+                <tbody class="align-middle"></tbody>
+            </table>
+        </div>
+
+        <!--View User Modal-->
+        <div class="modal fade" id="viewUserModal" tabindex="-1" aria-labelledby="viewUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fw-bolder fs-24" id="viewUserModalLabel">View User</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="viewUserModalBodyDiv">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+<script src="~/js/user-verification.js"></script>
+}

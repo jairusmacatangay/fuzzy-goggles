@@ -1,0 +1,28 @@
+﻿@model Clinic
+
+<form method="post" asp-action="UpdateLogo" enctype="multipart/form-data">
+    <div class="row">
+        <label asp-for="Id" for="Id" hidden></label>
+        <input asp-for="Id" hidden />
+        <label asp-for="DateAdded" for="DateAdded" hidden></label>
+        <input asp-for="DateAdded" hidden />
+        <label asp-for="LogoUrl" for="LogoUrl" hidden></label>
+        <input asp-for="LogoUrl" hidden />
+        <div class="col">
+            <!--Clinig Logo-->
+            <div class="mb-3">
+                <label asp-for="LogoUrl" class="form-label" for="file"></label>
+                <input type="file" name="file" class="form-control" id="file" />
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="d-flex justify-content-between mt-2">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times me-2"></i>Cancel</button>
+        <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save</button>
+    </div>
+</form>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.1/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation/dist/additional-methods.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>

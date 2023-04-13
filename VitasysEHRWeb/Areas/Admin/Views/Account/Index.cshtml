@@ -1,0 +1,93 @@
+﻿@{
+    ViewData["Title"] = "Account Management";
+    var status = Context.Request.Query["status"];
+    var archived = "text-primary";
+    var active = "text-primary";
+
+    switch (status)
+    {
+        case "archived":
+            archived = "active text-white";
+            break;
+        default:
+            active = "active text-white";
+            break;
+    }
+}
+
+<div class="card shadow-sm mt-3">
+    <div class="card-body">
+
+        <div class="d-flex justify-content-between flex-wrap mb-4">
+            <!--Heading-->
+            <div class="d-flex align-items-center">
+                <i class="fas fa-users me-2" style="font-size: 2rem"></i>
+                <h1 class="m-0 fw-bolder">User Accounts</h1>
+            </div>
+
+            <!--Active and Archived Tabs-->
+            <div>
+                <ul class="list-group list-group-horizontal">
+                    <a style="text-decoration: none;" asp-Controller="Account" asp-action="Index"
+                       asp-route-status="active">
+                    <li class="list-group-item @active list-group-rounded-left"><i class="fas fa-check me-2"></i>Active</li>
+                    </a>
+                    <a style="text-decoration: none;" asp-Controller="Account" asp-action="Index"
+                       asp-route-status="archived">
+                    <li class="list-group-item @archived list-group-rounded-right"><i class="fas fa-archive me-2"></i>Archived</li>
+                    </a>
+                </ul>
+            </div>
+        </div>
+
+        <!--Table-->
+        <div class="table-responsive-md">
+            <table id="myTable" class="table table-striped table-borderless w-100 table-rounded">
+                <thead class="bg-primary text-white">
+                    <tr class ="th-letter-spacing">
+                        <th>NAME</th>
+                        <th>DATE OF BIRTH</th>
+                        <th>GENDER</th>
+                        <th>DATE ADDED</th>
+                        <th>LAST MODIFIED</th>
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+                <tbody class="align-middle"></tbody>
+            </table>
+        </div>
+
+        <!--View User Modal-->
+        <div class="modal fade" id="viewUserModal" tabindex="-1" aria-labelledby="viewUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-24 fw-bolder" id="viewUserModalLabel">View User</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="viewUserModalBodyDiv">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Edit User Modal-->
+        <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title m-0 fs-24" id="editUserModalLabel">Edit User Account Request Form</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="editUserModalBodyDiv">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+<script src="~/js/user-accounts.js"></script>
+}

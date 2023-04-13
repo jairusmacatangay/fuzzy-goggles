@@ -1,0 +1,228 @@
+﻿@using VitasysEHR.Utility
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    string? profPicUrl = HttpContextAccessor.HttpContext.Session.GetString(SD.SessionKeyPatientProfPicUrl);
+    string? patientName = HttpContextAccessor.HttpContext.Session.GetString(SD.SessionKeyPatientName);
+    int? patientId = HttpContextAccessor.HttpContext.Session.GetInt32(SD.SessionKeyPatientId);
+    var page = ViewData["CurrentPage"];
+
+    string account = "";
+    string appointments = "";
+    string receipts = "";
+    string reminders = "";
+    string medicalHistory = "";
+    string dentalChart = "";
+    string prescription = "";
+    string document = "";
+    string treatmentRecord = "";
+
+    switch (page)
+    {
+        case "appointments":
+            appointments = "text-white";
+            break;
+        case "receipts":
+            receipts = "text-white";
+            break;
+        case "reminders":
+            reminders = "text-white";
+            break;
+        case "medicalHistory":
+            medicalHistory = "text-white";
+            break;
+        case "dentalChart":
+            dentalChart = "text-white";
+            break;
+        case "prescription":
+            prescription = "text-white";
+            break;
+        case "document":
+            document = "text-white";
+            break;
+        case "treatmentRecord":
+            treatmentRecord = "text-white";
+            break;
+        default:
+            account = "text-white";
+            break;
+    }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Vitasys EHR</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootswatch-cosmos.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <link rel="stylesheet" href="~/VitasysEHRWeb.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <script src="https://kit.fontawesome.com/df6d866fec.js" crossorigin="anonymous"></script>
+</head>
+<body style="background-color:#e9eff1;">
+    <header>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm" style="z-index: 2;">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="PatientPortal" asp-action="Index" asp-controller="Account"><img src="~/img/resources/logo-2.png" style="height: 28px;" alt="VitaSys EHR Logo" /> VitaSys EHR</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarColor03">
+
+                    <ul class="navbar-nav me-auto">
+
+                        <li class="nav-item dropdown rd-dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Patient Portal</a>
+                            <div class="dropdown-menu">
+                                <a asp-controller="Appointment" asp-action="Index" class="dropdown-item">Appointments</a>
+                                <a asp-controller="Receipt" asp-action="Index" class="dropdown-item">Receipts</a>
+                                <a asp-controller="Reminder" asp-action="Index" class="dropdown-item">Reminders</a>                              
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown rd-dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Records</a>
+                            <div class="dropdown-menu">
+                                <a asp-controller="Records" asp-action="MedicalHistory" class="dropdown-item">Medical History</a>
+                                <a asp-controller="Records" asp-action="DentalCharts" class="dropdown-item">Dental Chart</a>
+                                <a asp-controller="Records" asp-action="Documents" class="dropdown-item">Documents</a>
+                                <a asp-controller="Records" asp-action="Prescriptions" class="dropdown-item">Prescriptions</a>
+                                <a asp-controller="Records" asp-action="Treatments" class="dropdown-item">Treatment Records</a>                                
+                            </div>
+                        </li>
+
+                    </ul>
+
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <div class="d-flex align-items-center">
+                                <img src="@profPicUrl" width="30" height="30" class="rounded-circle" alt="Patient profile picture" />
+                                <a asp-controller="Account" asp-action="Index" class="nav-link">
+                                    @patientName
+                                </a>
+                            </div>
+                            
+                        </li>
+                        <li class="nav-item">
+                            <form class="form-inline">
+                                <a asp-area="PatientPortal" asp-controller="Account" asp-action="Logout" 
+                                    class="nav-link btn btn-link text-start">
+                                    <i class="fas fa-sign-out-alt me-1"></i> Logout
+                                </a>
+                            </form>
+                        </li>
+                    </ul>
+
+
+                </div>
+            </div>
+        </nav>
+
+    </header>
+
+    <div class="sidenav shadow-sm bg-primary">
+
+        <h6 class="ms-4 text-white fw-bold mb-3">Patient Portal</h6>
+
+        <ul class="sidenav-list">
+            <li>
+                <a asp-controller="Appointment" asp-action="Index">
+                    <div class="row">
+                        <div class="col-sm-2 @appointments"><i class="fas fa-calendar-check"></i></div>
+                        <div class="col-sm-10 @appointments">Appointments</div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a asp-controller="Receipt" asp-action="Index">
+                    <div class="row">
+                        <div class="col-sm-2 @receipts"><i class="fas fa-receipt"></i></div>
+                        <div class="col-sm-10 @receipts">Receipts</div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a asp-controller="Reminder" asp-action="Index">
+                    <div class="row">
+                        <div class="col-sm-2 @reminders"><i class="fas fa-bell"></i></div>
+                        <div class="col-sm-10 @reminders">Reminders</div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+
+        <hr class="text-white ms-3 me-3 mt-0 mb-4" />
+
+        <h6 class="ms-4 text-white fw-bold mb-3">Records</h6>
+
+        <ul class="sidenav-list">
+            <li>
+                <a asp-controller="Records" asp-action="MedicalHistory">
+                    <div class="row">
+                        <div class="col-sm-2 @medicalHistory"><i class="fas fa-notes-medical"></i></div>
+                        <div class="col-sm-10 @medicalHistory">Medical History</div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a asp-controller="Records" asp-action="DentalCharts">
+                    <div class="row">
+                        <div class="col-sm-2 @dentalChart"><i class="fas fa-tooth"></i></div>
+                        <div class="col-sm-10 @dentalChart">Dental Chart</div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a asp-controller="Records" asp-action="Documents">
+                    <div class="row">
+                        <div class="col-sm-2 @document"><i class="fas fa-folder"></i></div>
+                        <div class="col-sm-10 @document">Documents</div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a asp-controller="Records" asp-action="Prescriptions">
+                    <div class="row">
+                        <div class="col-sm-2 @prescription"><i class="fas fa-pills"></i></div>
+                        <div class="col-sm-10 @prescription">Prescriptions</div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a asp-controller="Records" asp-action="Treatments">
+                    <div class="row">
+                        <div class="col-sm-2 @treatmentRecord"><i class="fas fa-file-medical"></i></div>
+                        <div class="col-sm-10 @treatmentRecord">Treatment Records</div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+
+    </div>
+
+    <div class="page-content">
+        <main role="main" class="pb-3">
+            <partial name="_Notification" />
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+

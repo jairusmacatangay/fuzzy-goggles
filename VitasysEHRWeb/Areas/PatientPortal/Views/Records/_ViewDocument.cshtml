@@ -1,0 +1,25 @@
+﻿@model VitasysEHR.Models.ViewModels.DocumentsFolderVM
+
+@{
+
+    if(Model.Document.DocumentUrl != null)
+    {
+        var split = Model.Document.DocumentUrl.Split(".");
+        var extension = split[split.Length - 1]; // gets the last element which is the extension
+
+        if(extension == "jpg" || extension == "jpeg" || extension == "png" || extension == "gif")
+        {
+            <img src="@Model.Document.DocumentUrl" style="width: 100%; height: auto;" alt="@Model.Document.Name document" />
+        }
+        else if (extension == "pdf" || extension == "doc" || extension == "docx")
+        {
+            <embed src="@Model.Document.DocumentUrl" style="width: 100%; height: 80vh" />
+        }
+        else
+        {
+            <h1>Cannot view the file</h1>
+        }
+    }
+}
+
+

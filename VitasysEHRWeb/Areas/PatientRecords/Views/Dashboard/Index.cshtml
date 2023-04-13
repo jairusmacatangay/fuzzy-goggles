@@ -1,0 +1,1098 @@
+﻿@model VitasysEHR.Models.ViewModels.DashboardVM
+@using VitasysEHR.Utility
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    Layout = "_SideNavLayout";
+    ViewData["Title"] = "Patient Records - Dashboard";
+
+    string? subscriptionType = HttpContextAccessor.HttpContext.Session.GetString(SD.SessionKeySubscriptionType);
+    string? subscriptionIsLockout = HttpContextAccessor.HttpContext.Session.GetString(SD.SessionKeySubscriptionIsLockout);
+}
+
+<div class="d-flex align-items-center mb-3 mt-3">
+    <i class="fas fa-columns me-2" style="font-size: 2rem;"></i>
+    <h1 class="fw-bolder m-0">Dashboard</h1>
+</div>
+
+
+<div class="row gx-3">
+    <div class="col-lg-6 mb-3">
+        <div class="card shadow-sm h-100 rounded-3">
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between">
+                    <h2 class="m-0 fw-bold">Medical History</h2>
+                    @if (Model.MedicalHistoryVM.MedicalHistory != null)
+                    {
+                        <div>
+                            <a asp-area="PatientRecords" asp-controller="MedicalHistory" asp-action="Index"
+                                asp-route-id="@Model.PatientId" class="btn btn-primary rounded-3">
+                                <i class="fas fa-search-plus me-2"></i>See More
+                            </a>
+                        </div>
+                    }
+                </div>
+
+                @if (Model.MedicalHistoryVM.MedicalHistory != null)
+                {
+                    <div class="row gx-3 mt-3">
+                        <div class="col-sm-4 mb-3">
+                            <div class="card bg-light border-light rounded-3">
+                                <div class="card-body">
+                                    <p class="text-muted fw-bold m-0">Blood Type</p>
+                                    @if(Model.MedicalHistoryVM.MedicalHistory.BloodType == null){
+                                        <p class="m-0"><br/></p>
+                                    } else {
+                                        <p class="m-0">@Model.MedicalHistoryVM.MedicalHistory.BloodType</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 mb-3">
+                            <div class="card bg-light border-light rounded-3">
+                                <div class="card-body">
+                                    <p class="text-muted fw-bold m-0">Blood Pressure</p>
+                                    @if(Model.MedicalHistoryVM.MedicalHistory.BloodPressure == null){
+                                        <p class="m-0"><br/></p>
+                                    } else {
+                                        <p class="m-0">@Model.MedicalHistoryVM.MedicalHistory.BloodPressure</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 mb-3">
+                            <div class="card bg-light border-light rounded-3">
+                                <div class="card-body">
+                                    <p class="text-muted m-0 fw-bold">Bleeding Time</p>
+                                    @if(Model.MedicalHistoryVM.MedicalHistory.BleedingTime == null){
+                                        <p class="m-0"><br/></p>
+                                    } else {
+                                        <p class="m-0">@Model.MedicalHistoryVM.MedicalHistory.BleedingTime</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row gx-3">
+                        <div class="col-sm-6 mb-3">
+                            <div class="card bg-light border-light h-100">
+                                <div class="card-body rounded-3">
+                                    <p class="text-muted m-0 fw-bold">Medical Problems</p>
+                                    <ul class="list-unstyled mb-0" id="medicalHistoryUl">
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsHbp == true ? @Html.Raw("<li>High Blood Pressure</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsLbp == true ? @Html.Raw("<li>Low Blood Pressure</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsEpilepsy == true ? @Html.Raw("<li>Epilepsy / Convulsions</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsAids == true ? @Html.Raw("<li>AIDs or HIV Infection</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsStd == true ? @Html.Raw("<li>Sexually Transmitted Disease</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsStomach == true ? @Html.Raw("<li>Stomach Troubles / Ulcers</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsFainting == true ? @Html.Raw("<li>Fainting / Seizure</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsWeightLoss == true ? @Html.Raw("<li>Rapid Weight Loss</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsRadiation == true ? @Html.Raw("<li>Radiation Therapy</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsJointReplacement == true ? @Html.Raw("<li>Joint Replacement / Implant</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsHeartSurgery == true ? @Html.Raw("<li>Heart Surgery</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsHeartAttack == true ? @Html.Raw("<li>Heart Attack</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsThyroid == true ? @Html.Raw("<li>Thyroid Problem</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsHeartDisease == true ? @Html.Raw("<li>Heart Disease</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsHeartMurmur == true ? @Html.Raw("<li>Heart Murmur</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsHepa == true ? @Html.Raw("<li>Hepatitis / Liver Disease</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsRheumatic == true ? @Html.Raw("<li>Rheumatic Fever</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsHayFever == true ? @Html.Raw("<li>Hay Fever / Allergies</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsRespiratory == true ? @Html.Raw("<li>Respiratory Problems</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsJaundice == true ? @Html.Raw("<li>Hepatitis / Jaundice</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsTuberculosis == true ? @Html.Raw("<li>Tuberculosis</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsSwollenAnkles == true ? @Html.Raw("<li>Swollen Ankles</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsKidney == true ? @Html.Raw("<li>Kidney Disease</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsDiabetes == true ? @Html.Raw("<li>Diabetes</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsChestPain == true ? @Html.Raw("<li>Chest Pain</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsStroke == true ? @Html.Raw("<li>Stroke</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsCancer == true ? @Html.Raw("<li>Cancer / Tumors</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsAnemia == true ? @Html.Raw("<li>Anemia</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsAngina == true ? @Html.Raw("<li>Angina</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsAsthma == true ? @Html.Raw("<li>Asthma</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsEmphysema == true ? @Html.Raw("<li>Emphysema</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsBleeding == true ? @Html.Raw("<li>Bleeding Problems</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsBloodDisease == true ? @Html.Raw("<li>Blood Diseases</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsHeadInjury == true ? @Html.Raw("<li>Head Injury</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.IsArthritis == true ? @Html.Raw("<li>Arthritis / Rheumatism</li>") : "")
+                                        @(Model.MedicalHistoryVM.ReviewOfSystem.Other != null  ? @Html.Raw("<li>" + Model.MedicalHistoryVM.ReviewOfSystem.Other + "</li>") : "")
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <div class="card bg-light border-light h-100">
+                                <div class="card-body rounded-3">
+                                    <p class="text-muted fw-bold m-0">Allergies</p>
+                                    <ul class="list-unstyled mb-0" id="allergyUl">
+                                        @(Model.MedicalHistoryVM.Allergy.IsAnesthesia == true ? @Html.Raw("<li>Local Anesthetic</li>") : null)
+                                        @(Model.MedicalHistoryVM.Allergy.IsAntibiotics == true ? @Html.Raw("<li>Penicillin, Antibiotics</li>") : null)
+                                        @(Model.MedicalHistoryVM.Allergy.IsSulfa == true ? @Html.Raw("<li>Sulfa Drugs</li>") : null)
+                                        @(Model.MedicalHistoryVM.Allergy.IsAspirin == true ? @Html.Raw("<li>Aspirin</li>") : null)
+                                        @(Model.MedicalHistoryVM.Allergy.IsLatex == true ? @Html.Raw("<li>Latex</li>") : null)
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script defer>
+                        const allergyUl = document.getElementById("allergyUl")
+                        const medicalHistoryUl = document.getElementById("medicalHistoryUl")
+
+                        if (allergyUl.innerHTML.trim().length == 0) {
+                            allergyUl.innerHTML = "<li>The patient has no known allergies.</li>"
+                        }
+
+                        if (medicalHistoryUl.innerHTML.trim().length == 0) {
+                            medicalHistoryUl.innerHTML = "<li>The patient has no illness or underlying medical conditions.</li>"
+                        }
+                    </script>
+                }
+                else
+                {
+                    <div class="text-center py-2 mt-3">
+                        <i class="fas fa-notes-medical d-flex justify-content-center mb-3" style="font-size:40px"></i>
+                        <h3>No medical history</h3>
+                        <p>Add a medical history by clicking the button below.</p>
+                        <a asp-area="PatientRecords" asp-controller="MedicalHistory" asp-action="Index"
+                            asp-route-id="@Model.PatientId" class="btn btn-success rounded-3">
+                            <i class="fas fa-plus me-1"></i> Add Medical History
+                        </a>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 mb-3">
+        <div class="card shadow-sm h-100 rounded-3">
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between">
+                    <h2 class="m-0 fw-bold">Treatment Records</h2>
+                    @if (Model.TreatmentRecords.Count > 0)
+                    {
+                        <div>
+                            <a asp-area="PatientRecords" asp-controller="Treatment" asp-action="Index" 
+                                asp-route-id="@Model.PatientId" class="btn btn-primary rounded-3">
+                                <i class="fas fa-search-plus me-2"></i>See All
+                            </a>
+                        </div>
+                    }
+                </div>
+
+                @if (Model.TreatmentRecords.Count > 0)
+                {
+                    <table class="table table-striped table-borderless mt-3 border">
+                        <thead class="text-muted border-bottom">
+                            <tr>
+                                <th>#</th>
+                                <th>Recent Treatment</th>
+                                <th>Tooth Number/s</th>
+                                <th>Dentist/s</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (var i = 0; i < Model.TreatmentRecords.Count; i++)
+                            {
+                                if (i == 4) break;
+
+                                <tr>
+                                    <td>@(i + 1)</td>
+                                    <td>@Model.TreatmentRecords[i].Treatment.Name</td>
+                                    <td>@Model.TreatmentRecords[i].ToothNumbers</td>
+                                    <td>@Model.TreatmentRecords[i].Dentists</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div class="text-center py-2 mt-3">
+                        <i class="fas fa-file-medical d-flex justify-content-center mb-3" style="font-size:40px"></i>
+                        <h3>No treatment records</h3>
+                        <p>Start adding treatment records by clicking the button below.</p>
+                        <a asp-area="PatientRecords" asp-controller="Treatment" asp-action="Index" 
+                            asp-route-id="@Model.PatientId" class="btn btn-success rounded-3">
+                            <i class="fas fa-plus me-1"></i> Add Treatment
+                        </a>
+                    </div>
+                }
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow-sm mb-3 rounded-3">
+    <div class="card-body">
+
+        <div class="d-flex justify-content-between">
+            <h2 class="m-0 fw-bold">Dental Chart</h2>
+            @if (Model.DentalChartVM.DentalChart != null)
+            {
+                <div>
+                    <a asp-area="PatientRecords" asp-controller="DentalChart" asp-action="Index" 
+                        asp-route-id="@Model.PatientId" class="btn btn-primary rounded-3">
+                        <i class="fas fa-search-plus me-2"></i>All Dental Chart
+                    </a>
+                </div>
+            }
+        </div>
+
+        @if (Model.DentalChartVM.DentalChart != null)
+        {
+            <p class="text-muted m-0 fw-bold mt-3">Encounter Date</p>
+            <p class="m-0">@Model.DentalChartVM.EncounterDate</p>
+
+            <link rel="stylesheet" href="~/css/dental-chart.css" />
+
+            <div class="mt-5 mb-5" id="dental-chart">
+                <table align="center" class="mb-3">
+                    <tbody>
+
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth55 != null && Model.DentalChartVM.Tooth55.Condition != null ? Model.DentalChartVM.Tooth55.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth54 != null && Model.DentalChartVM.Tooth54.Condition != null ? Model.DentalChartVM.Tooth54.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth53 != null && Model.DentalChartVM.Tooth53.Condition != null ? Model.DentalChartVM.Tooth53.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth52 != null && Model.DentalChartVM.Tooth52.Condition != null ? Model.DentalChartVM.Tooth52.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth51 != null && Model.DentalChartVM.Tooth51.Condition != null ? Model.DentalChartVM.Tooth51.Condition.Abbreviation : ""))</td>
+                            <td style="padding: 10px;"></td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth61 != null && Model.DentalChartVM.Tooth61.Condition != null ? Model.DentalChartVM.Tooth61.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth62 != null && Model.DentalChartVM.Tooth62.Condition != null ? Model.DentalChartVM.Tooth62.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth63 != null && Model.DentalChartVM.Tooth63.Condition != null ? Model.DentalChartVM.Tooth63.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth64 != null && Model.DentalChartVM.Tooth64.Condition != null ? Model.DentalChartVM.Tooth64.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth65 != null && Model.DentalChartVM.Tooth65.Condition != null ? Model.DentalChartVM.Tooth65.Condition.Abbreviation : ""))</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>55</td>
+                            <td>54</td>
+                            <td>53</td>
+                            <td>52</td>
+                            <td>51</td>
+                            <td></td>
+                            <td>61</td>
+                            <td>62</td>
+                            <td>63</td>
+                            <td>64</td>
+                            <td>65</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+
+                        <tr class="pb ps">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <svg width="50" height="50" transform="scale(1,-1)" class="molar">
+                                    <polygon id="top" points="0,0 50,0 33,17 17,17" class="polygon unmarked @(Model.DentalChartVM.Tooth55 != null && Model.DentalChartVM.Tooth55.Lingual != null ? Model.DentalChartVM.Tooth55.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 17,17 17,33 0,50" class="polygon unmarked @(Model.DentalChartVM.Tooth55 != null && Model.DentalChartVM.Tooth55.Distal != null ? Model.DentalChartVM.Tooth55.Distal.Color : "")" />
+                                    <polygon id="bottom" points="0,50 17,33 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth55 != null && Model.DentalChartVM.Tooth55.BuccalOrLabial != null ? Model.DentalChartVM.Tooth55.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="50,0 33,17 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth55 != null && Model.DentalChartVM.Tooth55.Mesial != null ? Model.DentalChartVM.Tooth55.Mesial.Color : "")" />
+                                    <polygon id="center" points="17, 17 33, 17 33, 33 17, 33" class="polygon unmarked @(Model.DentalChartVM.Tooth55 != null && Model.DentalChartVM.Tooth55.Occlusal != null ? Model.DentalChartVM.Tooth55.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" transform="scale(1,-1)" class="molar">
+                                    <polygon id="top" points="0,0 50,0 33,17 17,17" class="polygon unmarked @(Model.DentalChartVM.Tooth54 != null && Model.DentalChartVM.Tooth54.Lingual != null ? Model.DentalChartVM.Tooth54.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 17,17 17,33 0,50" class="polygon unmarked @(Model.DentalChartVM.Tooth54 != null && Model.DentalChartVM.Tooth54.Distal != null ? Model.DentalChartVM.Tooth54.Distal.Color : "")" />
+                                    <polygon id="bottom" points="0,50 17,33 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth54 != null && Model.DentalChartVM.Tooth54.BuccalOrLabial != null ? Model.DentalChartVM.Tooth54.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="50,0 33,17 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth54 != null && Model.DentalChartVM.Tooth54.Mesial != null ? Model.DentalChartVM.Tooth54.Mesial.Color : "")" />
+                                    <polygon id="center" points="17, 17 33, 17 33, 33 17, 33" class="polygon unmarked @(Model.DentalChartVM.Tooth54 != null && Model.DentalChartVM.Tooth54.Occlusal != null ? Model.DentalChartVM.Tooth54.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" transform="scale(1,-1)" class="incisor">
+                                    <polygon id="top" points="17,0 33,0 33,25 17,25" class="polygon unmarked @(Model.DentalChartVM.Tooth53 != null && Model.DentalChartVM.Tooth53.Lingual != null ? Model.DentalChartVM.Tooth53.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,17 17,17 17,33 0,33" class="polygon unmarked @(Model.DentalChartVM.Tooth53 != null && Model.DentalChartVM.Tooth53.Distal != null ? Model.DentalChartVM.Tooth53.Distal.Color : "")" />
+                                    <polygon id="bottom" points="17,25 33,25 33,50 17,50" class="polygon unmarked @(Model.DentalChartVM.Tooth53 != null && Model.DentalChartVM.Tooth53.BuccalOrLabial != null ? Model.DentalChartVM.Tooth53.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="33,17 50,17 50,33 33,33" class="polygon unmarked @(Model.DentalChartVM.Tooth53 != null && Model.DentalChartVM.Tooth53.Mesial != null ? Model.DentalChartVM.Tooth53.Mesial.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" transform="scale(1,-1)" class="incisor">
+                                    <polygon id="top" points="17,0 33,0 33,25 17,25" class="polygon unmarked @(Model.DentalChartVM.Tooth52 != null && Model.DentalChartVM.Tooth52.Lingual != null ? Model.DentalChartVM.Tooth52.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,17 17,17 17,33 0,33" class="polygon unmarked @(Model.DentalChartVM.Tooth52 != null && Model.DentalChartVM.Tooth52.Distal != null ? Model.DentalChartVM.Tooth52.Distal.Color : "")" />
+                                    <polygon id="bottom" points="17,25 33,25 33,50 17,50" class="polygon unmarked @(Model.DentalChartVM.Tooth52 != null && Model.DentalChartVM.Tooth52.BuccalOrLabial != null ? Model.DentalChartVM.Tooth52.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="33,17 50,17 50,33 33,33" class="polygon unmarked @(Model.DentalChartVM.Tooth52 != null && Model.DentalChartVM.Tooth52.Mesial != null ? Model.DentalChartVM.Tooth52.Mesial.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" transform="scale(1,-1)" class="incisor">
+                                    <polygon id="top" points="17,0 33,0 33,25 17,25" class="polygon unmarked @(Model.DentalChartVM.Tooth51 != null && Model.DentalChartVM.Tooth51.Lingual != null ? Model.DentalChartVM.Tooth51.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,17 17,17 17,33 0,33" class="polygon unmarked @(Model.DentalChartVM.Tooth51 != null && Model.DentalChartVM.Tooth51.Distal != null ? Model.DentalChartVM.Tooth51.Distal.Color : "")" />
+                                    <polygon id="bottom" points="17,25 33,25 33,50 17,50" class="polygon unmarked @(Model.DentalChartVM.Tooth51 != null && Model.DentalChartVM.Tooth51.BuccalOrLabial != null ? Model.DentalChartVM.Tooth51.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="33,17 50,17 50,33 33,33" class="polygon unmarked @(Model.DentalChartVM.Tooth51 != null && Model.DentalChartVM.Tooth51.Mesial != null ? Model.DentalChartVM.Tooth51.Mesial.Color : "")" />
+                                </svg>
+                            </td>
+                            <td></td>
+                            <td>
+                                <svg width="50" height="50" transform="scale(1,-1)" class="incisor">
+                                    <polygon id="top" points="17,0 33,0 33,25 17,25" class="polygon unmarked @(Model.DentalChartVM.Tooth61 != null && Model.DentalChartVM.Tooth61.Lingual != null ? Model.DentalChartVM.Tooth61.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,17 17,17 17,33 0,33" class="polygon unmarked @(Model.DentalChartVM.Tooth61 != null && Model.DentalChartVM.Tooth61.Mesial != null ? Model.DentalChartVM.Tooth61.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="17,25 33,25 33,50 17,50" class="polygon unmarked @(Model.DentalChartVM.Tooth61 != null && Model.DentalChartVM.Tooth61.BuccalOrLabial != null ? Model.DentalChartVM.Tooth61.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="33,17 50,17 50,33 33,33" class="polygon unmarked @(Model.DentalChartVM.Tooth61 != null && Model.DentalChartVM.Tooth61.Distal != null ? Model.DentalChartVM.Tooth61.Distal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" transform="scale(1,-1)" class="incisor">
+                                    <polygon id="top" points="17,0 33,0 33,25 17,25" class="polygon unmarked @(Model.DentalChartVM.Tooth62 != null && Model.DentalChartVM.Tooth62.Lingual != null ? Model.DentalChartVM.Tooth62.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,17 17,17 17,33 0,33" class="polygon unmarked @(Model.DentalChartVM.Tooth62 != null && Model.DentalChartVM.Tooth62.Mesial != null ? Model.DentalChartVM.Tooth62.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="17,25 33,25 33,50 17,50" class="polygon unmarked @(Model.DentalChartVM.Tooth62 != null && Model.DentalChartVM.Tooth62.BuccalOrLabial != null ? Model.DentalChartVM.Tooth62.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="33,17 50,17 50,33 33,33" class="polygon unmarked @(Model.DentalChartVM.Tooth62 != null && Model.DentalChartVM.Tooth62.Distal != null ? Model.DentalChartVM.Tooth62.Distal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" transform="scale(1,-1)" class="incisor">
+                                    <polygon id="top" points="17,0 33,0 33,25 17,25" class="polygon unmarked @(Model.DentalChartVM.Tooth63 != null && Model.DentalChartVM.Tooth63.Lingual != null ? Model.DentalChartVM.Tooth63.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,17 17,17 17,33 0,33" class="polygon unmarked @(Model.DentalChartVM.Tooth63 != null && Model.DentalChartVM.Tooth63.Mesial != null ? Model.DentalChartVM.Tooth63.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="17,25 33,25 33,50 17,50" class="polygon unmarked @(Model.DentalChartVM.Tooth63 != null && Model.DentalChartVM.Tooth63.BuccalOrLabial != null ? Model.DentalChartVM.Tooth63.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="33,17 50,17 50,33 33,33" class="polygon unmarked @(Model.DentalChartVM.Tooth63 != null && Model.DentalChartVM.Tooth63.Distal != null ? Model.DentalChartVM.Tooth63.Distal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" transform="scale(1,-1)" class="molar">
+                                    <polygon id="top" points="0,0 50,0 33,17 17,17" class="polygon unmarked @(Model.DentalChartVM.Tooth64 != null && Model.DentalChartVM.Tooth64.Lingual != null ? Model.DentalChartVM.Tooth64.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 17,17 17,33 0,50" class="polygon unmarked @(Model.DentalChartVM.Tooth64 != null && Model.DentalChartVM.Tooth64.Mesial != null ? Model.DentalChartVM.Tooth64.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="0,50 17,33 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth64 != null && Model.DentalChartVM.Tooth64.BuccalOrLabial != null ? Model.DentalChartVM.Tooth64.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="50,0 33,17 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth64 != null && Model.DentalChartVM.Tooth64.Distal != null ? Model.DentalChartVM.Tooth64.Distal.Color : "")" />
+                                    <polygon id="center" points="17, 17 33, 17 33, 33 17, 33" class="polygon unmarked @(Model.DentalChartVM.Tooth64 != null && Model.DentalChartVM.Tooth64.Occlusal != null ? Model.DentalChartVM.Tooth64.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" transform="scale(1,-1)" class="molar">
+                                    <polygon id="top" points="0,0 50,0 33,17 17,17" class="polygon unmarked @(Model.DentalChartVM.Tooth65 != null && Model.DentalChartVM.Tooth65.Lingual != null ? Model.DentalChartVM.Tooth65.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 17,17 17,33 0,50" class="polygon unmarked @(Model.DentalChartVM.Tooth65 != null && Model.DentalChartVM.Tooth65.Mesial != null ? Model.DentalChartVM.Tooth65.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="0,50 17,33 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth65 != null && Model.DentalChartVM.Tooth65.BuccalOrLabial != null ? Model.DentalChartVM.Tooth65.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="50,0 33,17 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth65 != null && Model.DentalChartVM.Tooth65.Distal != null ? Model.DentalChartVM.Tooth65.Distal.Color : "")" />
+                                    <polygon id="center" points="17, 17 33, 17 33, 33 17, 33" class="polygon unmarked @(Model.DentalChartVM.Tooth65 != null && Model.DentalChartVM.Tooth65.Occlusal != null ? Model.DentalChartVM.Tooth65.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+
+                        <tr>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth18 != null && Model.DentalChartVM.Tooth18.Condition != null ? Model.DentalChartVM.Tooth18.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth17 != null && Model.DentalChartVM.Tooth17.Condition != null ? Model.DentalChartVM.Tooth17.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth16 != null && Model.DentalChartVM.Tooth16.Condition != null ? Model.DentalChartVM.Tooth16.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth15 != null && Model.DentalChartVM.Tooth15.Condition != null ? Model.DentalChartVM.Tooth15.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth14 != null && Model.DentalChartVM.Tooth14.Condition != null ? Model.DentalChartVM.Tooth14.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth13 != null && Model.DentalChartVM.Tooth13.Condition != null ? Model.DentalChartVM.Tooth13.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth12 != null && Model.DentalChartVM.Tooth12.Condition != null ? Model.DentalChartVM.Tooth12.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth11 != null && Model.DentalChartVM.Tooth11.Condition != null ? Model.DentalChartVM.Tooth11.Condition.Abbreviation : ""))</td>
+                            <td></td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth21 != null && Model.DentalChartVM.Tooth21.Condition != null ? Model.DentalChartVM.Tooth21.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth22 != null && Model.DentalChartVM.Tooth22.Condition != null ? Model.DentalChartVM.Tooth22.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth23 != null && Model.DentalChartVM.Tooth23.Condition != null ? Model.DentalChartVM.Tooth23.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth24 != null && Model.DentalChartVM.Tooth24.Condition != null ? Model.DentalChartVM.Tooth24.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth25 != null && Model.DentalChartVM.Tooth25.Condition != null ? Model.DentalChartVM.Tooth25.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth26 != null && Model.DentalChartVM.Tooth26.Condition != null ? Model.DentalChartVM.Tooth26.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth27 != null && Model.DentalChartVM.Tooth27.Condition != null ? Model.DentalChartVM.Tooth27.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth28 != null && Model.DentalChartVM.Tooth28.Condition != null ? Model.DentalChartVM.Tooth28.Condition.Abbreviation : ""))</td>
+                        </tr>
+
+
+                        <tr>
+                            <td>18</td>
+                            <td>17</td>
+                            <td>16</td>
+                            <td>15</td>
+                            <td>14</td>
+                            <td>13</td>
+                            <td>12</td>
+                            <td>11</td>
+                            <td></td>
+                            <td>21</td>
+                            <td>22</td>
+                            <td>23</td>
+                            <td>24</td>
+                            <td>25</td>
+                            <td>26</td>
+                            <td>27</td>
+                            <td>28</td>
+                        </tr>
+
+
+                        <tr class="pb ps">
+                            <td>
+                                <svg width="50" height="50" transform="scale(1,-1)" class="molar">
+                                    <polygon id="top" points="0,0 50,0 33,17 17,17" class="polygon unmarked @(Model.DentalChartVM.Tooth18 != null && Model.DentalChartVM.Tooth18.Lingual != null ? Model.DentalChartVM.Tooth18.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 17,17 17,33 0,50" class="polygon unmarked @(Model.DentalChartVM.Tooth18 != null && Model.DentalChartVM.Tooth18.Distal != null ? Model.DentalChartVM.Tooth18.Distal.Color : "")" />
+                                    <polygon id="bottom" points="0,50 17,33 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth18 != null && Model.DentalChartVM.Tooth18.BuccalOrLabial != null ? Model.DentalChartVM.Tooth18.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="50,0 33,17 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth18 != null && Model.DentalChartVM.Tooth18.Mesial != null ? Model.DentalChartVM.Tooth18.Mesial.Color : "")" />
+                                    <polygon id="center" points="17, 17 33, 17 33, 33 17, 33" class="polygon unmarked @(Model.DentalChartVM.Tooth18 != null && Model.DentalChartVM.Tooth18.Occlusal != null ? Model.DentalChartVM.Tooth18.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" transform="scale(1,-1)" class="molar">
+                                    <polygon id="top" points="0,0 50,0 33,17 17,17" class="polygon unmarked @(Model.DentalChartVM.Tooth17 != null && Model.DentalChartVM.Tooth17.Lingual != null ? Model.DentalChartVM.Tooth17.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 17,17 17,33 0,50" class="polygon unmarked @(Model.DentalChartVM.Tooth17 != null && Model.DentalChartVM.Tooth17.Distal != null ? Model.DentalChartVM.Tooth17.Distal.Color : "")" />
+                                    <polygon id="bottom" points="0,50 17,33 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth17 != null && Model.DentalChartVM.Tooth17.BuccalOrLabial != null ? Model.DentalChartVM.Tooth17.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="50,0 33,17 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth17 != null && Model.DentalChartVM.Tooth17.Mesial != null ? Model.DentalChartVM.Tooth17.Mesial.Color : "")" />
+                                    <polygon id="center" points="17, 17 33, 17 33, 33 17, 33" class="polygon unmarked @(Model.DentalChartVM.Tooth17 != null && Model.DentalChartVM.Tooth17.Occlusal != null ? Model.DentalChartVM.Tooth17.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" transform="scale(1,-1)" class="molar">
+                                    <polygon id="top" points="0,0 50,0 33,17 17,17" class="polygon unmarked @(Model.DentalChartVM.Tooth16 != null && Model.DentalChartVM.Tooth16.Lingual != null ? Model.DentalChartVM.Tooth16.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 17,17 17,33 0,50" class="polygon unmarked @(Model.DentalChartVM.Tooth16 != null && Model.DentalChartVM.Tooth16.Distal != null ? Model.DentalChartVM.Tooth16.Distal.Color : "")" />
+                                    <polygon id="bottom" points="0,50 17,33 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth16 != null && Model.DentalChartVM.Tooth16.BuccalOrLabial != null ? Model.DentalChartVM.Tooth16.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="50,0 33,17 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth16 != null && Model.DentalChartVM.Tooth16.Mesial != null ? Model.DentalChartVM.Tooth16.Mesial.Color : "")" />
+                                    <polygon id="center" points="17, 17 33, 17 33, 33 17, 33" class="polygon unmarked @(Model.DentalChartVM.Tooth16 != null && Model.DentalChartVM.Tooth16.Occlusal != null ? Model.DentalChartVM.Tooth16.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" transform="scale(1,-1)" class="premolar-5">
+                                    <polygon id="top" points="0,0 50,0 33,17 17,17" class="polygon unmarked @(Model.DentalChartVM.Tooth15 != null && Model.DentalChartVM.Tooth15.Lingual != null ? Model.DentalChartVM.Tooth15.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 17,17 17,33 0,50" class="polygon unmarked @(Model.DentalChartVM.Tooth15 != null && Model.DentalChartVM.Tooth15.Distal != null ? Model.DentalChartVM.Tooth15.Distal.Color : "")" />
+                                    <polygon id="bottom" points="0,50 17,33 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth15 != null && Model.DentalChartVM.Tooth15.BuccalOrLabial != null ? Model.DentalChartVM.Tooth15.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="50,0 33,17 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth15 != null && Model.DentalChartVM.Tooth15.Mesial != null ? Model.DentalChartVM.Tooth15.Mesial.Color : "")" />
+                                    <polygon id="center" points="17, 17 33, 17 33, 33 17, 33" class="polygon unmarked @(Model.DentalChartVM.Tooth15 != null && Model.DentalChartVM.Tooth15.Occlusal != null ? Model.DentalChartVM.Tooth15.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" transform="scale(1,-1)" class="premolar-4">
+                                    <polygon id="top" points="0,0 50,0 33,17 17,17" class="polygon unmarked @(Model.DentalChartVM.Tooth14 != null && Model.DentalChartVM.Tooth14.Lingual != null ? Model.DentalChartVM.Tooth14.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 17,17 17,33 0,50" class="polygon unmarked @(Model.DentalChartVM.Tooth14 != null && Model.DentalChartVM.Tooth14.Distal != null ? Model.DentalChartVM.Tooth14.Distal.Color : "")" />
+                                    <polygon id="bottom" points="0,50 17,33 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth14 != null && Model.DentalChartVM.Tooth14.BuccalOrLabial != null ? Model.DentalChartVM.Tooth14.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="50,0 33,17 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth14 != null && Model.DentalChartVM.Tooth14.Mesial != null ? Model.DentalChartVM.Tooth14.Mesial.Color : "")" />
+                                    <polygon id="center" points="17, 17 33, 17 33, 33 17, 33" class="polygon unmarked @(Model.DentalChartVM.Tooth14 != null && Model.DentalChartVM.Tooth14.Occlusal != null ? Model.DentalChartVM.Tooth14.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" transform="scale(1,-1)" class="incisor">
+                                    <polygon id="top" points="17,0 33,0 33,25 17,25" class="polygon unmarked @(Model.DentalChartVM.Tooth13 != null && Model.DentalChartVM.Tooth13.Lingual != null ? Model.DentalChartVM.Tooth13.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,17 17,17 17,33 0,33" class="polygon unmarked @(Model.DentalChartVM.Tooth13 != null && Model.DentalChartVM.Tooth13.Distal != null ? Model.DentalChartVM.Tooth13.Distal.Color : "")" />
+                                    <polygon id="bottom" points="17,25 33,25 33,50 17,50" class="polygon unmarked @(Model.DentalChartVM.Tooth13 != null && Model.DentalChartVM.Tooth13.BuccalOrLabial != null ? Model.DentalChartVM.Tooth13.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="33,17 50,17 50,33 33,33" class="polygon unmarked @(Model.DentalChartVM.Tooth13 != null && Model.DentalChartVM.Tooth13.Mesial != null ? Model.DentalChartVM.Tooth13.Mesial.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" transform="scale(1,-1)" class="incisor">
+                                    <polygon id="top" points="17,0 33,0 33,25 17,25" class="polygon unmarked @(Model.DentalChartVM.Tooth12 != null && Model.DentalChartVM.Tooth12.Lingual != null ? Model.DentalChartVM.Tooth12.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,17 17,17 17,33 0,33" class="polygon unmarked @(Model.DentalChartVM.Tooth12 != null && Model.DentalChartVM.Tooth12.Distal != null ? Model.DentalChartVM.Tooth12.Distal.Color : "")" />
+                                    <polygon id="bottom" points="17,25 33,25 33,50 17,50" class="polygon unmarked @(Model.DentalChartVM.Tooth12 != null && Model.DentalChartVM.Tooth12.BuccalOrLabial != null ? Model.DentalChartVM.Tooth12.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="33,17 50,17 50,33 33,33" class="polygon unmarked @(Model.DentalChartVM.Tooth12 != null && Model.DentalChartVM.Tooth12.Mesial != null ? Model.DentalChartVM.Tooth12.Mesial.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" transform="scale(1,-1)" class="incisor">
+                                    <polygon id="top" points="17,0 33,0 33,25 17,25" class="polygon unmarked @(Model.DentalChartVM.Tooth11 != null && Model.DentalChartVM.Tooth11.Lingual != null ? Model.DentalChartVM.Tooth11.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,17 17,17 17,33 0,33" class="polygon unmarked @(Model.DentalChartVM.Tooth11 != null && Model.DentalChartVM.Tooth11.Distal != null ? Model.DentalChartVM.Tooth11.Distal.Color : "")" />
+                                    <polygon id="bottom" points="17,25 33,25 33,50 17,50" class="polygon unmarked @(Model.DentalChartVM.Tooth11 != null && Model.DentalChartVM.Tooth11.BuccalOrLabial != null ? Model.DentalChartVM.Tooth11.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="33,17 50,17 50,33 33,33" class="polygon unmarked @(Model.DentalChartVM.Tooth11 != null && Model.DentalChartVM.Tooth11.Mesial != null ? Model.DentalChartVM.Tooth11.Mesial.Color : "")" />
+                                </svg>
+                            </td>
+                            <td></td>
+                            <td>
+                                <svg width="50" height="50" transform="scale(1,-1)" class="incisor">
+                                    <polygon id="top" points="17,0 33,0 33,25 17,25" class="polygon unmarked @(Model.DentalChartVM.Tooth21 != null && Model.DentalChartVM.Tooth21.Lingual != null ? Model.DentalChartVM.Tooth21.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,17 17,17 17,33 0,33" class="polygon unmarked @(Model.DentalChartVM.Tooth21 != null && Model.DentalChartVM.Tooth21.Mesial != null ? Model.DentalChartVM.Tooth21.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="17,25 33,25 33,50 17,50" class="polygon unmarked @(Model.DentalChartVM.Tooth21 != null && Model.DentalChartVM.Tooth21.BuccalOrLabial != null ? Model.DentalChartVM.Tooth21.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="33,17 50,17 50,33 33,33" class="polygon unmarked @(Model.DentalChartVM.Tooth21 != null && Model.DentalChartVM.Tooth21.Distal != null ? Model.DentalChartVM.Tooth21.Distal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" transform="scale(1,-1)" class="incisor">
+                                    <polygon id="top" points="17,0 33,0 33,25 17,25" class="polygon unmarked @(Model.DentalChartVM.Tooth22 != null && Model.DentalChartVM.Tooth22.Lingual != null ? Model.DentalChartVM.Tooth22.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,17 17,17 17,33 0,33" class="polygon unmarked @(Model.DentalChartVM.Tooth22 != null && Model.DentalChartVM.Tooth22.Mesial != null ? Model.DentalChartVM.Tooth22.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="17,25 33,25 33,50 17,50" class="polygon unmarked @(Model.DentalChartVM.Tooth22 != null && Model.DentalChartVM.Tooth22.BuccalOrLabial != null ? Model.DentalChartVM.Tooth22.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="33,17 50,17 50,33 33,33" class="polygon unmarked @(Model.DentalChartVM.Tooth22 != null && Model.DentalChartVM.Tooth22.Distal != null ? Model.DentalChartVM.Tooth22.Distal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" transform="scale(1,-1)" class="incisor">
+                                    <polygon id="top" points="17,0 33,0 33,25 17,25" class="polygon unmarked @(Model.DentalChartVM.Tooth23 != null && Model.DentalChartVM.Tooth23.Lingual != null ? Model.DentalChartVM.Tooth23.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,17 17,17 17,33 0,33" class="polygon unmarked @(Model.DentalChartVM.Tooth23 != null && Model.DentalChartVM.Tooth23.Mesial != null ? Model.DentalChartVM.Tooth23.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="17,25 33,25 33,50 17,50" class="polygon unmarked @(Model.DentalChartVM.Tooth23 != null && Model.DentalChartVM.Tooth23.BuccalOrLabial != null ? Model.DentalChartVM.Tooth23.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="33,17 50,17 50,33 33,33" class="polygon unmarked @(Model.DentalChartVM.Tooth23 != null && Model.DentalChartVM.Tooth23.Distal != null ? Model.DentalChartVM.Tooth23.Distal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" transform="scale(1,-1)" class="premolar-4">
+                                    <polygon id="top" points="0,0 50,0 33,17 17,17" class="polygon unmarked @(Model.DentalChartVM.Tooth24 != null && Model.DentalChartVM.Tooth24.Lingual != null ? Model.DentalChartVM.Tooth24.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 17,17 17,33 0,50" class="polygon unmarked @(Model.DentalChartVM.Tooth24 != null && Model.DentalChartVM.Tooth24.Mesial != null ? Model.DentalChartVM.Tooth24.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="0,50 17,33 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth24 != null && Model.DentalChartVM.Tooth24.BuccalOrLabial != null ? Model.DentalChartVM.Tooth24.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="50,0 33,17 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth24 != null && Model.DentalChartVM.Tooth24.Distal != null ? Model.DentalChartVM.Tooth24.Distal.Color : "")" />
+                                    <polygon id="center" points="17, 17 33, 17 33, 33 17, 33" class="polygon unmarked @(Model.DentalChartVM.Tooth24 != null && Model.DentalChartVM.Tooth24.Occlusal != null ? Model.DentalChartVM.Tooth24.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" transform="scale(1,-1)" class="premolar-5">
+                                    <polygon id="top" points="0,0 50,0 33,17 17,17" class="polygon unmarked @(Model.DentalChartVM.Tooth25 != null && Model.DentalChartVM.Tooth25.Lingual != null ? Model.DentalChartVM.Tooth25.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 17,17 17,33 0,50" class="polygon unmarked @(Model.DentalChartVM.Tooth25 != null && Model.DentalChartVM.Tooth25.Mesial != null ? Model.DentalChartVM.Tooth25.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="0,50 17,33 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth25 != null && Model.DentalChartVM.Tooth25.BuccalOrLabial != null ? Model.DentalChartVM.Tooth25.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="50,0 33,17 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth25 != null && Model.DentalChartVM.Tooth25.Distal != null ? Model.DentalChartVM.Tooth25.Distal.Color : "")" />
+                                    <polygon id="center" points="17, 17 33, 17 33, 33 17, 33" class="polygon unmarked @(Model.DentalChartVM.Tooth25 != null && Model.DentalChartVM.Tooth25.Occlusal != null ? Model.DentalChartVM.Tooth25.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" transform="scale(1,-1)" class="molar">
+                                    <polygon id="top" points="0,0 50,0 33,17 17,17" class="polygon unmarked @(Model.DentalChartVM.Tooth26 != null && Model.DentalChartVM.Tooth26.Lingual != null ? Model.DentalChartVM.Tooth26.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 17,17 17,33 0,50" class="polygon unmarked @(Model.DentalChartVM.Tooth26 != null && Model.DentalChartVM.Tooth26.Mesial != null ? Model.DentalChartVM.Tooth26.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="0,50 17,33 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth26 != null && Model.DentalChartVM.Tooth26.BuccalOrLabial != null ? Model.DentalChartVM.Tooth26.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="50,0 33,17 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth26 != null && Model.DentalChartVM.Tooth26.Distal != null ? Model.DentalChartVM.Tooth26.Distal.Color : "")" />
+                                    <polygon id="center" points="17, 17 33, 17 33, 33 17, 33" class="polygon unmarked @(Model.DentalChartVM.Tooth26 != null && Model.DentalChartVM.Tooth26.Occlusal != null ? Model.DentalChartVM.Tooth26.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" transform="scale(1,-1)" class="molar">
+                                    <polygon id="top" points="0,0 50,0 33,17 17,17" class="polygon unmarked @(Model.DentalChartVM.Tooth27 != null && Model.DentalChartVM.Tooth27.Lingual != null ? Model.DentalChartVM.Tooth27.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 17,17 17,33 0,50" class="polygon unmarked @(Model.DentalChartVM.Tooth27 != null && Model.DentalChartVM.Tooth27.Mesial != null ? Model.DentalChartVM.Tooth27.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="0,50 17,33 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth27 != null && Model.DentalChartVM.Tooth27.BuccalOrLabial != null ? Model.DentalChartVM.Tooth27.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="50,0 33,17 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth27 != null && Model.DentalChartVM.Tooth27.Distal != null ? Model.DentalChartVM.Tooth27.Distal.Color : "")" />
+                                    <polygon id="center" points="17, 17 33, 17 33, 33 17, 33" class="polygon unmarked @(Model.DentalChartVM.Tooth27 != null && Model.DentalChartVM.Tooth27.Occlusal != null ? Model.DentalChartVM.Tooth27.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" transform="scale(1,-1)" class="molar">
+                                    <polygon id="top" points="0,0 50,0 33,17 17,17" class="polygon unmarked @(Model.DentalChartVM.Tooth28 != null && Model.DentalChartVM.Tooth28.Lingual != null ? Model.DentalChartVM.Tooth28.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 17,17 17,33 0,50" class="polygon unmarked @(Model.DentalChartVM.Tooth28 != null && Model.DentalChartVM.Tooth28.Mesial != null ? Model.DentalChartVM.Tooth28.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="0,50 17,33 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth28 != null && Model.DentalChartVM.Tooth28.BuccalOrLabial != null ? Model.DentalChartVM.Tooth28.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="50,0 33,17 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth28 != null && Model.DentalChartVM.Tooth28.Distal != null ? Model.DentalChartVM.Tooth28.Distal.Color : "")" />
+                                    <polygon id="center" points="17, 17 33, 17 33, 33 17, 33" class="polygon unmarked @(Model.DentalChartVM.Tooth28 != null && Model.DentalChartVM.Tooth28.Occlusal != null ? Model.DentalChartVM.Tooth28.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td>
+                                <svg width="50" height="50" class="molar">
+                                    <polygon id="top" points="0,0 50,0 33,17 17,17" class="polygon unmarked @(Model.DentalChartVM.Tooth48 != null && Model.DentalChartVM.Tooth48.Lingual != null ? Model.DentalChartVM.Tooth48.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 17,17 17,33 0,50" class="polygon unmarked @(Model.DentalChartVM.Tooth48 != null && Model.DentalChartVM.Tooth48.Distal != null ? Model.DentalChartVM.Tooth48.Distal.Color : "")" />
+                                    <polygon id="bottom" points="0,50 17,33 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth48 != null && Model.DentalChartVM.Tooth48.BuccalOrLabial != null ? Model.DentalChartVM.Tooth48.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="50,0 33,17 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth48 != null && Model.DentalChartVM.Tooth48.Mesial != null ? Model.DentalChartVM.Tooth48.Mesial.Color : "")" />
+                                    <polygon id="center" points="17, 17 33, 17 33, 33 17, 33" class="polygon unmarked @(Model.DentalChartVM.Tooth48 != null && Model.DentalChartVM.Tooth48.Occlusal != null ? Model.DentalChartVM.Tooth48.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" class="molar">
+                                    <polygon id="top" points="0,0 50,0 33,17 17,17" class="polygon unmarked @(Model.DentalChartVM.Tooth47 != null && Model.DentalChartVM.Tooth47.Lingual != null ? Model.DentalChartVM.Tooth47.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 17,17 17,33 0,50" class="polygon unmarked @(Model.DentalChartVM.Tooth47 != null && Model.DentalChartVM.Tooth47.Distal != null ? Model.DentalChartVM.Tooth47.Distal.Color : "")" />
+                                    <polygon id="bottom" points="0,50 17,33 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth47 != null && Model.DentalChartVM.Tooth47.BuccalOrLabial != null ? Model.DentalChartVM.Tooth47.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="50,0 33,17 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth47 != null && Model.DentalChartVM.Tooth47.Mesial != null ? Model.DentalChartVM.Tooth47.Mesial.Color : "")" />
+                                    <polygon id="center" points="17, 17 33, 17 33, 33 17, 33" class="polygon unmarked @(Model.DentalChartVM.Tooth47 != null && Model.DentalChartVM.Tooth47.Occlusal != null ? Model.DentalChartVM.Tooth47.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" class="molar">
+                                    <polygon id="top" points="0,0 50,0 33,17 17,17" class="polygon unmarked @(Model.DentalChartVM.Tooth46 != null && Model.DentalChartVM.Tooth46.Lingual != null ? Model.DentalChartVM.Tooth46.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 17,17 17,33 0,50" class="polygon unmarked @(Model.DentalChartVM.Tooth46 != null && Model.DentalChartVM.Tooth46.Distal != null ? Model.DentalChartVM.Tooth46.Distal.Color : "")" />
+                                    <polygon id="bottom" points="0,50 17,33 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth46 != null && Model.DentalChartVM.Tooth46.BuccalOrLabial != null ? Model.DentalChartVM.Tooth46.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="50,0 33,17 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth46 != null && Model.DentalChartVM.Tooth46.Mesial != null ? Model.DentalChartVM.Tooth46.Mesial.Color : "")" />
+                                    <polygon id="center" points="17, 17 33, 17 33, 33 17, 33" class="polygon unmarked @(Model.DentalChartVM.Tooth46 != null && Model.DentalChartVM.Tooth46.Occlusal != null ? Model.DentalChartVM.Tooth46.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" class="premolar-5">
+                                    <polygon id="top" points="0,0 50,0 33,17 17,17" class="polygon unmarked @(Model.DentalChartVM.Tooth45 != null && Model.DentalChartVM.Tooth45.Lingual != null ? Model.DentalChartVM.Tooth45.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 17,17 17,33 0,50" class="polygon unmarked @(Model.DentalChartVM.Tooth45 != null && Model.DentalChartVM.Tooth45.Distal != null ? Model.DentalChartVM.Tooth45.Distal.Color : "")" />
+                                    <polygon id="bottom" points="0,50 17,33 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth45 != null && Model.DentalChartVM.Tooth45.BuccalOrLabial != null ? Model.DentalChartVM.Tooth45.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="50,0 33,17 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth45 != null && Model.DentalChartVM.Tooth45.Mesial != null ? Model.DentalChartVM.Tooth45.Mesial.Color : "")" />
+                                    <polygon id="center" points="17, 17 33, 17 33, 33 17, 33" class="polygon unmarked @(Model.DentalChartVM.Tooth45 != null && Model.DentalChartVM.Tooth45.Occlusal != null ? Model.DentalChartVM.Tooth45.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" class="premolar-5">
+                                    <polygon id="top" points="0,0 50,0 33,17 17,17" class="polygon unmarked @(Model.DentalChartVM.Tooth44 != null && Model.DentalChartVM.Tooth44.Lingual != null ? Model.DentalChartVM.Tooth44.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 17,17 17,33 0,50" class="polygon unmarked @(Model.DentalChartVM.Tooth44 != null && Model.DentalChartVM.Tooth44.Distal != null ? Model.DentalChartVM.Tooth44.Distal.Color : "")" />
+                                    <polygon id="bottom" points="0,50 17,33 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth44 != null && Model.DentalChartVM.Tooth44.BuccalOrLabial != null ? Model.DentalChartVM.Tooth44.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="50,0 33,17 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth44 != null && Model.DentalChartVM.Tooth44.Mesial != null ? Model.DentalChartVM.Tooth44.Mesial.Color : "")" />
+                                    <polygon id="center" points="17, 17 33, 17 33, 33 17, 33" class="polygon unmarked @(Model.DentalChartVM.Tooth44 != null && Model.DentalChartVM.Tooth44.Occlusal != null ? Model.DentalChartVM.Tooth44.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" class="incisor">
+                                    <polygon id="top" points="17,0 33,0 33,25 17,25" class="polygon unmarked @(Model.DentalChartVM.Tooth43 != null && Model.DentalChartVM.Tooth43.Lingual != null ? Model.DentalChartVM.Tooth43.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,17 17,17 17,33 0,33" class="polygon unmarked @(Model.DentalChartVM.Tooth43 != null && Model.DentalChartVM.Tooth43.Distal != null ? Model.DentalChartVM.Tooth43.Distal.Color : "")" />
+                                    <polygon id="bottom" points="17,25 33,25 33,50 17,50" class="polygon unmarked @(Model.DentalChartVM.Tooth43 != null && Model.DentalChartVM.Tooth43.BuccalOrLabial != null ? Model.DentalChartVM.Tooth43.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="33,17 50,17 50,33 33,33" class="polygon unmarked @(Model.DentalChartVM.Tooth43 != null && Model.DentalChartVM.Tooth43.Mesial != null ? Model.DentalChartVM.Tooth43.Mesial.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" class="incisor">
+                                    <polygon id="top" points="17,0 33,0 33,25 17,25" class="polygon unmarked @(Model.DentalChartVM.Tooth42 != null && Model.DentalChartVM.Tooth42.Lingual != null ? Model.DentalChartVM.Tooth42.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,17 17,17 17,33 0,33" class="polygon unmarked @(Model.DentalChartVM.Tooth42 != null && Model.DentalChartVM.Tooth42.Distal != null ? Model.DentalChartVM.Tooth42.Distal.Color : "")" />
+                                    <polygon id="bottom" points="17,25 33,25 33,50 17,50" class="polygon unmarked @(Model.DentalChartVM.Tooth42 != null && Model.DentalChartVM.Tooth42.BuccalOrLabial != null ? Model.DentalChartVM.Tooth42.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="33,17 50,17 50,33 33,33" class="polygon unmarked @(Model.DentalChartVM.Tooth42 != null && Model.DentalChartVM.Tooth42.Mesial != null ? Model.DentalChartVM.Tooth42.Mesial.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" class="incisor">
+                                    <polygon id="top" points="17,0 33,0 33,25 17,25" class="polygon unmarked @(Model.DentalChartVM.Tooth41 != null && Model.DentalChartVM.Tooth41.Lingual != null ? Model.DentalChartVM.Tooth41.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,17 17,17 17,33 0,33" class="polygon unmarked @(Model.DentalChartVM.Tooth41 != null && Model.DentalChartVM.Tooth41.Distal != null ? Model.DentalChartVM.Tooth41.Distal.Color : "")" />
+                                    <polygon id="bottom" points="17,25 33,25 33,50 17,50" class="polygon unmarked @(Model.DentalChartVM.Tooth41 != null && Model.DentalChartVM.Tooth41.BuccalOrLabial != null ? Model.DentalChartVM.Tooth41.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="33,17 50,17 50,33 33,33" class="polygon unmarked @(Model.DentalChartVM.Tooth41 != null && Model.DentalChartVM.Tooth41.Mesial != null ? Model.DentalChartVM.Tooth41.Mesial.Color : "")" />
+                                </svg>
+                            </td>
+                            <td></td>
+                            <td>
+                                <svg width="50" height="50" class="incisor">
+                                    <polygon id="top" points="17,0 33,0 33,25 17,25" class="polygon unmarked @(Model.DentalChartVM.Tooth31 != null && Model.DentalChartVM.Tooth31.Lingual != null ? Model.DentalChartVM.Tooth31.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,17 17,17 17,33 0,33" class="polygon unmarked @(Model.DentalChartVM.Tooth31 != null && Model.DentalChartVM.Tooth31.Mesial != null ? Model.DentalChartVM.Tooth31.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="17,25 33,25 33,50 17,50" class="polygon unmarked @(Model.DentalChartVM.Tooth31 != null && Model.DentalChartVM.Tooth31.BuccalOrLabial != null ? Model.DentalChartVM.Tooth31.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="33,17 50,17 50,33 33,33" class="polygon unmarked @(Model.DentalChartVM.Tooth31 != null && Model.DentalChartVM.Tooth31.Distal != null ? Model.DentalChartVM.Tooth31.Distal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" class="incisor">
+                                    <polygon id="top" points="17,0 33,0 33,25 17,25" class="polygon unmarked @(Model.DentalChartVM.Tooth32 != null && Model.DentalChartVM.Tooth32.Lingual != null ? Model.DentalChartVM.Tooth32.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,17 17,17 17,33 0,33" class="polygon unmarked @(Model.DentalChartVM.Tooth32 != null && Model.DentalChartVM.Tooth32.Mesial != null ? Model.DentalChartVM.Tooth32.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="17,25 33,25 33,50 17,50" class="polygon unmarked @(Model.DentalChartVM.Tooth32 != null && Model.DentalChartVM.Tooth32.BuccalOrLabial != null ? Model.DentalChartVM.Tooth32.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="33,17 50,17 50,33 33,33" class="polygon unmarked @(Model.DentalChartVM.Tooth32 != null && Model.DentalChartVM.Tooth32.Distal != null ? Model.DentalChartVM.Tooth32.Distal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" class="incisor">
+                                    <polygon id="top" points="17,0 33,0 33,25 17,25" class="polygon unmarked @(Model.DentalChartVM.Tooth33 != null && Model.DentalChartVM.Tooth33.Lingual != null ? Model.DentalChartVM.Tooth33.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,17 17,17 17,33 0,33" class="polygon unmarked @(Model.DentalChartVM.Tooth33 != null && Model.DentalChartVM.Tooth33.Mesial != null ? Model.DentalChartVM.Tooth33.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="17,25 33,25 33,50 17,50" class="polygon unmarked @(Model.DentalChartVM.Tooth33 != null && Model.DentalChartVM.Tooth33.BuccalOrLabial != null ? Model.DentalChartVM.Tooth33.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="33,17 50,17 50,33 33,33" class="polygon unmarked @(Model.DentalChartVM.Tooth33 != null && Model.DentalChartVM.Tooth33.Distal != null ? Model.DentalChartVM.Tooth33.Distal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" class="premolar-5">
+                                    <polygon id="top" points="0,0 50,0 33,17 17,17" class="polygon unmarked @(Model.DentalChartVM.Tooth34 != null && Model.DentalChartVM.Tooth34.Lingual != null ? Model.DentalChartVM.Tooth34.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 17,17 17,33 0,50" class="polygon unmarked @(Model.DentalChartVM.Tooth34 != null && Model.DentalChartVM.Tooth34.Mesial != null ? Model.DentalChartVM.Tooth34.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="0,50 17,33 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth34 != null && Model.DentalChartVM.Tooth34.BuccalOrLabial != null ? Model.DentalChartVM.Tooth34.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="50,0 33,17 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth34 != null && Model.DentalChartVM.Tooth34.Distal != null ? Model.DentalChartVM.Tooth34.Distal.Color : "")" />
+                                    <polygon id="center" points="17, 17 33, 17 33, 33 17, 33" class="polygon unmarked @(Model.DentalChartVM.Tooth34 != null && Model.DentalChartVM.Tooth34.Occlusal != null ? Model.DentalChartVM.Tooth34.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" class="premolar-5">
+                                    <polygon id="top" points="0,0 50,0 33,17 17,17" class="polygon unmarked @(Model.DentalChartVM.Tooth35 != null && Model.DentalChartVM.Tooth35.Lingual != null ? Model.DentalChartVM.Tooth35.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 17,17 17,33 0,50" class="polygon unmarked @(Model.DentalChartVM.Tooth35 != null && Model.DentalChartVM.Tooth35.Mesial != null ? Model.DentalChartVM.Tooth35.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="0,50 17,33 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth35 != null && Model.DentalChartVM.Tooth35.BuccalOrLabial != null ? Model.DentalChartVM.Tooth35.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="50,0 33,17 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth35 != null && Model.DentalChartVM.Tooth35.Distal != null ? Model.DentalChartVM.Tooth35.Distal.Color : "")" />
+                                    <polygon id="center" points="17, 17 33, 17 33, 33 17, 33" class="polygon unmarked @(Model.DentalChartVM.Tooth35 != null && Model.DentalChartVM.Tooth35.Occlusal != null ? Model.DentalChartVM.Tooth35.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" class="molar">
+                                    <polygon id="top" points="0,0 50,0 33,17 17,17" class="polygon unmarked @(Model.DentalChartVM.Tooth36 != null && Model.DentalChartVM.Tooth36.Lingual != null ? Model.DentalChartVM.Tooth36.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 17,17 17,33 0,50" class="polygon unmarked @(Model.DentalChartVM.Tooth36 != null && Model.DentalChartVM.Tooth36.Mesial != null ? Model.DentalChartVM.Tooth36.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="0,50 17,33 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth36 != null && Model.DentalChartVM.Tooth36.BuccalOrLabial != null ? Model.DentalChartVM.Tooth36.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="50,0 33,17 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth36 != null && Model.DentalChartVM.Tooth36.Distal != null ? Model.DentalChartVM.Tooth36.Distal.Color : "")" />
+                                    <polygon id="center" points="17, 17 33, 17 33, 33 17, 33" class="polygon unmarked @(Model.DentalChartVM.Tooth36 != null && Model.DentalChartVM.Tooth36.Occlusal != null ? Model.DentalChartVM.Tooth36.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" class="molar">
+                                    <polygon id="top" points="0,0 50,0 33,17 17,17" class="polygon unmarked @(Model.DentalChartVM.Tooth37 != null && Model.DentalChartVM.Tooth37.Lingual != null ? Model.DentalChartVM.Tooth37.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 17,17 17,33 0,50" class="polygon unmarked @(Model.DentalChartVM.Tooth37 != null && Model.DentalChartVM.Tooth37.Mesial != null ? Model.DentalChartVM.Tooth37.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="0,50 17,33 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth37 != null && Model.DentalChartVM.Tooth37.BuccalOrLabial != null ? Model.DentalChartVM.Tooth37.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="50,0 33,17 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth37 != null && Model.DentalChartVM.Tooth37.Distal != null ? Model.DentalChartVM.Tooth37.Distal.Color : "")" />
+                                    <polygon id="center" points="17, 17 33, 17 33, 33 17, 33" class="polygon unmarked @(Model.DentalChartVM.Tooth37 != null && Model.DentalChartVM.Tooth37.Occlusal != null ? Model.DentalChartVM.Tooth37.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" class="molar">
+                                    <polygon id="top" points="0,0 50,0 33,17 17,17" class="polygon unmarked @(Model.DentalChartVM.Tooth38 != null && Model.DentalChartVM.Tooth38.Lingual != null ? Model.DentalChartVM.Tooth38.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 17,17 17,33 0,50" class="polygon unmarked @(Model.DentalChartVM.Tooth38 != null && Model.DentalChartVM.Tooth38.Mesial != null ? Model.DentalChartVM.Tooth38.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="0,50 17,33 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth38 != null && Model.DentalChartVM.Tooth38.BuccalOrLabial != null ? Model.DentalChartVM.Tooth38.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="50,0 33,17 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth38 != null && Model.DentalChartVM.Tooth38.Distal != null ? Model.DentalChartVM.Tooth38.Distal.Color : "")" />
+                                    <polygon id="center" points="17, 17 33, 17 33, 33 17, 33" class="polygon unmarked @(Model.DentalChartVM.Tooth38 != null && Model.DentalChartVM.Tooth38.Occlusal != null ? Model.DentalChartVM.Tooth38.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td>48</td>
+                            <td>47</td>
+                            <td>46</td>
+                            <td>45</td>
+                            <td>44</td>
+                            <td>43</td>
+                            <td>42</td>
+                            <td>41</td>
+                            <td></td>
+                            <td>31</td>
+                            <td>32</td>
+                            <td>33</td>
+                            <td>34</td>
+                            <td>35</td>
+                            <td>36</td>
+                            <td>37</td>
+                            <td>38</td>
+                        </tr>
+
+
+                        <tr>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth48 != null && Model.DentalChartVM.Tooth48.Condition != null ? Model.DentalChartVM.Tooth48.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth47 != null && Model.DentalChartVM.Tooth47.Condition != null ? Model.DentalChartVM.Tooth47.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth46 != null && Model.DentalChartVM.Tooth46.Condition != null ? Model.DentalChartVM.Tooth46.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth45 != null && Model.DentalChartVM.Tooth45.Condition != null ? Model.DentalChartVM.Tooth45.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth44 != null && Model.DentalChartVM.Tooth44.Condition != null ? Model.DentalChartVM.Tooth44.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth43 != null && Model.DentalChartVM.Tooth43.Condition != null ? Model.DentalChartVM.Tooth43.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth42 != null && Model.DentalChartVM.Tooth42.Condition != null ? Model.DentalChartVM.Tooth42.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth41 != null && Model.DentalChartVM.Tooth41.Condition != null ? Model.DentalChartVM.Tooth41.Condition.Abbreviation : ""))</td>
+                            <td></td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth31 != null && Model.DentalChartVM.Tooth31.Condition != null ? Model.DentalChartVM.Tooth31.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth32 != null && Model.DentalChartVM.Tooth32.Condition != null ? Model.DentalChartVM.Tooth32.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth33 != null && Model.DentalChartVM.Tooth33.Condition != null ? Model.DentalChartVM.Tooth33.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth34 != null && Model.DentalChartVM.Tooth34.Condition != null ? Model.DentalChartVM.Tooth34.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth35 != null && Model.DentalChartVM.Tooth35.Condition != null ? Model.DentalChartVM.Tooth35.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth36 != null && Model.DentalChartVM.Tooth36.Condition != null ? Model.DentalChartVM.Tooth36.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth37 != null && Model.DentalChartVM.Tooth37.Condition != null ? Model.DentalChartVM.Tooth37.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth38 != null && Model.DentalChartVM.Tooth38.Condition != null ? Model.DentalChartVM.Tooth38.Condition.Abbreviation : ""))</td>
+                        </tr>
+
+
+                        <tr class="pt">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <svg width="50" height="50" class="premolar-5">
+                                    <polygon id="top" points="0,0 50,0 33,17 17,17" class="polygon unmarked @(Model.DentalChartVM.Tooth85 != null && Model.DentalChartVM.Tooth85.Lingual != null ? Model.DentalChartVM.Tooth85.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 17,17 17,33 0,50" class="polygon unmarked @(Model.DentalChartVM.Tooth85 != null && Model.DentalChartVM.Tooth85.Distal != null ? Model.DentalChartVM.Tooth85.Distal.Color : "")" />
+                                    <polygon id="bottom" points="0,50 17,33 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth85 != null && Model.DentalChartVM.Tooth85.BuccalOrLabial != null ? Model.DentalChartVM.Tooth85.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="50,0 33,17 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth85 != null && Model.DentalChartVM.Tooth85.Mesial != null ? Model.DentalChartVM.Tooth85.Mesial.Color : "")" />
+                                    <polygon id="center" points="17, 17 33, 17 33, 33 17, 33" class="polygon unmarked @(Model.DentalChartVM.Tooth85 != null && Model.DentalChartVM.Tooth85.Occlusal != null ? Model.DentalChartVM.Tooth85.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" class="premolar-5">
+                                    <polygon id="top" points="0,0 50,0 33,17 17,17" class="polygon unmarked @(Model.DentalChartVM.Tooth84 != null && Model.DentalChartVM.Tooth84.Lingual != null ? Model.DentalChartVM.Tooth84.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 17,17 17,33 0,50" class="polygon unmarked @(Model.DentalChartVM.Tooth84 != null && Model.DentalChartVM.Tooth84.Distal != null ? Model.DentalChartVM.Tooth84.Distal.Color : "")" />
+                                    <polygon id="bottom" points="0,50 17,33 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth84 != null && Model.DentalChartVM.Tooth84.BuccalOrLabial != null ? Model.DentalChartVM.Tooth84.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="50,0 33,17 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth84 != null && Model.DentalChartVM.Tooth84.Mesial != null ? Model.DentalChartVM.Tooth84.Mesial.Color : "")" />
+                                    <polygon id="center" points="17, 17 33, 17 33, 33 17, 33" class="polygon unmarked @(Model.DentalChartVM.Tooth84 != null && Model.DentalChartVM.Tooth84.Occlusal != null ? Model.DentalChartVM.Tooth84.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" class="incisor">
+                                    <polygon id="top" points="17,0 33,0 33,25 17,25" class="polygon unmarked @(Model.DentalChartVM.Tooth83 != null && Model.DentalChartVM.Tooth83.Lingual != null ? Model.DentalChartVM.Tooth83.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,17 17,17 17,33 0,33" class="polygon unmarked @(Model.DentalChartVM.Tooth83 != null && Model.DentalChartVM.Tooth83.Distal != null ? Model.DentalChartVM.Tooth83.Distal.Color : "")" />
+                                    <polygon id="bottom" points="17,25 33,25 33,50 17,50" class="polygon unmarked @(Model.DentalChartVM.Tooth83 != null && Model.DentalChartVM.Tooth83.BuccalOrLabial != null ? Model.DentalChartVM.Tooth83.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="33,17 50,17 50,33 33,33" class="polygon unmarked @(Model.DentalChartVM.Tooth83 != null && Model.DentalChartVM.Tooth83.Mesial != null ? Model.DentalChartVM.Tooth83.Mesial.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" class="incisor">
+                                    <polygon id="top" points="17,0 33,0 33,25 17,25" class="polygon unmarked @(Model.DentalChartVM.Tooth82 != null && Model.DentalChartVM.Tooth82.Lingual != null ? Model.DentalChartVM.Tooth82.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,17 17,17 17,33 0,33" class="polygon unmarked @(Model.DentalChartVM.Tooth82 != null && Model.DentalChartVM.Tooth82.Distal != null ? Model.DentalChartVM.Tooth82.Distal.Color : "")" />
+                                    <polygon id="bottom" points="17,25 33,25 33,50 17,50" class="polygon unmarked @(Model.DentalChartVM.Tooth82 != null && Model.DentalChartVM.Tooth82.BuccalOrLabial != null ? Model.DentalChartVM.Tooth82.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="33,17 50,17 50,33 33,33" class="polygon unmarked @(Model.DentalChartVM.Tooth82 != null && Model.DentalChartVM.Tooth82.Mesial != null ? Model.DentalChartVM.Tooth82.Mesial.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" class="incisor">
+                                    <polygon id="top" points="17,0 33,0 33,25 17,25" class="polygon unmarked @(Model.DentalChartVM.Tooth81 != null && Model.DentalChartVM.Tooth81.Lingual != null ? Model.DentalChartVM.Tooth81.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,17 17,17 17,33 0,33" class="polygon unmarked @(Model.DentalChartVM.Tooth81 != null && Model.DentalChartVM.Tooth81.Distal != null ? Model.DentalChartVM.Tooth81.Distal.Color : "")" />
+                                    <polygon id="bottom" points="17,25 33,25 33,50 17,50" class="polygon unmarked @(Model.DentalChartVM.Tooth81 != null && Model.DentalChartVM.Tooth81.BuccalOrLabial != null ? Model.DentalChartVM.Tooth81.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="33,17 50,17 50,33 33,33" class="polygon unmarked @(Model.DentalChartVM.Tooth81 != null && Model.DentalChartVM.Tooth81.Mesial != null ? Model.DentalChartVM.Tooth81.Mesial.Color : "")" />
+                                </svg>
+                            </td>
+                            <td></td>
+                            <td>
+                                <svg width="50" height="50" class="incisor">
+                                    <polygon id="top" points="17,0 33,0 33,25 17,25" class="polygon unmarked @(Model.DentalChartVM.Tooth71 != null && Model.DentalChartVM.Tooth71.Lingual != null ? Model.DentalChartVM.Tooth71.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,17 17,17 17,33 0,33" class="polygon unmarked @(Model.DentalChartVM.Tooth71 != null && Model.DentalChartVM.Tooth71.Mesial != null ? Model.DentalChartVM.Tooth71.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="17,25 33,25 33,50 17,50" class="polygon unmarked @(Model.DentalChartVM.Tooth71 != null && Model.DentalChartVM.Tooth71.BuccalOrLabial != null ? Model.DentalChartVM.Tooth71.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="33,17 50,17 50,33 33,33" class="polygon unmarked @(Model.DentalChartVM.Tooth71 != null && Model.DentalChartVM.Tooth71.Distal != null ? Model.DentalChartVM.Tooth71.Distal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" class="incisor">
+                                    <polygon id="top" points="17,0 33,0 33,25 17,25" class="polygon unmarked @(Model.DentalChartVM.Tooth72 != null && Model.DentalChartVM.Tooth72.Lingual != null ? Model.DentalChartVM.Tooth72.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,17 17,17 17,33 0,33" class="polygon unmarked @(Model.DentalChartVM.Tooth72 != null && Model.DentalChartVM.Tooth72.Mesial != null ? Model.DentalChartVM.Tooth72.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="17,25 33,25 33,50 17,50" class="polygon unmarked @(Model.DentalChartVM.Tooth72 != null && Model.DentalChartVM.Tooth72.BuccalOrLabial != null ? Model.DentalChartVM.Tooth72.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="33,17 50,17 50,33 33,33" class="polygon unmarked @(Model.DentalChartVM.Tooth72 != null && Model.DentalChartVM.Tooth72.Distal != null ? Model.DentalChartVM.Tooth72.Distal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" class="incisor">
+                                    <polygon id="top" points="17,0 33,0 33,25 17,25" class="polygon unmarked @(Model.DentalChartVM.Tooth73 != null && Model.DentalChartVM.Tooth73.Lingual != null ? Model.DentalChartVM.Tooth73.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,17 17,17 17,33 0,33" class="polygon unmarked @(Model.DentalChartVM.Tooth73 != null && Model.DentalChartVM.Tooth73.Mesial != null ? Model.DentalChartVM.Tooth73.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="17,25 33,25 33,50 17,50" class="polygon unmarked @(Model.DentalChartVM.Tooth73 != null && Model.DentalChartVM.Tooth73.BuccalOrLabial != null ? Model.DentalChartVM.Tooth73.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="33,17 50,17 50,33 33,33" class="polygon unmarked @(Model.DentalChartVM.Tooth73 != null && Model.DentalChartVM.Tooth73.Distal != null ? Model.DentalChartVM.Tooth73.Distal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" class="premolar-5">
+                                    <polygon id="top" points="0,0 50,0 33,17 17,17" class="polygon unmarked @(Model.DentalChartVM.Tooth74 != null && Model.DentalChartVM.Tooth74.Lingual != null ? Model.DentalChartVM.Tooth74.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 17,17 17,33 0,50" class="polygon unmarked @(Model.DentalChartVM.Tooth74 != null && Model.DentalChartVM.Tooth74.Mesial != null ? Model.DentalChartVM.Tooth74.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="0,50 17,33 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth74 != null && Model.DentalChartVM.Tooth74.BuccalOrLabial != null ? Model.DentalChartVM.Tooth74.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="50,0 33,17 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth74 != null && Model.DentalChartVM.Tooth74.Distal != null ? Model.DentalChartVM.Tooth74.Distal.Color : "")" />
+                                    <polygon id="center" points="17, 17 33, 17 33, 33 17, 33" class="polygon unmarked @(Model.DentalChartVM.Tooth74 != null && Model.DentalChartVM.Tooth74.Occlusal != null ? Model.DentalChartVM.Tooth74.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="50" height="50" class="premolar-5">
+                                    <polygon id="top" points="0,0 50,0 33,17 17,17" class="polygon unmarked @(Model.DentalChartVM.Tooth75 != null && Model.DentalChartVM.Tooth75.Lingual != null ? Model.DentalChartVM.Tooth75.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 17,17 17,33 0,50" class="polygon unmarked @(Model.DentalChartVM.Tooth75 != null && Model.DentalChartVM.Tooth75.Mesial != null ? Model.DentalChartVM.Tooth75.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="0,50 17,33 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth75 != null && Model.DentalChartVM.Tooth75.BuccalOrLabial != null ? Model.DentalChartVM.Tooth75.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="50,0 33,17 33,33 50,50" class="polygon unmarked @(Model.DentalChartVM.Tooth75 != null && Model.DentalChartVM.Tooth75.Distal != null ? Model.DentalChartVM.Tooth75.Distal.Color : "")" />
+                                    <polygon id="center" points="17, 17 33, 17 33, 33 17, 33" class="polygon unmarked @(Model.DentalChartVM.Tooth75 != null && Model.DentalChartVM.Tooth75.Occlusal != null ? Model.DentalChartVM.Tooth75.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>85</td>
+                            <td>84</td>
+                            <td>83</td>
+                            <td>82</td>
+                            <td>81</td>
+                            <td></td>
+                            <td>71</td>
+                            <td>72</td>
+                            <td>73</td>
+                            <td>74</td>
+                            <td>75</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                        <!--Lower Milk Teeth Boxes-->
+                    <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth85 != null && Model.DentalChartVM.Tooth85.Condition != null ? Model.DentalChartVM.Tooth85.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth84 != null && Model.DentalChartVM.Tooth84.Condition != null ? Model.DentalChartVM.Tooth84.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth83 != null && Model.DentalChartVM.Tooth83.Condition != null ? Model.DentalChartVM.Tooth83.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth82 != null && Model.DentalChartVM.Tooth82.Condition != null ? Model.DentalChartVM.Tooth82.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth81 != null && Model.DentalChartVM.Tooth81.Condition != null ? Model.DentalChartVM.Tooth81.Condition.Abbreviation : ""))</td>
+                            <td></td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth71 != null && Model.DentalChartVM.Tooth71.Condition != null ? Model.DentalChartVM.Tooth71.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth72 != null && Model.DentalChartVM.Tooth72.Condition != null ? Model.DentalChartVM.Tooth72.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth73 != null && Model.DentalChartVM.Tooth73.Condition != null ? Model.DentalChartVM.Tooth73.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth74 != null && Model.DentalChartVM.Tooth74.Condition != null ? Model.DentalChartVM.Tooth74.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.DentalChartVM.Tooth75 != null && Model.DentalChartVM.Tooth75.Condition != null ? Model.DentalChartVM.Tooth75.Condition.Abbreviation : ""))</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-2 mt-3">
+                <i class="fas fa-tooth d-flex justify-content-center mb-3" style="font-size:40px"></i>
+                <h3>No dental chart</h3>
+                <p>Add a dental chart by clicking the button below.</p>
+                <a asp-area="PatientRecords" asp-controller="DentalChart" asp-action="Index" 
+                    asp-route-id="@Model.PatientId" class="btn btn-success rounded-3">
+                    <i class="fas fa-plus me-1"></i> Add Dental Chart
+                </a>
+            </div>
+        }
+
+    </div>
+</div>
+
+<div class="row gx-3 mt-3">
+
+    <div class="col-lg-4 mb-3">
+        <div class="card shadow-sm h-100 rounded-3">
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between">
+                    <h2 class="m-0 fw-bold">Prescriptions</h2>
+                    @if (Model.Prescriptions.Count > 0)
+                    {
+                        <div>
+                            <a asp-area="PatientRecords" asp-controller="Prescription" asp-action="Index" 
+                                asp-route-id="@Model.PatientId" class="btn btn-primary rounded-3">
+                                <i class="fas fa-search-plus me-2"></i>See All
+                            </a>
+                        </div>
+                    }
+                </div>
+
+                @if (Model.Prescriptions.Count > 0)
+                {
+                    <table class="table table-striped table-borderless mt-3 border">
+                        <thead class="text-muted border-bottom">
+                            <tr>
+                                <th style="width:30px">#</th>
+                                <th>Recent Prescriptions</th>
+                                <th>Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (var i = 0; i < Model.Prescriptions.Count; i++)
+                            {
+                                if (i == 4) break;
+
+                                <tr>
+                                    <td>@(i + 1)</td>
+                                    <td>@Model.Prescriptions[i].Drug @Model.Prescriptions[i].Dose @Model.Prescriptions[i].Dosage</td>
+                                    <td>@Model.Prescriptions[i].Quantity</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div class="text-center py-2 mt-3">
+                        <i class="fas fa-pills d-flex justify-content-center mb-3" style="font-size:40px"></i>
+                        <h3>No prescriptions</h3>
+                        <p>Start adding prescriptions by clicking the button below.</p>
+                        <a asp-area="PatientRecords" asp-controller="Prescription" asp-action="Index" 
+                            asp-route-id="@Model.PatientId" class="btn btn-success rounded-3">
+                            <i class="fas fa-plus me-1"></i> Add Prescription
+                        </a>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+
+    @if (subscriptionIsLockout == "false")
+    {
+        @if (subscriptionType == "Basic" || subscriptionType == "Pro")
+        {
+             <div class="col-lg-4 mb-3">
+                <div class="card shadow-sm h-100 rounded-3">
+                    <div class="card-body">
+
+                        <div class="d-flex justify-content-between">
+                            <h2 class="m-0 fw-bold">Documents</h2>
+                            @if (Model.Documents.Count > 0)
+                            {
+                                <div>
+                                    <a asp-area="PatientRecords" asp-controller="Document" asp-action="Index" 
+                                        asp-route-id="@Model.PatientId" class="btn btn-primary rounded-3">
+                                        <i class="fas fa-search-plus me-2"></i>See All
+                                    </a>
+                                </div>
+                            }
+                        </div>
+
+                        @if (Model.Documents.Count > 0)
+                        {
+                            <table class="table table-striped table-borderless mt-3 border">
+                                <thead class="text-muted border-bottom">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Recent Documents</th>
+                                        <th>From Folder</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (var i = 0; i < Model.Documents.Count; i++)
+                                    {
+                                        if (i == 4) break;
+
+                                        <tr>
+                                            <td>@(i + 1)</td>
+                                            <td>@Model.Documents[i].Name</td>
+                                            <td>@Model.Documents[i].Folder.Name.Substring(0, Model.Documents[i].Folder.Name.Length - 33)</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <div class="text-center py-2 mt-3">
+                                <i class="far fa-folder-open d-flex justify-content-center mb-3" style="font-size:40px"></i>
+                                <h3>No documents</h3>
+                                <p>Start adding documents by clicking the button below.</p>
+                                <a asp-area="PatientRecords" asp-controller="Document" asp-action="Index" 
+                                    asp-route-id="@Model.PatientId" class="btn btn-success rounded-3">
+                                    <i class="fas fa-plus me-1"></i> Add Documents
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-3">
+                <div class="card shadow-sm h-100 rounded-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h2 class="m-0 fw-bold">Reminders</h2>
+                            @if (Model.Reminders.Count > 0)
+                            {
+                                <div>
+                                    <a asp-area="PatientRecords" asp-controller="Reminder" asp-action="Index" 
+                                        asp-route-id="@Model.PatientId" class="btn btn-primary rounded-3">
+                                        <i class="fas fa-search-plus me-2"></i>See All
+                                    </a>
+                                </div>
+                            }
+                        </div>
+
+                        @if (Model.Reminders.Count > 0)
+                        {
+                            <table class="table table-borderless mt-3 table-striped border">
+                                <thead class="text-muted border-bottom">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Recent Reminders</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (var i = 0; i < Model.Reminders.Count; i++)
+                                    {
+                                        if (i == 4) break;
+
+                                        <tr>
+                                            <td>@(i + 1)</td>
+                                            <td>@Model.Reminders[i].Title</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <div class="text-center py-2 mt-3">
+                                <i class="fas fa-bell d-flex justify-content-center mb-3" style="font-size:40px"></i>
+                                <h3>No reminders</h3>
+                                <p>Start adding reminders by clicking the button below.</p>
+                                <a asp-area="PatientRecords" asp-controller="Reminder" asp-action="Index" 
+                                    asp-route-id="@Model.PatientId" class="btn btn-success rounded-3">
+                                    <i class="fas fa-plus me-1"></i> Add Reminder
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>   
+        }
+    }
+    
+</div>

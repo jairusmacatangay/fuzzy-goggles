@@ -1,0 +1,143 @@
+﻿@page
+@model ProfileModel
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "/Views/Shared/_Registration_Layout.cshtml";
+}
+
+<div class="card shadow-sm mt-3">
+    <div class="card-body">
+        <div class="alert alert-info d-flex align-items-center" role="alert">
+            <i class="fas fa-info-circle me-2 fs-24"></i>
+            <p class="m-0">
+                Please fill in your profile information.
+            </p>
+        </div>
+
+        <h1 class="fs-24 fw-bolder">Clinic Owner Profile</h1>
+        
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <form id="profile-form" enctype="multipart/form-data" method="post">
+            <div class="row">
+
+                <div class="col-md-6">
+
+                    <div class="mb-3">
+                        <label asp-for="Username" class="form-label"></label>
+                        <input asp-for="Username" class="form-control" disabled />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.FirstName" class="form-label"></label>
+                        <input asp-for="Input.FirstName" class="form-control" />
+                        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="d-flex">
+                            <label asp-for="Input.MiddleName" class="form-label"></label>
+                            <p class="m-0 ms-1 text-muted">(optional)</p>
+                        </div>
+                        <input asp-for="Input.MiddleName" class="form-control" />
+                        <span asp-validation-for="Input.MiddleName" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.LastName" class="form-label"></label>
+                        <input asp-for="Input.LastName" class="form-control" />
+                        <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <div class="mb-3">
+                        <label asp-for="Input.PhoneNumber" class="form-label"></label>
+                        <input asp-for="Input.PhoneNumber" class="form-control" />
+                        <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="d-flex">
+                            <label asp-for="Input.ProfPicUrl" class="form-label"></label>
+                            <p class="m-0 ms-1 text-muted">(optional)</p>
+                        </div>
+                        <input type="file" name="file" asp-for="Input.ProfPicUrl" class="form-control" />
+                        <span asp-validation-for="Input.ProfPicUrl" class="text-danger"></span>
+                    </div>
+
+
+
+                    <!--Gender-->
+                    <div class="mb-3">
+                        <label asp-for="Input.Gender" class="form-label"></label>
+                        <select asp-for="Input.Gender" class="form-select">
+                            <option selected disabled>Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="LGBTQIA+">LGBTQIA+</option>
+                            <option value="Prefer not to say">Prefer not to say</option>
+                        </select>
+                        <span asp-validation-for="Input.Gender" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <h1 class="fs-24 fw-bolder">Address</h1>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="Input.Address" class="form-label"></label>
+                        <input asp-for="Input.Address" class="form-control" />
+                        <span asp-validation-for="Input.Address" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.City" class="form-label"></label>
+                        <input asp-for="Input.City" class="form-control" />
+                        <span asp-validation-for="Input.City" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="Input.Province" class="form-label"></label>
+                        <input asp-for="Input.Province" class="form-control" />
+                        <span asp-validation-for="Input.Province" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.ZipCode" class="form-label"></label>
+                        <input asp-for="Input.ZipCode" maxlength="4" class="form-control" required />
+                        <span asp-validation-for="Input.ZipCode" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <hr />
+
+            <h1 class="fs-24 fw-bolder">Business Permit</h1>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="Input.Permit" class="form-label"></label>
+                        <input type="file" name="permit" asp-for="Input.Permit" class="form-control" required />
+                        <span asp-validation-for="Input.Permit" class="text-danger"></span>
+                        <div class="text-muted">
+                            You are required to submit a picture or digital copy of your business permit for validation purposes.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button id="update-profile-button" type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

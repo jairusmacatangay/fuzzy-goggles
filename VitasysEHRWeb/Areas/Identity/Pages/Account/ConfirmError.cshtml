@@ -1,0 +1,17 @@
+﻿@page
+@model ConfirmEmailErrorModel
+@{
+    ViewData["Title"] = "Confirm email";
+}
+
+<!--Unverified Message-->
+<div class="card message-card-sm mx-auto mt-3 shadow-sm">
+    <div class="card-body">
+        <i class="fas fa-times-circle text-danger d-flex justify-content-center mb-3" style="font-size: 100px;"></i>
+        <h1 class="text-center fw-bolder">Unverified</h1>
+        <hr />
+        <p class="m-0 text-center">
+            Your email hasn't been verified yet. Please check the verification email that we sent to you. Didn't see it? We'll <a asp-area="Identity" asp-page="/Account/ResendEmailConfirmation">resend</a> the email to you.
+        </p>
+    </div>
+</div>

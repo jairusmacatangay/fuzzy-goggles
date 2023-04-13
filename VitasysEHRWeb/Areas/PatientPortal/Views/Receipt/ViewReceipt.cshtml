@@ -1,0 +1,95 @@
+﻿@model VitasysEHR.Models.ViewModels.ReceiptViewVM
+@{
+    Layout = "/Areas/PatientPortal/Views/_PatientPortalLayout.cshtml";
+}
+
+<div class="d-flex justify-content-center">
+    <div class="card shadow-sm mt-3 pp-view-card">
+        <div class="card-body">
+
+            <div class="rd-margin">
+                <h1 class="mb-3">Receipt</h1>
+                <div class="row">
+                    <div class="col-6">
+                        <p class="fw-bold m-0">@Model.ClinicName</p> <!--Clinic Name-->
+                        <p class="m-0">@Model.Address</p> <!--Clinic Address-->
+                        <p class="m-0">@Model.City, @Model.Province, @Model.ZipCode</p> <!--Clinic City, Province, ZipCode-->
+                    </div>
+                    <div class="col-6">
+                        <p class="m-0">@Model.EmailAddress</p> <!--Clinic Email-->
+                        <p class="m-0">@Model.MobilePhone</p> <!--Clinic MobilePhone-->
+                        <p class="m-0">@Model.OfficePhone</p> <!--Clinic OfficePhone-->
+                    </div>
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col-6">
+                        <p class="fw-bold m-0">Billed To</p>
+                        <p class="m-0">@Model.PatientName</p> <!--Patient Name-->
+
+                        <p class="fw-bold m-0 mt-3">Receipt Details</p>
+                        <p class="m-0">Receipt # @Model.Invoice.Id</p> <!--Invoice.ID-->
+                        <p class="m-0">Date: @Model.InvoiceDate</p> <!--Invoice.InvoiceDate-->
+                    </div>
+                    <div class="col-6">
+                        <p class="fw-bold m-0">Payment Details</p>
+                        <p class="m-0">Status: @Model.Invoice.PaymentStatus.Status </p> <!--Invoice.PaymentStatus.Status-->
+                        <p class="m-0">Method: @Model.PaymentMethod</p> <!--Invoice.PaymentMethod.Method-->
+                        <p class="m-0">Date: @Model.PaymentDate</p> <!--Invoice.PaymentDate-->
+                    </div>
+                </div>
+
+                <div class="mt-5">
+                    <div class="table-responsive-lg">
+                        <table class="table border border-1 w-100">
+                            <thead class="bg-secondary text-white border border-secondary">
+                                <tr>
+                                    <th>Treatment</th>
+                                    <th>Tooth No./s</th>
+                                    <th>Dentist/s</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var record in Model.TreatmentRecords)
+                                {
+                                    <tr class="align-middle">
+                                        <td>@record.Treatment.Name</td> <!--TreatmentRecord.Treatment.Name-->
+                                        <td>@record.ToothNumbers</td> <!--TreatmentRecord.ToothNumbers-->
+                                        <td>@record.Dentists</td> <!--TreatmentRecord.Dentists-->
+                                        <td>@record.Quantity</td> <!--TreatmentRecord.Quantity-->
+                                        <td>&#8369; @record.TotalPrice</td> <!--TreatmentRecord.TotalPrice-->
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <div class="card" style="width: 250px">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    <p class="fw-bold m-0">Total Amount</p>
+                                    <p class="fw-bold m-0">Amount Paid</p>
+                                    <p class="fw-bold m-0">Change</p>
+                                </div>
+                                <div class="col-6 text-end">
+                                    <p class="m-0">&#8369; @Model.Invoice.TotalAmount </p> <!--Invoice.TotalAmount-->
+                                    <p class="m-0">&#8369; @Model.Invoice.AmountPaid </p> <!--Invoice.AmountPaid-->
+                                    <p class="m-0">&#8369; @Model.Invoice.Change</p> <!--Invoice.Change-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a asp-action="Index" class="btn btn-secondary mt-3">Back</a>
+            </div>
+
+        </div>
+    </div>
+</div>

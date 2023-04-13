@@ -1,0 +1,251 @@
+﻿@model VitasysEHR.Models.ViewModels.MedicalHistoryVM
+@{
+    Layout = "_SideNavLayout";
+    ViewData["Title"] = "Medical History";
+}
+
+<div class="d-flex justify-content-center">
+    <div class="card shadow-sm mt-3 pp-card-50-75-100">
+        <div class="card-body">
+            @if (Model.MedicalHistory == null)
+            {
+                <div class="text-center py-5">
+                    <i class="fas fa-notes-medical d-flex justify-content-center mb-3" style="font-size: 100px;"></i>
+                    <h1>Patient has no medical history yet</h1>
+                    <p>Add a medical history by clicking the button below</p>
+                    <button onclick="loadCreateForm(@ViewData["PatientId"])" type="button" class="btn btn-success">Create</button>
+                </div>
+            }
+            else
+            {
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-notes-medical me-2" style="font-size: 2rem"></i>
+                        <h1 class="m-0 fw-bolder">Medical History</h1>
+                    </div>
+
+                    <div>
+                        <button class="btn btn-success" onclick="loadEditForm(@ViewData["PatientId"])" type="button">
+                            <i class="fas fa-edit me-2"></i>Edit
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="accordion" id="medicalHistoryAccordion">
+                    <!--Medical History-->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="medicalHistoryH1">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#medicalHistoryCollapse1" aria-expanded="true" aria-controls="medicalHistoryCollapse1">
+                                <span class="fw-bold">Medical History</span>
+                            </button>
+                        </h2>
+                        <div id="medicalHistoryCollapse1" class="accordion-collapse collapse show" aria-labelledby="medicalHistoryH1" data-bs-parent="#medicalHistoryAccordion">
+                            <div class="accordion-body">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="card mb-3">
+                                            <div class="card-body">
+                                                <p class="text-muted m-0 fw-bold">Blood Type</p>
+                                                @if (Model.MedicalHistory.BloodType == null)
+                                                {
+                                                    <p class="m-0"><br /></p>
+                                                }
+                                                else
+                                                {
+                                                    <p class="m-0">@Model.MedicalHistory.BloodType</p>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="card mb-3">
+                                            <div class="card-body">
+                                                <p class="text-muted m-0 fw-bold">Blood Pressure</p>
+                                                @if (Model.MedicalHistory.BloodPressure == null)
+                                                {
+                                                    <p class="m-0"><br /></p>
+                                                }
+                                                else
+                                                {
+                                                    <p class="m-0">@Model.MedicalHistory.BloodPressure</p>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="card mb-3">
+                                            <div class="card-body">
+                                                <p class="text-muted m-0 fw-bold">Bleeding Time</p>
+                                                @if (Model.MedicalHistory.BleedingTime == null)
+                                                {
+                                                    <p class="m-0"><br /></p>
+                                                }
+                                                else
+                                                {
+                                                    <p class="m-0">@Model.MedicalHistory.BleedingTime</p>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <p class="text-muted m-0 fw-bold">In good health?</p>
+                                <p>@(Model.MedicalHistory.IsGoodHealth == true ? "Yes." : "No.")</p>
+
+                                <p class="text-muted m-0 fw-bold">Currently under medical treatment?</p>
+                                <p>@(Model.MedicalHistory.IsMedTreatment == true ? "Yes." : "No.") @(Model.MedicalHistory.IsConditionTreated != null ? Model.MedicalHistory.IsConditionTreated + "." : "")</p>
+
+                                <p class="text-muted m-0 fw-bold">Had a serious illness or surgical operation?</p>
+                                <p>@(Model.MedicalHistory.IsIllnessOperation == true ? "Yes." : "No.") @(Model.MedicalHistory.IllnessOperation != null ? Model.MedicalHistory.IllnessOperation + "." : "")</p>
+
+                                <p class="text-muted m-0 fw-bold">Experience of hospitalization?</p>
+                                <p>@(Model.MedicalHistory.IsHospitalized == true ? "Yes." : "No.") @(Model.MedicalHistory.Hospitalized != null ? Model.MedicalHistory.Hospitalized + "." : "")</p>
+
+                                <p class="text-muted m-0 fw-bold">Currently taking any prescription or non-prescription medication?</p>
+                                <p>@(Model.MedicalHistory.IsMedication == true ? "Yes." : "No.") @(Model.MedicalHistory.Medication != null ? Model.MedicalHistory.Medication + "." : "")</p>
+
+                                <p class="text-muted m-0 fw-bold">Uses tobacco products?</p>
+                                <p>@(Model.MedicalHistory.IsTobacco == true ? "Yes." : "No.")</p>
+
+                                <p class="text-muted m-0 fw-bold">Uses alcohol, cocaine, or other dangerous drugs?</p>
+                                <p>@(Model.MedicalHistory.IsDrugs == true ? "Yes." : "No.")</p>
+
+                                @if ((string?)ViewData["Gender"] == "Female")
+                                {
+                                    <p class="text-muted m-0 fw-bold">Currently pregnant?</p>
+                                    <p>@(Model.MedicalHistory.IsPregnant == true ? "Yes." : "No.")</p>
+
+                                    <p class="text-muted m-0 fw-bold">Currently Nursing?</p>
+                                    <p>@(Model.MedicalHistory.IsNursing == true ? "Yes." : "No.")</p>
+
+                                    <p class="text-muted m-0 fw-bold">Currently taking birth control pills?</p>
+                                    <p>@(Model.MedicalHistory.IsBirthControl == true ? "Yes." : "No.")</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <!--Allergy-->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="medicalHistoryH2">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#medicalHistoryCollapse2" aria-expanded="false" aria-controls="medicalHistoryCollapse2">
+                                <span class="fw-bold">Allergies</span>
+                            </button>
+                        </h2>
+                        <div id="medicalHistoryCollapse2" class="accordion-collapse collapse" aria-labelledby="medicalHistoryH2" data-bs-parent="#medicalHistoryAccordion">
+                            <div class="accordion-body">
+                                <p class="text-muted fw-bold" id="allergyText">The patient has these following allergies:</p>
+                                <ul class="list-unstyled mb-0" id="allergyUl">
+                                    @(Model.Allergy.IsAnesthesia == true ? @Html.Raw("<li>Local Anesthetic</li>") : null)
+                                    @(Model.Allergy.IsAntibiotics == true ? @Html.Raw("<li>Penicillin, Antibiotics</li>") : null)
+                                    @(Model.Allergy.IsSulfa == true ? @Html.Raw("<li>Sulfa Drugs</li>") : null)
+                                    @(Model.Allergy.IsAspirin == true ? @Html.Raw("<li>Aspirin</li>") : null)
+                                    @(Model.Allergy.IsLatex == true ? @Html.Raw("<li>Latex</li>") : null)
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Record of Illnesses-->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="medicalHistoryH3">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#medicalHistoryCollapse3" aria-expanded="false" aria-controls="medicalHistoryCollapse3">
+                                <span class="fw-bold">Record of Illnesses</span>
+                            </button>
+                        </h2>
+                        <div id="medicalHistoryCollapse3" class="accordion-collapse collapse" aria-labelledby="medicalHistoryH3" data-bs-parent="#medicalHistoryAccordion">
+                            <div class="accordion-body">
+                                <p class="text-muted fw-bold" id="medicalHistoryText">The patient has these following problems:</p>
+                                <ul class="list-unstyled mb-0" id="medicalHistoryUl">
+                                    @(Model.ReviewOfSystem.IsHbp == true ? @Html.Raw("<li>High Blood Pressure</li>") : "")
+                                    @(Model.ReviewOfSystem.IsLbp == true ? @Html.Raw("<li>Low Blood Pressure</li>") : "")
+                                    @(Model.ReviewOfSystem.IsEpilepsy == true ? @Html.Raw("<li>Epilepsy / Convulsions</li>") : "")
+                                    @(Model.ReviewOfSystem.IsAids == true ? @Html.Raw("<li>AIDs or HIV Infection</li>") : "")
+                                    @(Model.ReviewOfSystem.IsStd == true ? @Html.Raw("<li>Sexually Transmitted Disease</li>") : "")
+                                    @(Model.ReviewOfSystem.IsStomach == true ? @Html.Raw("<li>Stomach Troubles / Ulcers</li>") : "")
+                                    @(Model.ReviewOfSystem.IsFainting == true ? @Html.Raw("<li>Fainting / Seizure</li>") : "")
+                                    @(Model.ReviewOfSystem.IsWeightLoss == true ? @Html.Raw("<li>Rapid Weight Loss</li>") : "")
+                                    @(Model.ReviewOfSystem.IsRadiation == true ? @Html.Raw("<li>Radiation Therapy</li>") : "")
+                                    @(Model.ReviewOfSystem.IsJointReplacement == true ? @Html.Raw("<li>Joint Replacement / Implant</li>") : "")
+                                    @(Model.ReviewOfSystem.IsHeartSurgery == true ? @Html.Raw("<li>Heart Surgery</li>") : "")
+                                    @(Model.ReviewOfSystem.IsHeartAttack == true ? @Html.Raw("<li>Heart Attack</li>") : "")
+                                    @(Model.ReviewOfSystem.IsThyroid == true ? @Html.Raw("<li>Thyroid Problem</li>") : "")
+                                    @(Model.ReviewOfSystem.IsHeartDisease == true ? @Html.Raw("<li>Heart Disease</li>") : "")
+                                    @(Model.ReviewOfSystem.IsHeartMurmur == true ? @Html.Raw("<li>Heart Murmur</li>") : "")
+                                    @(Model.ReviewOfSystem.IsHepa == true ? @Html.Raw("<li>Hepatitis / Liver Disease</li>") : "")
+                                    @(Model.ReviewOfSystem.IsRheumatic == true ? @Html.Raw("<li>Rheumatic Fever</li>") : "")
+                                    @(Model.ReviewOfSystem.IsHayFever == true ? @Html.Raw("<li>Hay Fever / Allergies</li>") : "")
+                                    @(Model.ReviewOfSystem.IsRespiratory == true ? @Html.Raw("<li>Respiratory Problems</li>") : "")
+                                    @(Model.ReviewOfSystem.IsJaundice == true ? @Html.Raw("<li>Hepatitis / Jaundice</li>") : "")
+                                    @(Model.ReviewOfSystem.IsTuberculosis == true ? @Html.Raw("<li>Tuberculosis</li>") : "")
+                                    @(Model.ReviewOfSystem.IsSwollenAnkles == true ? @Html.Raw("<li>Swollen Ankles</li>") : "")
+                                    @(Model.ReviewOfSystem.IsKidney == true ? @Html.Raw("<li>Kidney Disease</li>") : "")
+                                    @(Model.ReviewOfSystem.IsDiabetes == true ? @Html.Raw("<li>Diabetes</li>") : "")
+                                    @(Model.ReviewOfSystem.IsChestPain == true ? @Html.Raw("<li>Chest Pain</li>") : "")
+                                    @(Model.ReviewOfSystem.IsStroke == true ? @Html.Raw("<li>Stroke</li>") : "")
+                                    @(Model.ReviewOfSystem.IsCancer == true ? @Html.Raw("<li>Cancer / Tumors</li>") : "")
+                                    @(Model.ReviewOfSystem.IsAnemia == true ? @Html.Raw("<li>Anemia</li>") : "")
+                                    @(Model.ReviewOfSystem.IsAngina == true ? @Html.Raw("<li>Angina</li>") : "")
+                                    @(Model.ReviewOfSystem.IsAsthma == true ? @Html.Raw("<li>Asthma</li>") : "")
+                                    @(Model.ReviewOfSystem.IsEmphysema == true ? @Html.Raw("<li>Emphysema</li>") : "")
+                                    @(Model.ReviewOfSystem.IsBleeding == true ? @Html.Raw("<li>Bleeding Problems</li>") : "")
+                                    @(Model.ReviewOfSystem.IsBloodDisease == true ? @Html.Raw("<li>Blood Diseases</li>") : "")
+                                    @(Model.ReviewOfSystem.IsHeadInjury == true ? @Html.Raw("<li>Head Injury</li>") : "")
+                                    @(Model.ReviewOfSystem.IsArthritis == true ? @Html.Raw("<li>Arthritis / Rheumatism</li>") : "")
+                                    @(Model.ReviewOfSystem.Other != null ? @Html.Raw("<li>" + Model.ReviewOfSystem.Other + "</li>") : "")
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+
+<!-- Create Medical History Modal -->
+<div class="modal fade" id="createMedHisModal" tabindex="-1" aria-labelledby="createMedHisModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-24" id="createMedHisModalLabel">Create Medical History</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="createMedHisModalBodyDiv">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Medical History Modal -->
+<div class="modal fade" id="editMedHisModal" tabindex="-1" aria-labelledby="editMedHisModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-24" id="editMedHisModalLabel">Edit Medical History</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="editMedHisModalBodyDiv">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script src="~/js/medical-history.js"></script>
+<script defer>
+    const allergyText = document.getElementById("allergyText")
+    const allergyUl = document.getElementById("allergyUl")
+    const medicalHistoryText = document.getElementById("medicalHistoryText")
+    const medicalHistoryUl = document.getElementById("medicalHistoryUl")
+
+    if (allergyUl.innerHTML.trim().length == 0) {
+        allergyText.innerHTML = ""
+        allergyUl.innerHTML = "<li>The patient has no known allergies.</li>"
+    }
+
+    if (medicalHistoryUl.innerHTML.trim().length == 0) {
+        medicalHistoryText.innerHTML = ""
+        medicalHistoryUl.innerHTML = "<li>The patient has no illness or underlying medical conditions.</li>"
+    }
+</script>
+}

@@ -1,0 +1,99 @@
+﻿@model VitasysEHR.Models.ViewModels.ClinicVM
+
+<form method="post" asp-action="UpdateAccount" enctype="multipart/form-data" id="editForm">
+    <div class="row">
+        <label asp-for="Clinic.Id" for="Id" hidden></label>
+        <input asp-for="Clinic.Id" hidden />
+        <label asp-for="Clinic.DateAdded" for="DateAdded" hidden></label>
+        <input asp-for="Clinic.DateAdded" hidden />
+        <div class="col">
+             <!--Clinic Name-->
+            <div class="mb-3">
+                <label asp-for="Clinic.Name" class="form-label"></label>
+                <input asp-for="Clinic.Name" class="form-control">
+                <span asp-validation-for="Clinic.Name" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                 <!--StartTime-->
+                <div class="col-sm-6">
+                    <label asp-for="Clinic.StartTime" class="form-label"></label>
+                    <select asp-for="Clinic.StartTime" asp-items="Model.StartTimeList" class="form-select" id="startTime">
+                        <option selected disabled>Select Start Time</option>
+                    </select>
+                    <span asp-validation-for="Clinic.StartTime" class="text-danger"></span>
+                </div>
+
+                <!--EndTime-->
+                <div class="col-sm-6">
+                    <label asp-for="Clinic.EndTime" class="form-label"></label>
+                    <select asp-for="Clinic.EndTime" asp-items="Model.EndTimeList" class="form-select" id="endTime">
+                        <option selected disabled>Select End Time</option>
+                    </select>
+                    <span asp-validation-for="Clinic.EndTime" class="text-danger"></span>
+                </div>
+                <span class="text-danger" id="timeError"></span>
+            </div>
+
+            <!--Email Address-->
+            <div class="mb-3">
+                <label asp-for="Clinic.EmailAddress" class="form-label"></label>
+                <input asp-for="Clinic.EmailAddress" type="email" class="form-control">
+                <span asp-validation-for="Clinic.EmailAddress" class="text-danger"></span>
+            </div>
+
+            <!--Address Line 1-->
+            <div class="mb-3">
+                <label asp-for="Clinic.Address" class="form-label"></label>
+                <input asp-for="Clinic.Address" class="form-control" placeholder="Street and number">
+                <span asp-validation-for="Clinic.Address" class="text-danger"></span>
+            </div>
+
+            <!--City-->
+            <div class="mb-3">
+                <label asp-for="Clinic.City" class="form-label"></label>
+                <input asp-for="Clinic.City" class="form-control">
+                <span asp-validation-for="Clinic.City" class="text-danger"></span>
+            </div>
+
+            <!--Province-->
+            <div class="mb-3">
+                <label asp-for="Clinic.Province" class="form-label"></label>
+                <input asp-for="Clinic.Province" class="form-control">
+                <span asp-validation-for="Clinic.Province" class="text-danger"></span>
+            </div>
+
+            <!--Zip Code-->
+            <div class="mb-3">
+                <label asp-for="Clinic.ZipCode" class="form-label"></label>
+                <input asp-for="Clinic.ZipCode" maxlength="4" class="form-control">
+                <span asp-validation-for="Clinic.ZipCode" class="text-danger"></span>
+            </div>
+
+            <!--Office No-->
+            <div class="mb-3">
+                <label asp-for="Clinic.OfficePhone" class="form-label"></label>
+                <input asp-for="Clinic.OfficePhone" class="form-control">
+                <span asp-validation-for="Clinic.OfficePhone" class="text-danger"></span>
+            </div>
+
+            <!--Mobile No-->
+            <div class="mb-3">
+                <label asp-for="Clinic.MobilePhone" class="form-label"></label>
+                <input asp-for="Clinic.MobilePhone" class="form-control">
+                <span asp-validation-for="Clinic.MobilePhone" class="text-danger"></span>
+            </div>
+        </div>
+
+    </div>
+    <br />
+    <div class="d-flex justify-content-between mt-2">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times me-2"></i>Cancel</button>
+        <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save</button>
+    </div>
+</form>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.1/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation/dist/additional-methods.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>

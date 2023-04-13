@@ -1,0 +1,771 @@
+﻿@model VitasysEHR.Models.ViewModels.DentalChartVM
+@using VitasysEHR.Utility
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Dental Chart";
+}
+
+@if (Model != null)
+{
+    if (Model.DentalChart != null)
+    {
+        if (Model.DentalChart.OralCavity != null)
+        {
+            <form asp-action="PrintDentalSummary" method="get">
+                <input type="hidden" value="@Model.DentalChart.PatientId" name="patientId" />
+                <button type="submit" class="btn btn-primary"><i class="fas fa-print me-2"></i>Print</button>
+            </form>
+
+            <h2 class="mt-4 fs-24 fw-bold">Dental Chart</h2>
+
+            <p class="text-muted m-0 fw-bold mt-3">Encounter Date</p>
+            <p class="m-0">@Model.EncounterDate</p>            
+
+            <link rel="stylesheet" href="~/css/dental-chart.css" />
+
+            <div class="mt-5 mb-5" id="dental-chart">
+                <table align="center" class="mb-3">
+                    <tbody>
+                        <!--Upper Milk Teeth Boxes-->
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="box">@Html.Raw((Model.Tooth55 != null && Model.Tooth55.Condition != null ? Model.Tooth55.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth54 != null && Model.Tooth54.Condition != null ? Model.Tooth54.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth53 != null && Model.Tooth53.Condition != null ? Model.Tooth53.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth52 != null && Model.Tooth52.Condition != null ? Model.Tooth52.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth51 != null && Model.Tooth51.Condition != null ? Model.Tooth51.Condition.Abbreviation : ""))</td>
+                            <td style="padding: 10px;"></td>
+                            <td class="box">@Html.Raw((Model.Tooth61 != null && Model.Tooth61.Condition != null ? Model.Tooth61.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth62 != null && Model.Tooth62.Condition != null ? Model.Tooth62.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth63 != null && Model.Tooth63.Condition != null ? Model.Tooth63.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth64 != null && Model.Tooth64.Condition != null ? Model.Tooth64.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth65 != null && Model.Tooth65.Condition != null ? Model.Tooth65.Condition.Abbreviation : ""))</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                        <!--Upper Milk Teeth Labels-->
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>55</td>
+                            <td>54</td>
+                            <td>53</td>
+                            <td>52</td>
+                            <td>51</td>
+                            <td></td>
+                            <td>61</td>
+                            <td>62</td>
+                            <td>63</td>
+                            <td>64</td>
+                            <td>65</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                        <!--Upper Milk Teeth-->
+                        <tr class="pb ps">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <svg width="45" height="45" transform="scale(1,-1)" class="molar">
+                                    <polygon id="top" points="0,0 45,0 30.15,14.85 14.85,14.85" class="polygon unmarked @(Model.Tooth55 != null && Model.Tooth55.Lingual != null ? Model.Tooth55.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 14.85,14.85 14.85,30.15 0,45" class="polygon unmarked @(Model.Tooth55 != null && Model.Tooth55.Distal != null ? Model.Tooth55.Distal.Color : "")" />
+                                    <polygon id="bottom" points="0,45 14.85,30.15 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth55 != null && Model.Tooth55.BuccalOrLabial != null ? Model.Tooth55.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="45,0 30.15,14.85 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth55 != null && Model.Tooth55.Mesial != null ? Model.Tooth55.Mesial.Color : "")" />
+                                    <polygon id="center" points="14.85, 14.85 30.15, 14.85 30.15, 30.15 14.85, 30.15" class="polygon unmarked @(Model.Tooth55 != null && Model.Tooth55.Occlusal != null ? Model.Tooth55.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" transform="scale(1,-1)" class="molar">
+                                    <polygon id="top" points="0,0 45,0 30.15,14.85 14.85,14.85" class="polygon unmarked @(Model.Tooth54 != null && Model.Tooth54.Lingual != null ? Model.Tooth54.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 14.85,14.85 14.85,30.15 0,45" class="polygon unmarked @(Model.Tooth54 != null && Model.Tooth54.Distal != null ? Model.Tooth54.Distal.Color : "")" />
+                                    <polygon id="bottom" points="0,45 14.85,30.15 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth54 != null && Model.Tooth54.BuccalOrLabial != null ? Model.Tooth54.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="45,0 30.15,14.85 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth54 != null && Model.Tooth54.Mesial != null ? Model.Tooth54.Mesial.Color : "")" />
+                                    <polygon id="center" points="14.85, 14.85 30.15, 14.85 30.15, 30.15 14.85, 30.15" class="polygon unmarked @(Model.Tooth54 != null && Model.Tooth54.Occlusal != null ? Model.Tooth54.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" transform="scale(1,-1)" class="incisor">
+                                    <polygon id="top" points="14.85,0 30.15,0 30.15,22.5 14.85,22.5" class="polygon unmarked @(Model.Tooth53 != null && Model.Tooth53.Lingual != null ? Model.Tooth53.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,14.85 14.85,14.85 14.85,30.15 0,30.15" class="polygon unmarked @(Model.Tooth53 != null && Model.Tooth53.Distal != null ? Model.Tooth53.Distal.Color : "")" />
+                                    <polygon id="bottom" points="14.85,22.5 30.15,22.5 30.15,45 14.85,45" class="polygon unmarked @(Model.Tooth53 != null && Model.Tooth53.BuccalOrLabial != null ? Model.Tooth53.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="30.15,14.85 45,14.85 45,30.15 30.15,30.15" class="polygon unmarked @(Model.Tooth53 != null && Model.Tooth53.Mesial != null ? Model.Tooth53.Mesial.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" transform="scale(1,-1)" class="incisor">
+                                    <polygon id="top" points="14.85,0 30.15,0 30.15,22.5 14.85,22.5" class="polygon unmarked @(Model.Tooth52 != null && Model.Tooth52.Lingual != null ? Model.Tooth52.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,14.85 14.85,14.85 14.85,30.15 0,30.15" class="polygon unmarked @(Model.Tooth52 != null && Model.Tooth52.Distal != null ? Model.Tooth52.Distal.Color : "")" />
+                                    <polygon id="bottom" points="14.85,22.5 30.15,22.5 30.15,45 14.85,45" class="polygon unmarked @(Model.Tooth52 != null && Model.Tooth52.BuccalOrLabial != null ? Model.Tooth52.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="30.15,14.85 45,14.85 45,30.15 30.15,30.15" class="polygon unmarked @(Model.Tooth52 != null && Model.Tooth52.Mesial != null ? Model.Tooth52.Mesial.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" transform="scale(1,-1)" class="incisor">
+                                    <polygon id="top" points="14.85,0 30.15,0 30.15,22.5 14.85,22.5" class="polygon unmarked @(Model.Tooth51 != null && Model.Tooth51.Lingual != null ? Model.Tooth51.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,14.85 14.85,14.85 14.85,30.15 0,30.15" class="polygon unmarked @(Model.Tooth51 != null && Model.Tooth51.Distal != null ? Model.Tooth51.Distal.Color : "")" />
+                                    <polygon id="bottom" points="14.85,22.5 30.15,22.5 30.15,45 14.85,45" class="polygon unmarked @(Model.Tooth51 != null && Model.Tooth51.BuccalOrLabial != null ? Model.Tooth51.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="30.15,14.85 45,14.85 45,30.15 30.15,30.15" class="polygon unmarked @(Model.Tooth51 != null && Model.Tooth51.Mesial != null ? Model.Tooth51.Mesial.Color : "")" />
+                                </svg>
+                            </td>
+                            <td></td>
+                            <td>
+                                <svg width="45" height="45" transform="scale(1,-1)" class="incisor">
+                                    <polygon id="top" points="14.85,0 30.15,0 30.15,22.5 14.85,22.5" class="polygon unmarked @(Model.Tooth61 != null && Model.Tooth61.Lingual != null ? Model.Tooth61.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,14.85 14.85,14.85 14.85,30.15 0,30.15" class="polygon unmarked @(Model.Tooth61 != null && Model.Tooth61.Mesial != null ? Model.Tooth61.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="14.85,22.5 30.15,22.5 30.15,45 14.85,45" class="polygon unmarked @(Model.Tooth61 != null && Model.Tooth61.BuccalOrLabial != null ? Model.Tooth61.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="30.15,14.85 45,14.85 45,30.15 30.15,30.15" class="polygon unmarked @(Model.Tooth61 != null && Model.Tooth61.Distal != null ? Model.Tooth61.Distal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" transform="scale(1,-1)" class="incisor">
+                                    <polygon id="top" points="14.85,0 30.15,0 30.15,22.5 14.85,22.5" class="polygon unmarked @(Model.Tooth62 != null && Model.Tooth62.Lingual != null ? Model.Tooth62.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,14.85 14.85,14.85 14.85,30.15 0,30.15" class="polygon unmarked @(Model.Tooth62 != null && Model.Tooth62.Mesial != null ? Model.Tooth62.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="14.85,22.5 30.15,22.5 30.15,45 14.85,45" class="polygon unmarked @(Model.Tooth62 != null && Model.Tooth62.BuccalOrLabial != null ? Model.Tooth62.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="30.15,14.85 45,14.85 45,30.15 30.15,30.15" class="polygon unmarked @(Model.Tooth62 != null && Model.Tooth62.Distal != null ? Model.Tooth62.Distal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" transform="scale(1,-1)" class="incisor">
+                                    <polygon id="top" points="14.85,0 30.15,0 30.15,22.5 14.85,22.5" class="polygon unmarked @(Model.Tooth63 != null && Model.Tooth63.Lingual != null ? Model.Tooth63.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,14.85 14.85,14.85 14.85,30.15 0,30.15" class="polygon unmarked @(Model.Tooth63 != null && Model.Tooth63.Mesial != null ? Model.Tooth63.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="14.85,22.5 30.15,22.5 30.15,45 14.85,45" class="polygon unmarked @(Model.Tooth63 != null && Model.Tooth63.BuccalOrLabial != null ? Model.Tooth63.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="30.15,14.85 45,14.85 45,30.15 30.15,30.15" class="polygon unmarked @(Model.Tooth63 != null && Model.Tooth63.Distal != null ? Model.Tooth63.Distal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" transform="scale(1,-1)" class="molar">
+                                    <polygon id="top" points="0,0 45,0 30.15,14.85 14.85,14.85" class="polygon unmarked @(Model.Tooth64 != null && Model.Tooth64.Lingual != null ? Model.Tooth64.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 14.85,14.85 14.85,30.15 0,45" class="polygon unmarked @(Model.Tooth64 != null && Model.Tooth64.Mesial != null ? Model.Tooth64.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="0,45 14.85,30.15 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth64 != null && Model.Tooth64.BuccalOrLabial != null ? Model.Tooth64.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="45,0 30.15,14.85 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth64 != null && Model.Tooth64.Distal != null ? Model.Tooth64.Distal.Color : "")" />
+                                    <polygon id="center" points="14.85, 14.85 30.15, 14.85 30.15, 30.15 14.85, 30.15" class="polygon unmarked @(Model.Tooth64 != null && Model.Tooth64.Occlusal != null ? Model.Tooth64.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" transform="scale(1,-1)" class="molar">
+                                    <polygon id="top" points="0,0 45,0 30.15,14.85 14.85,14.85" class="polygon unmarked @(Model.Tooth65 != null && Model.Tooth65.Lingual != null ? Model.Tooth65.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 14.85,14.85 14.85,30.15 0,45" class="polygon unmarked @(Model.Tooth65 != null && Model.Tooth65.Mesial != null ? Model.Tooth65.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="0,45 14.85,30.15 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth65 != null && Model.Tooth65.BuccalOrLabial != null ? Model.Tooth65.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="45,0 30.15,14.85 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth65 != null && Model.Tooth65.Distal != null ? Model.Tooth65.Distal.Color : "")" />
+                                    <polygon id="center" points="14.85, 14.85 30.15, 14.85 30.15, 30.15 14.85, 30.15" class="polygon unmarked @(Model.Tooth65 != null && Model.Tooth65.Occlusal != null ? Model.Tooth65.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                        <!--Upper Teeth Boxes-->
+                        <tr>
+                            <td class="box">@Html.Raw((Model.Tooth18 != null && Model.Tooth18.Condition != null ? Model.Tooth18.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth17 != null && Model.Tooth17.Condition != null ? Model.Tooth17.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth16 != null && Model.Tooth16.Condition != null ? Model.Tooth16.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth15 != null && Model.Tooth15.Condition != null ? Model.Tooth15.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth14 != null && Model.Tooth14.Condition != null ? Model.Tooth14.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth13 != null && Model.Tooth13.Condition != null ? Model.Tooth13.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth12 != null && Model.Tooth12.Condition != null ? Model.Tooth12.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth11 != null && Model.Tooth11.Condition != null ? Model.Tooth11.Condition.Abbreviation : ""))</td>
+                            <td></td>
+                            <td class="box">@Html.Raw((Model.Tooth21 != null && Model.Tooth21.Condition != null ? Model.Tooth21.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth22 != null && Model.Tooth22.Condition != null ? Model.Tooth22.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth23 != null && Model.Tooth23.Condition != null ? Model.Tooth23.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth24 != null && Model.Tooth24.Condition != null ? Model.Tooth24.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth25 != null && Model.Tooth25.Condition != null ? Model.Tooth25.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth26 != null && Model.Tooth26.Condition != null ? Model.Tooth26.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth27 != null && Model.Tooth27.Condition != null ? Model.Tooth27.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth28 != null && Model.Tooth28.Condition != null ? Model.Tooth28.Condition.Abbreviation : ""))</td>
+                        </tr>
+
+                        <!--Upper Teeth Label-->
+                        <tr>
+                            <td>18</td>
+                            <td>17</td>
+                            <td>16</td>
+                            <td>15</td>
+                            <td>14</td>
+                            <td>13</td>
+                            <td>12</td>
+                            <td>11</td>
+                            <td></td>
+                            <td>21</td>
+                            <td>22</td>
+                            <td>23</td>
+                            <td>24</td>
+                            <td>25</td>
+                            <td>26</td>
+                            <td>27</td>
+                            <td>28</td>
+                        </tr>
+
+                        <!--Upper Teeth-->
+                        <tr class="pb ps">
+                            <td>
+                                <svg width="45" height="45" transform="scale(1,-1)" class="molar">
+                                    <polygon id="top" points="0,0 45,0 30.15,14.85 14.85,14.85" class="polygon unmarked @(Model.Tooth18 != null && Model.Tooth18.Lingual != null ? Model.Tooth18.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 14.85,14.85 14.85,30.15 0,45" class="polygon unmarked @(Model.Tooth18 != null && Model.Tooth18.Distal != null ? Model.Tooth18.Distal.Color : "")" />
+                                    <polygon id="bottom" points="0,45 14.85,30.15 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth18 != null && Model.Tooth18.BuccalOrLabial != null ? Model.Tooth18.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="45,0 30.15,14.85 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth18 != null && Model.Tooth18.Mesial != null ? Model.Tooth18.Mesial.Color : "")" />
+                                    <polygon id="center" points="14.85, 14.85 30.15, 14.85 30.15, 30.15 14.85, 30.15" class="polygon unmarked @(Model.Tooth18 != null && Model.Tooth18.Occlusal != null ? Model.Tooth18.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" transform="scale(1,-1)" class="molar">
+                                    <polygon id="top" points="0,0 45,0 30.15,14.85 14.85,14.85" class="polygon unmarked @(Model.Tooth17 != null && Model.Tooth17.Lingual != null ? Model.Tooth17.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 14.85,14.85 14.85,30.15 0,45" class="polygon unmarked @(Model.Tooth17 != null && Model.Tooth17.Distal != null ? Model.Tooth17.Distal.Color : "")" />
+                                    <polygon id="bottom" points="0,45 14.85,30.15 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth17 != null && Model.Tooth17.BuccalOrLabial != null ? Model.Tooth17.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="45,0 30.15,14.85 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth17 != null && Model.Tooth17.Mesial != null ? Model.Tooth17.Mesial.Color : "")" />
+                                    <polygon id="center" points="14.85, 14.85 30.15, 14.85 30.15, 30.15 14.85, 30.15" class="polygon unmarked @(Model.Tooth17 != null && Model.Tooth17.Occlusal != null ? Model.Tooth17.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" transform="scale(1,-1)" class="molar">
+                                    <polygon id="top" points="0,0 45,0 30.15,14.85 14.85,14.85" class="polygon unmarked @(Model.Tooth16 != null && Model.Tooth16.Lingual != null ? Model.Tooth16.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 14.85,14.85 14.85,30.15 0,45" class="polygon unmarked @(Model.Tooth16 != null && Model.Tooth16.Distal != null ? Model.Tooth16.Distal.Color : "")" />
+                                    <polygon id="bottom" points="0,45 14.85,30.15 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth16 != null && Model.Tooth16.BuccalOrLabial != null ? Model.Tooth16.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="45,0 30.15,14.85 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth16 != null && Model.Tooth16.Mesial != null ? Model.Tooth16.Mesial.Color : "")" />
+                                    <polygon id="center" points="14.85, 14.85 30.15, 14.85 30.15, 30.15 14.85, 30.15" class="polygon unmarked @(Model.Tooth16 != null && Model.Tooth16.Occlusal != null ? Model.Tooth16.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" transform="scale(1,-1)" class="premolar-5">
+                                    <polygon id="top" points="0,0 45,0 30.15,14.85 14.85,14.85" class="polygon unmarked @(Model.Tooth15 != null && Model.Tooth15.Lingual != null ? Model.Tooth15.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 14.85,14.85 14.85,30.15 0,45" class="polygon unmarked @(Model.Tooth15 != null && Model.Tooth15.Distal != null ? Model.Tooth15.Distal.Color : "")" />
+                                    <polygon id="bottom" points="0,45 14.85,30.15 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth15 != null && Model.Tooth15.BuccalOrLabial != null ? Model.Tooth15.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="45,0 30.15,14.85 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth15 != null && Model.Tooth15.Mesial != null ? Model.Tooth15.Mesial.Color : "")" />
+                                    <polygon id="center" points="14.85, 14.85 30.15, 14.85 30.15, 30.15 14.85, 30.15" class="polygon unmarked @(Model.Tooth15 != null && Model.Tooth15.Occlusal != null ? Model.Tooth15.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" transform="scale(1,-1)" class="premolar-4">
+                                    <polygon id="top" points="0,0 45,0 30.15,14.85 14.85,14.85" class="polygon unmarked @(Model.Tooth14 != null && Model.Tooth14.Lingual != null ? Model.Tooth14.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 14.85,14.85 14.85,30.15 0,45" class="polygon unmarked @(Model.Tooth14 != null && Model.Tooth14.Distal != null ? Model.Tooth14.Distal.Color : "")" />
+                                    <polygon id="bottom" points="0,45 14.85,30.15 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth14 != null && Model.Tooth14.BuccalOrLabial != null ? Model.Tooth14.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="45,0 30.15,14.85 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth14 != null && Model.Tooth14.Mesial != null ? Model.Tooth14.Mesial.Color : "")" />
+                                    <polygon id="center" points="14.85, 14.85 30.15, 14.85 30.15, 30.15 14.85, 30.15" class="polygon unmarked @(Model.Tooth14 != null && Model.Tooth14.Occlusal != null ? Model.Tooth14.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" transform="scale(1,-1)" class="incisor">
+                                    <polygon id="top" points="14.85,0 30.15,0 30.15,22.5 14.85,22.5" class="polygon unmarked @(Model.Tooth13 != null && Model.Tooth13.Lingual != null ? Model.Tooth13.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,14.85 14.85,14.85 14.85,30.15 0,30.15" class="polygon unmarked @(Model.Tooth13 != null && Model.Tooth13.Distal != null ? Model.Tooth13.Distal.Color : "")" />
+                                    <polygon id="bottom" points="14.85,22.5 30.15,22.5 30.15,45 14.85,45" class="polygon unmarked @(Model.Tooth13 != null && Model.Tooth13.BuccalOrLabial != null ? Model.Tooth13.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="30.15,14.85 45,14.85 45,30.15 30.15,30.15" class="polygon unmarked @(Model.Tooth13 != null && Model.Tooth13.Mesial != null ? Model.Tooth13.Mesial.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" transform="scale(1,-1)" class="incisor">
+                                    <polygon id="top" points="14.85,0 30.15,0 30.15,22.5 14.85,22.5" class="polygon unmarked @(Model.Tooth12 != null && Model.Tooth12.Lingual != null ? Model.Tooth12.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,14.85 14.85,14.85 14.85,30.15 0,30.15" class="polygon unmarked @(Model.Tooth12 != null && Model.Tooth12.Distal != null ? Model.Tooth12.Distal.Color : "")" />
+                                    <polygon id="bottom" points="14.85,22.5 30.15,22.5 30.15,45 14.85,45" class="polygon unmarked @(Model.Tooth12 != null && Model.Tooth12.BuccalOrLabial != null ? Model.Tooth12.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="30.15,14.85 45,14.85 45,30.15 30.15,30.15" class="polygon unmarked @(Model.Tooth12 != null && Model.Tooth12.Mesial != null ? Model.Tooth12.Mesial.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" transform="scale(1,-1)" class="incisor">
+                                    <polygon id="top" points="14.85,0 30.15,0 30.15,22.5 14.85,22.5" class="polygon unmarked @(Model.Tooth11 != null && Model.Tooth11.Lingual != null ? Model.Tooth11.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,14.85 14.85,14.85 14.85,30.15 0,30.15" class="polygon unmarked @(Model.Tooth11 != null && Model.Tooth11.Distal != null ? Model.Tooth11.Distal.Color : "")" />
+                                    <polygon id="bottom" points="14.85,22.5 30.15,22.5 30.15,45 14.85,45" class="polygon unmarked @(Model.Tooth11 != null && Model.Tooth11.BuccalOrLabial != null ? Model.Tooth11.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="30.15,14.85 45,14.85 45,30.15 30.15,30.15" class="polygon unmarked @(Model.Tooth11 != null && Model.Tooth11.Mesial != null ? Model.Tooth11.Mesial.Color : "")" />
+                                </svg>
+                            </td>
+                            <td></td>
+                            <td>
+                                <svg width="45" height="45" transform="scale(1,-1)" class="incisor">
+                                    <polygon id="top" points="14.85,0 30.15,0 30.15,22.5 14.85,22.5" class="polygon unmarked @(Model.Tooth21 != null && Model.Tooth21.Lingual != null ? Model.Tooth21.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,14.85 14.85,14.85 14.85,30.15 0,30.15" class="polygon unmarked @(Model.Tooth21 != null && Model.Tooth21.Mesial != null ? Model.Tooth21.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="14.85,22.5 30.15,22.5 30.15,45 14.85,45" class="polygon unmarked @(Model.Tooth21 != null && Model.Tooth21.BuccalOrLabial != null ? Model.Tooth21.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="30.15,14.85 45,14.85 45,30.15 30.15,30.15" class="polygon unmarked @(Model.Tooth21 != null && Model.Tooth21.Distal != null ? Model.Tooth21.Distal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" transform="scale(1,-1)" class="incisor">
+                                    <polygon id="top" points="14.85,0 30.15,0 30.15,22.5 14.85,22.5" class="polygon unmarked @(Model.Tooth22 != null && Model.Tooth22.Lingual != null ? Model.Tooth22.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,14.85 14.85,14.85 14.85,30.15 0,30.15" class="polygon unmarked @(Model.Tooth22 != null && Model.Tooth22.Mesial != null ? Model.Tooth22.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="14.85,22.5 30.15,22.5 30.15,45 14.85,45" class="polygon unmarked @(Model.Tooth22 != null && Model.Tooth22.BuccalOrLabial != null ? Model.Tooth22.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="30.15,14.85 45,14.85 45,30.15 30.15,30.15" class="polygon unmarked @(Model.Tooth22 != null && Model.Tooth22.Distal != null ? Model.Tooth22.Distal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" transform="scale(1,-1)" class="incisor">
+                                    <polygon id="top" points="14.85,0 30.15,0 30.15,22.5 14.85,22.5" class="polygon unmarked @(Model.Tooth23 != null && Model.Tooth23.Lingual != null ? Model.Tooth23.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,14.85 14.85,14.85 14.85,30.15 0,30.15" class="polygon unmarked @(Model.Tooth23 != null && Model.Tooth23.Mesial != null ? Model.Tooth23.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="14.85,22.5 30.15,22.5 30.15,45 14.85,45" class="polygon unmarked @(Model.Tooth23 != null && Model.Tooth23.BuccalOrLabial != null ? Model.Tooth23.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="30.15,14.85 45,14.85 45,30.15 30.15,30.15" class="polygon unmarked @(Model.Tooth23 != null && Model.Tooth23.Distal != null ? Model.Tooth23.Distal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" transform="scale(1,-1)" class="premolar-4">
+                                    <polygon id="top" points="0,0 45,0 30.15,14.85 14.85,14.85" class="polygon unmarked @(Model.Tooth24 != null && Model.Tooth24.Lingual != null ? Model.Tooth24.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 14.85,14.85 14.85,30.15 0,45" class="polygon unmarked @(Model.Tooth24 != null && Model.Tooth24.Mesial != null ? Model.Tooth24.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="0,45 14.85,30.15 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth24 != null && Model.Tooth24.BuccalOrLabial != null ? Model.Tooth24.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="45,0 30.15,14.85 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth24 != null && Model.Tooth24.Distal != null ? Model.Tooth24.Distal.Color : "")" />
+                                    <polygon id="center" points="14.85, 14.85 30.15, 14.85 30.15, 30.15 14.85, 30.15" class="polygon unmarked @(Model.Tooth24 != null && Model.Tooth24.Occlusal != null ? Model.Tooth24.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" transform="scale(1,-1)" class="premolar-5">
+                                    <polygon id="top" points="0,0 45,0 30.15,14.85 14.85,14.85" class="polygon unmarked @(Model.Tooth25 != null && Model.Tooth25.Lingual != null ? Model.Tooth25.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 14.85,14.85 14.85,30.15 0,45" class="polygon unmarked @(Model.Tooth25 != null && Model.Tooth25.Mesial != null ? Model.Tooth25.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="0,45 14.85,30.15 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth25 != null && Model.Tooth25.BuccalOrLabial != null ? Model.Tooth25.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="45,0 30.15,14.85 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth25 != null && Model.Tooth25.Distal != null ? Model.Tooth25.Distal.Color : "")" />
+                                    <polygon id="center" points="14.85, 14.85 30.15, 14.85 30.15, 30.15 14.85, 30.15" class="polygon unmarked @(Model.Tooth25 != null && Model.Tooth25.Occlusal != null ? Model.Tooth25.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" transform="scale(1,-1)" class="molar">
+                                    <polygon id="top" points="0,0 45,0 30.15,14.85 14.85,14.85" class="polygon unmarked @(Model.Tooth26 != null && Model.Tooth26.Lingual != null ? Model.Tooth26.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 14.85,14.85 14.85,30.15 0,45" class="polygon unmarked @(Model.Tooth26 != null && Model.Tooth26.Mesial != null ? Model.Tooth26.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="0,45 14.85,30.15 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth26 != null && Model.Tooth26.BuccalOrLabial != null ? Model.Tooth26.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="45,0 30.15,14.85 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth26 != null && Model.Tooth26.Distal != null ? Model.Tooth26.Distal.Color : "")" />
+                                    <polygon id="center" points="14.85, 14.85 30.15, 14.85 30.15, 30.15 14.85, 30.15" class="polygon unmarked @(Model.Tooth26 != null && Model.Tooth26.Occlusal != null ? Model.Tooth26.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" transform="scale(1,-1)" class="molar">
+                                    <polygon id="top" points="0,0 45,0 30.15,14.85 14.85,14.85" class="polygon unmarked @(Model.Tooth27 != null && Model.Tooth27.Lingual != null ? Model.Tooth27.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 14.85,14.85 14.85,30.15 0,45" class="polygon unmarked @(Model.Tooth27 != null && Model.Tooth27.Mesial != null ? Model.Tooth27.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="0,45 14.85,30.15 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth27 != null && Model.Tooth27.BuccalOrLabial != null ? Model.Tooth27.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="45,0 30.15,14.85 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth27 != null && Model.Tooth27.Distal != null ? Model.Tooth27.Distal.Color : "")" />
+                                    <polygon id="center" points="14.85, 14.85 30.15, 14.85 30.15, 30.15 14.85, 30.15" class="polygon unmarked @(Model.Tooth27 != null && Model.Tooth27.Occlusal != null ? Model.Tooth27.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" transform="scale(1,-1)" class="molar">
+                                    <polygon id="top" points="0,0 45,0 30.15,14.85 14.85,14.85" class="polygon unmarked @(Model.Tooth28 != null && Model.Tooth28.Lingual != null ? Model.Tooth28.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 14.85,14.85 14.85,30.15 0,45" class="polygon unmarked @(Model.Tooth28 != null && Model.Tooth28.Mesial != null ? Model.Tooth28.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="0,45 14.85,30.15 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth28 != null && Model.Tooth28.BuccalOrLabial != null ? Model.Tooth28.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="45,0 30.15,14.85 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth28 != null && Model.Tooth28.Distal != null ? Model.Tooth28.Distal.Color : "")" />
+                                    <polygon id="center" points="14.85, 14.85 30.15, 14.85 30.15, 30.15 14.85, 30.15" class="polygon unmarked @(Model.Tooth28 != null && Model.Tooth28.Occlusal != null ? Model.Tooth28.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                        </tr>
+
+                        <!--Lower Teeth-->
+                        <tr>
+                            <td>
+                                <svg width="45" height="45" class="molar">
+                                    <polygon id="top" points="0,0 45,0 30.15,14.85 14.85,14.85" class="polygon unmarked @(Model.Tooth48 != null && Model.Tooth48.Lingual != null ? Model.Tooth48.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 14.85,14.85 14.85,30.15 0,45" class="polygon unmarked @(Model.Tooth48 != null && Model.Tooth48.Distal != null ? Model.Tooth48.Distal.Color : "")" />
+                                    <polygon id="bottom" points="0,45 14.85,30.15 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth48 != null && Model.Tooth48.BuccalOrLabial != null ? Model.Tooth48.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="45,0 30.15,14.85 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth48 != null && Model.Tooth48.Mesial != null ? Model.Tooth48.Mesial.Color : "")" />
+                                    <polygon id="center" points="14.85, 14.85 30.15, 14.85 30.15, 30.15 14.85, 30.15" class="polygon unmarked @(Model.Tooth48 != null && Model.Tooth48.Occlusal != null ? Model.Tooth48.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" class="molar">
+                                    <polygon id="top" points="0,0 45,0 30.15,14.85 14.85,14.85" class="polygon unmarked @(Model.Tooth47 != null && Model.Tooth47.Lingual != null ? Model.Tooth47.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 14.85,14.85 14.85,30.15 0,45" class="polygon unmarked @(Model.Tooth47 != null && Model.Tooth47.Distal != null ? Model.Tooth47.Distal.Color : "")" />
+                                    <polygon id="bottom" points="0,45 14.85,30.15 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth47 != null && Model.Tooth47.BuccalOrLabial != null ? Model.Tooth47.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="45,0 30.15,14.85 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth47 != null && Model.Tooth47.Mesial != null ? Model.Tooth47.Mesial.Color : "")" />
+                                    <polygon id="center" points="14.85, 14.85 30.15, 14.85 30.15, 30.15 14.85, 30.15" class="polygon unmarked @(Model.Tooth47 != null && Model.Tooth47.Occlusal != null ? Model.Tooth47.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" class="molar">
+                                    <polygon id="top" points="0,0 45,0 30.15,14.85 14.85,14.85" class="polygon unmarked @(Model.Tooth46 != null && Model.Tooth46.Lingual != null ? Model.Tooth46.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 14.85,14.85 14.85,30.15 0,45" class="polygon unmarked @(Model.Tooth46 != null && Model.Tooth46.Distal != null ? Model.Tooth46.Distal.Color : "")" />
+                                    <polygon id="bottom" points="0,45 14.85,30.15 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth46 != null && Model.Tooth46.BuccalOrLabial != null ? Model.Tooth46.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="45,0 30.15,14.85 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth46 != null && Model.Tooth46.Mesial != null ? Model.Tooth46.Mesial.Color : "")" />
+                                    <polygon id="center" points="14.85, 14.85 30.15, 14.85 30.15, 30.15 14.85, 30.15" class="polygon unmarked @(Model.Tooth46 != null && Model.Tooth46.Occlusal != null ? Model.Tooth46.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" class="premolar-5">
+                                    <polygon id="top" points="0,0 45,0 30.15,14.85 14.85,14.85" class="polygon unmarked @(Model.Tooth45 != null && Model.Tooth45.Lingual != null ? Model.Tooth45.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 14.85,14.85 14.85,30.15 0,45" class="polygon unmarked @(Model.Tooth45 != null && Model.Tooth45.Distal != null ? Model.Tooth45.Distal.Color : "")" />
+                                    <polygon id="bottom" points="0,45 14.85,30.15 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth45 != null && Model.Tooth45.BuccalOrLabial != null ? Model.Tooth45.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="45,0 30.15,14.85 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth45 != null && Model.Tooth45.Mesial != null ? Model.Tooth45.Mesial.Color : "")" />
+                                    <polygon id="center" points="14.85, 14.85 30.15, 14.85 30.15, 30.15 14.85, 30.15" class="polygon unmarked @(Model.Tooth45 != null && Model.Tooth45.Occlusal != null ? Model.Tooth45.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" class="premolar-5">
+                                    <polygon id="top" points="0,0 45,0 30.15,14.85 14.85,14.85" class="polygon unmarked @(Model.Tooth44 != null && Model.Tooth44.Lingual != null ? Model.Tooth44.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 14.85,14.85 14.85,30.15 0,45" class="polygon unmarked @(Model.Tooth44 != null && Model.Tooth44.Distal != null ? Model.Tooth44.Distal.Color : "")" />
+                                    <polygon id="bottom" points="0,45 14.85,30.15 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth44 != null && Model.Tooth44.BuccalOrLabial != null ? Model.Tooth44.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="45,0 30.15,14.85 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth44 != null && Model.Tooth44.Mesial != null ? Model.Tooth44.Mesial.Color : "")" />
+                                    <polygon id="center" points="14.85, 14.85 30.15, 14.85 30.15, 30.15 14.85, 30.15" class="polygon unmarked @(Model.Tooth44 != null && Model.Tooth44.Occlusal != null ? Model.Tooth44.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" class="incisor">
+                                    <polygon id="top" points="14.85,0 30.15,0 30.15,22.5 14.85,22.5" class="polygon unmarked @(Model.Tooth43 != null && Model.Tooth43.Lingual != null ? Model.Tooth43.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,14.85 14.85,14.85 14.85,30.15 0,30.15" class="polygon unmarked @(Model.Tooth43 != null && Model.Tooth43.Distal != null ? Model.Tooth43.Distal.Color : "")" />
+                                    <polygon id="bottom" points="14.85,22.5 30.15,22.5 30.15,45 14.85,45" class="polygon unmarked @(Model.Tooth43 != null && Model.Tooth43.BuccalOrLabial != null ? Model.Tooth43.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="30.15,14.85 45,14.85 45,30.15 30.15,30.15" class="polygon unmarked @(Model.Tooth43 != null && Model.Tooth43.Mesial != null ? Model.Tooth43.Mesial.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" class="incisor">
+                                    <polygon id="top" points="14.85,0 30.15,0 30.15,22.5 14.85,22.5" class="polygon unmarked @(Model.Tooth42 != null && Model.Tooth42.Lingual != null ? Model.Tooth42.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,14.85 14.85,14.85 14.85,30.15 0,30.15" class="polygon unmarked @(Model.Tooth42 != null && Model.Tooth42.Distal != null ? Model.Tooth42.Distal.Color : "")" />
+                                    <polygon id="bottom" points="14.85,22.5 30.15,22.5 30.15,45 14.85,45" class="polygon unmarked @(Model.Tooth42 != null && Model.Tooth42.BuccalOrLabial != null ? Model.Tooth42.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="30.15,14.85 45,14.85 45,30.15 30.15,30.15" class="polygon unmarked @(Model.Tooth42 != null && Model.Tooth42.Mesial != null ? Model.Tooth42.Mesial.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" class="incisor">
+                                    <polygon id="top" points="14.85,0 30.15,0 30.15,22.5 14.85,22.5" class="polygon unmarked @(Model.Tooth41 != null && Model.Tooth41.Lingual != null ? Model.Tooth41.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,14.85 14.85,14.85 14.85,30.15 0,30.15" class="polygon unmarked @(Model.Tooth41 != null && Model.Tooth41.Distal != null ? Model.Tooth41.Distal.Color : "")" />
+                                    <polygon id="bottom" points="14.85,22.5 30.15,22.5 30.15,45 14.85,45" class="polygon unmarked @(Model.Tooth41 != null && Model.Tooth41.BuccalOrLabial != null ? Model.Tooth41.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="30.15,14.85 45,14.85 45,30.15 30.15,30.15" class="polygon unmarked @(Model.Tooth41 != null && Model.Tooth41.Mesial != null ? Model.Tooth41.Mesial.Color : "")" />
+                                </svg>
+                            </td>
+                            <td></td>
+                            <td>
+                                <svg width="45" height="45" class="incisor">
+                                    <polygon id="top" points="14.85,0 30.15,0 30.15,22.5 14.85,22.5" class="polygon unmarked @(Model.Tooth31 != null && Model.Tooth31.Lingual != null ? Model.Tooth31.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,14.85 14.85,14.85 14.85,30.15 0,30.15" class="polygon unmarked @(Model.Tooth31 != null && Model.Tooth31.Mesial != null ? Model.Tooth31.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="14.85,22.5 30.15,22.5 30.15,45 14.85,45" class="polygon unmarked @(Model.Tooth31 != null && Model.Tooth31.BuccalOrLabial != null ? Model.Tooth31.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="30.15,14.85 45,14.85 45,30.15 30.15,30.15" class="polygon unmarked @(Model.Tooth31 != null && Model.Tooth31.Distal != null ? Model.Tooth31.Distal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" class="incisor">
+                                    <polygon id="top" points="14.85,0 30.15,0 30.15,22.5 14.85,22.5" class="polygon unmarked @(Model.Tooth32 != null && Model.Tooth32.Lingual != null ? Model.Tooth32.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,14.85 14.85,14.85 14.85,30.15 0,30.15" class="polygon unmarked @(Model.Tooth32 != null && Model.Tooth32.Mesial != null ? Model.Tooth32.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="14.85,22.5 30.15,22.5 30.15,45 14.85,45" class="polygon unmarked @(Model.Tooth32 != null && Model.Tooth32.BuccalOrLabial != null ? Model.Tooth32.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="30.15,14.85 45,14.85 45,30.15 30.15,30.15" class="polygon unmarked @(Model.Tooth32 != null && Model.Tooth32.Distal != null ? Model.Tooth32.Distal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" class="incisor">
+                                    <polygon id="top" points="14.85,0 30.15,0 30.15,22.5 14.85,22.5" class="polygon unmarked @(Model.Tooth33 != null && Model.Tooth33.Lingual != null ? Model.Tooth33.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,14.85 14.85,14.85 14.85,30.15 0,30.15" class="polygon unmarked @(Model.Tooth33 != null && Model.Tooth33.Mesial != null ? Model.Tooth33.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="14.85,22.5 30.15,22.5 30.15,45 14.85,45" class="polygon unmarked @(Model.Tooth33 != null && Model.Tooth33.BuccalOrLabial != null ? Model.Tooth33.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="30.15,14.85 45,14.85 45,30.15 30.15,30.15" class="polygon unmarked @(Model.Tooth33 != null && Model.Tooth33.Distal != null ? Model.Tooth33.Distal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" class="premolar-5">
+                                    <polygon id="top" points="0,0 45,0 30.15,14.85 14.85,14.85" class="polygon unmarked @(Model.Tooth34 != null && Model.Tooth34.Lingual != null ? Model.Tooth34.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 14.85,14.85 14.85,30.15 0,45" class="polygon unmarked @(Model.Tooth34 != null && Model.Tooth34.Mesial != null ? Model.Tooth34.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="0,45 14.85,30.15 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth34 != null && Model.Tooth34.BuccalOrLabial != null ? Model.Tooth34.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="45,0 30.15,14.85 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth34 != null && Model.Tooth34.Distal != null ? Model.Tooth34.Distal.Color : "")" />
+                                    <polygon id="center" points="14.85, 14.85 30.15, 14.85 30.15, 30.15 14.85, 30.15" class="polygon unmarked @(Model.Tooth34 != null && Model.Tooth34.Occlusal != null ? Model.Tooth34.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" class="premolar-5">
+                                    <polygon id="top" points="0,0 45,0 30.15,14.85 14.85,14.85" class="polygon unmarked @(Model.Tooth35 != null && Model.Tooth35.Lingual != null ? Model.Tooth35.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 14.85,14.85 14.85,30.15 0,45" class="polygon unmarked @(Model.Tooth35 != null && Model.Tooth35.Mesial != null ? Model.Tooth35.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="0,45 14.85,30.15 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth35 != null && Model.Tooth35.BuccalOrLabial != null ? Model.Tooth35.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="45,0 30.15,14.85 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth35 != null && Model.Tooth35.Distal != null ? Model.Tooth35.Distal.Color : "")" />
+                                    <polygon id="center" points="14.85, 14.85 30.15, 14.85 30.15, 30.15 14.85, 30.15" class="polygon unmarked @(Model.Tooth35 != null && Model.Tooth35.Occlusal != null ? Model.Tooth35.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" class="molar">
+                                    <polygon id="top" points="0,0 45,0 30.15,14.85 14.85,14.85" class="polygon unmarked @(Model.Tooth36 != null && Model.Tooth36.Lingual != null ? Model.Tooth36.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 14.85,14.85 14.85,30.15 0,45" class="polygon unmarked @(Model.Tooth36 != null && Model.Tooth36.Mesial != null ? Model.Tooth36.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="0,45 14.85,30.15 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth36 != null && Model.Tooth36.BuccalOrLabial != null ? Model.Tooth36.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="45,0 30.15,14.85 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth36 != null && Model.Tooth36.Distal != null ? Model.Tooth36.Distal.Color : "")" />
+                                    <polygon id="center" points="14.85, 14.85 30.15, 14.85 30.15, 30.15 14.85, 30.15" class="polygon unmarked @(Model.Tooth36 != null && Model.Tooth36.Occlusal != null ? Model.Tooth36.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" class="molar">
+                                    <polygon id="top" points="0,0 45,0 30.15,14.85 14.85,14.85" class="polygon unmarked @(Model.Tooth37 != null && Model.Tooth37.Lingual != null ? Model.Tooth37.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 14.85,14.85 14.85,30.15 0,45" class="polygon unmarked @(Model.Tooth37 != null && Model.Tooth37.Mesial != null ? Model.Tooth37.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="0,45 14.85,30.15 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth37 != null && Model.Tooth37.BuccalOrLabial != null ? Model.Tooth37.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="45,0 30.15,14.85 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth37 != null && Model.Tooth37.Distal != null ? Model.Tooth37.Distal.Color : "")" />
+                                    <polygon id="center" points="14.85, 14.85 30.15, 14.85 30.15, 30.15 14.85, 30.15" class="polygon unmarked @(Model.Tooth37 != null && Model.Tooth37.Occlusal != null ? Model.Tooth37.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" class="molar">
+                                    <polygon id="top" points="0,0 45,0 30.15,14.85 14.85,14.85" class="polygon unmarked @(Model.Tooth38 != null && Model.Tooth38.Lingual != null ? Model.Tooth38.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 14.85,14.85 14.85,30.15 0,45" class="polygon unmarked @(Model.Tooth38 != null && Model.Tooth38.Mesial != null ? Model.Tooth38.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="0,45 14.85,30.15 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth38 != null && Model.Tooth38.BuccalOrLabial != null ? Model.Tooth38.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="45,0 30.15,14.85 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth38 != null && Model.Tooth38.Distal != null ? Model.Tooth38.Distal.Color : "")" />
+                                    <polygon id="center" points="14.85, 14.85 30.15, 14.85 30.15, 30.15 14.85, 30.15" class="polygon unmarked @(Model.Tooth38 != null && Model.Tooth38.Occlusal != null ? Model.Tooth38.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                        </tr>
+
+                        <!--Lower Teeth Label-->
+                        <tr>
+                            <td>48</td>
+                            <td>47</td>
+                            <td>46</td>
+                            <td>45</td>
+                            <td>44</td>
+                            <td>43</td>
+                            <td>42</td>
+                            <td>41</td>
+                            <td></td>
+                            <td>31</td>
+                            <td>32</td>
+                            <td>33</td>
+                            <td>34</td>
+                            <td>35</td>
+                            <td>36</td>
+                            <td>37</td>
+                            <td>38</td>
+                        </tr>
+
+                        <!--Lower Teeth Boxes-->
+                        <tr>
+                            <td class="box">@Html.Raw((Model.Tooth48 != null && Model.Tooth48.Condition != null ? Model.Tooth48.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth47 != null && Model.Tooth47.Condition != null ? Model.Tooth47.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth46 != null && Model.Tooth46.Condition != null ? Model.Tooth46.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth45 != null && Model.Tooth45.Condition != null ? Model.Tooth45.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth44 != null && Model.Tooth44.Condition != null ? Model.Tooth44.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth43 != null && Model.Tooth43.Condition != null ? Model.Tooth43.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth42 != null && Model.Tooth42.Condition != null ? Model.Tooth42.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth41 != null && Model.Tooth41.Condition != null ? Model.Tooth41.Condition.Abbreviation : ""))</td>
+                            <td></td>
+                            <td class="box">@Html.Raw((Model.Tooth31 != null && Model.Tooth31.Condition != null ? Model.Tooth31.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth32 != null && Model.Tooth32.Condition != null ? Model.Tooth32.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth33 != null && Model.Tooth33.Condition != null ? Model.Tooth33.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth34 != null && Model.Tooth34.Condition != null ? Model.Tooth34.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth35 != null && Model.Tooth35.Condition != null ? Model.Tooth35.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth36 != null && Model.Tooth36.Condition != null ? Model.Tooth36.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth37 != null && Model.Tooth37.Condition != null ? Model.Tooth37.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth38 != null && Model.Tooth38.Condition != null ? Model.Tooth38.Condition.Abbreviation : ""))</td>
+                        </tr>
+
+                        <!--Lower Milk Teeth-->
+                        <tr class="pt">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <svg width="45" height="45" class="premolar-5">
+                                    <polygon id="top" points="0,0 45,0 30.15,14.85 14.85,14.85" class="polygon unmarked @(Model.Tooth85 != null && Model.Tooth85.Lingual != null ? Model.Tooth85.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 14.85,14.85 14.85,30.15 0,45" class="polygon unmarked @(Model.Tooth85 != null && Model.Tooth85.Distal != null ? Model.Tooth85.Distal.Color : "")" />
+                                    <polygon id="bottom" points="0,45 14.85,30.15 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth85 != null && Model.Tooth85.BuccalOrLabial != null ? Model.Tooth85.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="45,0 30.15,14.85 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth85 != null && Model.Tooth85.Mesial != null ? Model.Tooth85.Mesial.Color : "")" />
+                                    <polygon id="center" points="14.85, 14.85 30.15, 14.85 30.15, 30.15 14.85, 30.15" class="polygon unmarked @(Model.Tooth85 != null && Model.Tooth85.Occlusal != null ? Model.Tooth85.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" class="premolar-5">
+                                    <polygon id="top" points="0,0 45,0 30.15,14.85 14.85,14.85" class="polygon unmarked @(Model.Tooth84 != null && Model.Tooth84.Lingual != null ? Model.Tooth84.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 14.85,14.85 14.85,30.15 0,45" class="polygon unmarked @(Model.Tooth84 != null && Model.Tooth84.Distal != null ? Model.Tooth84.Distal.Color : "")" />
+                                    <polygon id="bottom" points="0,45 14.85,30.15 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth84 != null && Model.Tooth84.BuccalOrLabial != null ? Model.Tooth84.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="45,0 30.15,14.85 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth84 != null && Model.Tooth84.Mesial != null ? Model.Tooth84.Mesial.Color : "")" />
+                                    <polygon id="center" points="14.85, 14.85 30.15, 14.85 30.15, 30.15 14.85, 30.15" class="polygon unmarked @(Model.Tooth84 != null && Model.Tooth84.Occlusal != null ? Model.Tooth84.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" class="incisor">
+                                    <polygon id="top" points="14.85,0 30.15,0 30.15,22.5 14.85,22.5" class="polygon unmarked @(Model.Tooth83 != null && Model.Tooth83.Lingual != null ? Model.Tooth83.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,14.85 14.85,14.85 14.85,30.15 0,30.15" class="polygon unmarked @(Model.Tooth83 != null && Model.Tooth83.Distal != null ? Model.Tooth83.Distal.Color : "")" />
+                                    <polygon id="bottom" points="14.85,22.5 30.15,22.5 30.15,45 14.85,45" class="polygon unmarked @(Model.Tooth83 != null && Model.Tooth83.BuccalOrLabial != null ? Model.Tooth83.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="30.15,14.85 45,14.85 45,30.15 30.15,30.15" class="polygon unmarked @(Model.Tooth83 != null && Model.Tooth83.Mesial != null ? Model.Tooth83.Mesial.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" class="incisor">
+                                    <polygon id="top" points="14.85,0 30.15,0 30.15,22.5 14.85,22.5" class="polygon unmarked @(Model.Tooth82 != null && Model.Tooth82.Lingual != null ? Model.Tooth82.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,14.85 14.85,14.85 14.85,30.15 0,30.15" class="polygon unmarked @(Model.Tooth82 != null && Model.Tooth82.Distal != null ? Model.Tooth82.Distal.Color : "")" />
+                                    <polygon id="bottom" points="14.85,22.5 30.15,22.5 30.15,45 14.85,45" class="polygon unmarked @(Model.Tooth82 != null && Model.Tooth82.BuccalOrLabial != null ? Model.Tooth82.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="30.15,14.85 45,14.85 45,30.15 30.15,30.15" class="polygon unmarked @(Model.Tooth82 != null && Model.Tooth82.Mesial != null ? Model.Tooth82.Mesial.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" class="incisor">
+                                    <polygon id="top" points="14.85,0 30.15,0 30.15,22.5 14.85,22.5" class="polygon unmarked @(Model.Tooth81 != null && Model.Tooth81.Lingual != null ? Model.Tooth81.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,14.85 14.85,14.85 14.85,30.15 0,30.15" class="polygon unmarked @(Model.Tooth81 != null && Model.Tooth81.Distal != null ? Model.Tooth81.Distal.Color : "")" />
+                                    <polygon id="bottom" points="14.85,22.5 30.15,22.5 30.15,45 14.85,45" class="polygon unmarked @(Model.Tooth81 != null && Model.Tooth81.BuccalOrLabial != null ? Model.Tooth81.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="30.15,14.85 45,14.85 45,30.15 30.15,30.15" class="polygon unmarked @(Model.Tooth81 != null && Model.Tooth81.Mesial != null ? Model.Tooth81.Mesial.Color : "")" />
+                                </svg>
+                            </td>
+                            <td></td>
+                            <td>
+                                <svg width="45" height="45" class="incisor">
+                                    <polygon id="top" points="14.85,0 30.15,0 30.15,22.5 14.85,22.5" class="polygon unmarked @(Model.Tooth71 != null && Model.Tooth71.Lingual != null ? Model.Tooth71.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,14.85 14.85,14.85 14.85,30.15 0,30.15" class="polygon unmarked @(Model.Tooth71 != null && Model.Tooth71.Mesial != null ? Model.Tooth71.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="14.85,22.5 30.15,22.5 30.15,45 14.85,45" class="polygon unmarked @(Model.Tooth71 != null && Model.Tooth71.BuccalOrLabial != null ? Model.Tooth71.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="30.15,14.85 45,14.85 45,30.15 30.15,30.15" class="polygon unmarked @(Model.Tooth71 != null && Model.Tooth71.Distal != null ? Model.Tooth71.Distal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" class="incisor">
+                                    <polygon id="top" points="14.85,0 30.15,0 30.15,22.5 14.85,22.5" class="polygon unmarked @(Model.Tooth72 != null && Model.Tooth72.Lingual != null ? Model.Tooth72.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,14.85 14.85,14.85 14.85,30.15 0,30.15" class="polygon unmarked @(Model.Tooth72 != null && Model.Tooth72.Mesial != null ? Model.Tooth72.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="14.85,22.5 30.15,22.5 30.15,45 14.85,45" class="polygon unmarked @(Model.Tooth72 != null && Model.Tooth72.BuccalOrLabial != null ? Model.Tooth72.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="30.15,14.85 45,14.85 45,30.15 30.15,30.15" class="polygon unmarked @(Model.Tooth72 != null && Model.Tooth72.Distal != null ? Model.Tooth72.Distal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" class="incisor">
+                                    <polygon id="top" points="14.85,0 30.15,0 30.15,22.5 14.85,22.5" class="polygon unmarked @(Model.Tooth73 != null && Model.Tooth73.Lingual != null ? Model.Tooth73.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,14.85 14.85,14.85 14.85,30.15 0,30.15" class="polygon unmarked @(Model.Tooth73 != null && Model.Tooth73.Mesial != null ? Model.Tooth73.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="14.85,22.5 30.15,22.5 30.15,45 14.85,45" class="polygon unmarked @(Model.Tooth73 != null && Model.Tooth73.BuccalOrLabial != null ? Model.Tooth73.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="30.15,14.85 45,14.85 45,30.15 30.15,30.15" class="polygon unmarked @(Model.Tooth73 != null && Model.Tooth73.Distal != null ? Model.Tooth73.Distal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" class="premolar-5">
+                                    <polygon id="top" points="0,0 45,0 30.15,14.85 14.85,14.85" class="polygon unmarked @(Model.Tooth74 != null && Model.Tooth74.Lingual != null ? Model.Tooth74.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 14.85,14.85 14.85,30.15 0,45" class="polygon unmarked @(Model.Tooth74 != null && Model.Tooth74.Mesial != null ? Model.Tooth74.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="0,45 14.85,30.15 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth74 != null && Model.Tooth74.BuccalOrLabial != null ? Model.Tooth74.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="45,0 30.15,14.85 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth74 != null && Model.Tooth74.Distal != null ? Model.Tooth74.Distal.Color : "")" />
+                                    <polygon id="center" points="14.85, 14.85 30.15, 14.85 30.15, 30.15 14.85, 30.15" class="polygon unmarked @(Model.Tooth74 != null && Model.Tooth74.Occlusal != null ? Model.Tooth74.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td>
+                                <svg width="45" height="45" class="premolar-5">
+                                    <polygon id="top" points="0,0 45,0 30.15,14.85 14.85,14.85" class="polygon unmarked @(Model.Tooth75 != null && Model.Tooth75.Lingual != null ? Model.Tooth75.Lingual.Color : "")" />
+                                    <polygon id="left" points="0,0 14.85,14.85 14.85,30.15 0,45" class="polygon unmarked @(Model.Tooth75 != null && Model.Tooth75.Mesial != null ? Model.Tooth75.Mesial.Color : "")" />
+                                    <polygon id="bottom" points="0,45 14.85,30.15 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth75 != null && Model.Tooth75.BuccalOrLabial != null ? Model.Tooth75.BuccalOrLabial.Color : "")" />
+                                    <polygon id="right" points="45,0 30.15,14.85 30.15,30.15 45,45" class="polygon unmarked @(Model.Tooth75 != null && Model.Tooth75.Distal != null ? Model.Tooth75.Distal.Color : "")" />
+                                    <polygon id="center" points="14.85, 14.85 30.15, 14.85 30.15, 30.15 14.85, 30.15" class="polygon unmarked @(Model.Tooth75 != null && Model.Tooth75.Occlusal != null ? Model.Tooth75.Occlusal.Color : "")" />
+                                </svg>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                        <!--Lower Milk Label-->
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>85</td>
+                            <td>84</td>
+                            <td>83</td>
+                            <td>82</td>
+                            <td>81</td>
+                            <td></td>
+                            <td>71</td>
+                            <td>72</td>
+                            <td>73</td>
+                            <td>74</td>
+                            <td>75</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                        <!--Lower Milk Teeth Boxes-->
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="box">@Html.Raw((Model.Tooth85 != null && Model.Tooth85.Condition != null ? Model.Tooth85.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth84 != null && Model.Tooth84.Condition != null ? Model.Tooth84.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth83 != null && Model.Tooth83.Condition != null ? Model.Tooth83.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth82 != null && Model.Tooth82.Condition != null ? Model.Tooth82.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth81 != null && Model.Tooth81.Condition != null ? Model.Tooth81.Condition.Abbreviation : ""))</td>
+                            <td></td>
+                            <td class="box">@Html.Raw((Model.Tooth71 != null && Model.Tooth71.Condition != null ? Model.Tooth71.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth72 != null && Model.Tooth72.Condition != null ? Model.Tooth72.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth73 != null && Model.Tooth73.Condition != null ? Model.Tooth73.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth74 != null && Model.Tooth74.Condition != null ? Model.Tooth74.Condition.Abbreviation : ""))</td>
+                            <td class="box">@Html.Raw((Model.Tooth75 != null && Model.Tooth75.Condition != null ? Model.Tooth75.Condition.Abbreviation : ""))</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="table-responsive-xl mx-5 mb-5">
+                <table class="table table-bordered" id="dental-chart">
+                    <tr>
+                        <td>&#10003;</td>
+                        <td>Present</td>
+                        <td>Un</td>
+                        <td>Unerupted</td>
+                        <td>Att</td>
+                        <td>Attachment</td>
+                        <td><div class="border p-2" style="background-color: lightgreen"></div></td>
+                        <td>Inlay</td>
+                    </tr>
+                    <tr>
+                        <td>M</td>
+                        <td>Missing Due To Caries</td>
+                        <td>X</td>
+                        <td>Extraction Due To Caries</td>
+                        <td>P</td>
+                        <td>Pontic</td>
+                        <td><div class="border p-2" style="background-color: purple"></div></td>
+                        <td>Onlay</td>
+                    </tr>
+                    <tr>
+                        <td>Mo</td>
+                        <td>Missing Due To Other Causes</td>
+                        <td>Xo</td>
+                        <td>Extraction Due To Other Causes</td>
+                        <td>Imp</td>
+                        <td>Implant</td>
+                        <td><div class="border p-2" style="background-color: darkblue"></div></td>
+                        <td>Sealant</td>
+                    </tr>
+                    <tr>
+                        <td>Im</td>
+                        <td>Impacted Tooth</td>
+                        <td>JC</td>
+                        <td>Jacket Crown</td>
+                        <td><div class="border p-2" style="background-color: darkgray"></div></td>
+                        <td>Amalgam</td>
+                        <td><div class="border p-2" style="background-color: red"></div></td>
+                        <td>Caries</td>
+                    </tr>
+                    <tr>
+                        <td>Rf</td>
+                        <td>Root Fragment</td>
+                        <td>Ab</td>
+                        <td>Abutment</td>
+                        <td><div class="border p-2" style="background-color: blue"></div></td>
+                        <td>Composite</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+
+            <script src="~/js/dental-chart.js"></script>
+
+            <hr />
+
+            <h3 class="mb-3 fs-24 fw-bold">Oral Cavity Conditions</h3>
+
+            <ul list-unstyled mb-0>
+                @(Model.DentalChart.OralCavity.IsGingivitis == true ? @Html.Raw("<li>Gingivitis</li>") : null)
+                @(Model.DentalChart.OralCavity.IsEarlyPerio == true ? @Html.Raw("<li>Early Periodontitis</li>") : null)
+                @(Model.DentalChart.OralCavity.IsModPerio == true ? @Html.Raw("<li>Moderate Periodontitis</li>") : null)
+                @(Model.DentalChart.OralCavity.IsAdvPerio == true ? @Html.Raw("<li>Advanced Periodontitis</li>") : null)
+                @(Model.DentalChart.OralCavity.IsOverjet == true ? @Html.Raw("<li>Overjet</li>") : null)
+                @(Model.DentalChart.OralCavity.IsOverbite == true ? @Html.Raw("<li>Overbite</li>") : null)
+                @(Model.DentalChart.OralCavity.IsMidlineDeviation == true ? @Html.Raw("<li>Midline Deviation</li>") : null)
+                @(Model.DentalChart.OralCavity.IsCrossbite == true ? @Html.Raw("<li>Crossbite</li>") : null)
+                @(Model.DentalChart.OralCavity.IsClenching == true ? @Html.Raw("<li>Clenching</li>") : null)
+                @(Model.DentalChart.OralCavity.IsClicking == true ? @Html.Raw("<li>Clicking</li>") : null)
+                @(Model.DentalChart.OralCavity.IsTrismus == true ? @Html.Raw("<li>Trismus</li>") : null)
+                @(Model.DentalChart.OralCavity.IsMusclePain == true ? @Html.Raw("<li>Muscle Pain</li>") : null)
+            </ul>
+
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="mb-3">
+                        <label class="form-label" for="DentalChart_OralCavity_OrthoApplication">Orthodontic Application</label>
+                        <input asp-for="@Model.DentalChart.OralCavity.OrthoApplication" class="form-control" disabled />
+                        <span asp-validation-for="@Model.DentalChart.OralCavity.OrthoApplication" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="mb-3">
+                        <label class="form-label" for="DentalChart_OralCavity_ClassType">Class Type</label>
+                        <input asp-for="@Model.DentalChart.OralCavity.ClassType" class="form-control" disabled />
+                        <span asp-validation-for="@Model.DentalChart.OralCavity.ClassType" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}

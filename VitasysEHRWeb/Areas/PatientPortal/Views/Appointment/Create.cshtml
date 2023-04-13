@@ -1,0 +1,112 @@
+﻿@model VitasysEHR.Models.ViewModels.AppointmentVM
+
+@{
+    ViewData["Title"] = "Appointments";
+    Layout = "/Areas/PatientPortal/Views/_PatientPortalLayout.cshtml";
+
+    List<SelectListItem> clinicList = new List<SelectListItem>();
+    foreach(var item in Model.Clinics)
+    {
+        var splitClinicHours = item.Text.Split("-");
+        var clinicStartTime = splitClinicHours[1];
+        var clinicEndTime = splitClinicHours[3];
+        var clinicName = splitClinicHours[4];
+
+        item.Text = clinicName + " (Clinic Hours: " + clinicStartTime + " - " + clinicEndTime +")";
+
+        clinicList.Add(new SelectListItem
+        {
+            Text = item.Text,
+            Value = item.Value
+        });
+    }
+}
+
+<div class="d-flex justify-content-center">
+    <div class="card shadow-sm mt-3 pp-card-50-75-100">
+        <div class="card-body">
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger" role="alert">
+                    <h5><i class="fas fa-exclamation-circle me-2"></i> @TempData["ErrorMessage"]</h5>
+                    <hr />
+                    <p class="m-0">Available time slots for date @Model.AppointmentDate:</p>
+                    <ul class="m-0">
+                        @foreach (var item in Model.AvailableTimeslots)
+                        {
+                            <li>@item</li>
+                        }
+                    </ul>
+                </div>
+            }
+
+            <div class="d-flex align-items-center">
+                <i class="fas fa-calendar-check me-2" style="font-size: 2rem"></i>
+                <h1 class="m-0">Book Appointment</h1>
+            </div>
+            
+
+            <form asp-action="Create" method="post" class="mt-3">
+
+                <div class="mb-3">
+                    <label class="form-label" for="date">Date:</label>
+                    <input asp-for="AppointmentDate" type="date" title="Date must not be on or before present date" id="date" class="form-control" />
+                    <span asp-validation-for="AppointmentDate" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="Appointment_AppointmentTimeId">Time:</label>
+                    <select asp-for="Appointment.AppointmentTimeId" asp-items="@Model.TimeSlots" class="form-select">
+                        <option disabled selected>Select Time Slot</option>
+                    </select>
+                    <span asp-validation-for="Appointment.AppointmentTimeId" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="Appointment_ClinicId">Clinic:</label>
+                    <select asp-for="Appointment.ClinicId" asp-items="@clinicList" class="form-select">
+                        <option disabled selected>Select Clinic</option>
+                    </select>
+                    <span asp-validation-for="Appointment.ClinicId" class="text-danger"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label" for="Appointment_Description">Purpose of Appointment:</label>
+                    <textarea asp-for="Appointment.Description" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Appointment.Description" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Index" class="btn btn-secondary"><i class="fas fa-times me-2"></i>Cancel</a>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane me-2"></i>Submit</button>
+                </div>
+                
+                
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.1/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation/dist/additional-methods.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
+<script>
+$(function(){
+    var dtToday = new Date();
+    
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate() + 1;
+    var year = dtToday.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+    
+    var maxDate = year + '-' + month + '-' + day;
+
+    $('#date').attr('min', maxDate);
+});
+</script>

@@ -1,0 +1,124 @@
+﻿@{
+    ViewData["Title"] = "Employee";
+    var status = Context.Request.Query["status"];
+    var archived = "text-primary";
+    var active = "text-primary";
+
+    switch (status)
+    {
+        case "archived":
+            archived = "active text-white";
+            break;
+        default:
+            active = "active text-white";
+            break;
+    }
+}
+
+<div class="card shadow-sm mt-3">
+    <div class="card-body">
+
+
+        <div class="d-flex justify-content-between flex-wrap mb-4">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-briefcase me-2" style="font-size: 2rem"></i>
+                <h1 class="m-0 fw-bolder">Employees</h1>
+            </div>
+
+            <div class="col-lg-6 d-flex flex-row rd-justify-content-sn mb-3">
+                <button class="btn btn-success me-3" onclick="addEmployee()">
+                    <i class="fas fa-plus me-2"></i> Add Employee
+                </button>
+                <ul class="list-group list-group-horizontal">
+                    <a style="text-decoration: none;" asp-Controller="Employee" asp-action="Index"
+                       asp-route-status="active">
+                    <li class="list-group-item @active list-group-rounded-left"><i class="fas fa-check me-2"></i>Active</li>
+                    </a>
+                    <a style="text-decoration: none;" asp-Controller="Employee" asp-action="Index"
+                       asp-route-status="archived">
+                    <li class="list-group-item @archived list-group-rounded-right"><i class="fas fa-archive me-2"></i>Archived</li>
+                    </a>
+                </ul>
+            </div>
+        </div>
+
+        <div class="table-responsive-sm">
+            <table id="myTable" class="table table-hover table-striped border w-100 table-rounded">
+                <thead class="bg-primary text-white">
+                    <tr style="letter-spacing: 1.4px;">
+                        <th>NAME</th>
+                        <th>ROLE</th>
+                        <th>DATE ADDED</th>
+                        <th>LAST MODIFIED</th>
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+                <tbody class="align-middle"></tbody>
+            </table>
+        </div>
+
+        <!--Add Employee Modal-->
+        <div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-24" id="addEmployeeModalLabel">Add Employee</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="addEmployeeModalBodyDiv">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--View Employee Modal-->
+        <div class="modal fade" id="viewEmployeeModal" tabindex="-1" aria-labelledby="viewEmployeeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-24" id="viewEmployeeModalLabel">View Employee Details</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="viewEmployeeModalBodyDiv">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Edit Employee Modal-->
+        <div class="modal fade" id="editEmployeeModal" tabindex="-1" aria-labelledby="editEmployeeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-24" id="editEmployeeModalLabel">Edit Employee Details</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="editEmployeeModalBodyDiv">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Reusable Modal-->
+        <div class="modal fade" id="employeeModal" tabindex="-1" aria-labelledby="employeeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-24" id="employeeModalLabel"></h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="employeeModalBodyDiv">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    @{
+    <partial name="_ValidationScriptsPartial" />
+    }
+<script src="~/js/employee.js"></script>
+}

@@ -1,0 +1,65 @@
+﻿@using VitasysEHR.Utility
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    Layout = "_SideNavLayout";
+    ViewData["Title"] = "Reminders";
+
+    int? patientId = HttpContextAccessor.HttpContext.Session.GetInt32(SD.SessionKeyPatientId);
+}
+
+<input type="hidden" id="patientId" value="@patientId" />
+
+<div class="d-flex justify-content-center">
+    <div class="card shadow-sm mt-3 pp-card-75-100">
+        <div class="card-body">
+
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <div class=" d-flex align-items-center">
+                    <i class="fas fa-bell me-2" style="font-size: 2rem"></i>
+                    <h1 class="m-0 fw-bolder">Reminders</h1>
+                </div>
+
+                <div>
+                    <a asp-action="Create" class="btn btn-success"><i class="fas fa-plus me-2"></i> Create Reminder</a>
+                </div>
+
+            </div>
+
+
+            <div class="table-responsive-lg">
+                <table class="table table-striped table-hover w-100" id="remindersTable">
+                    <thead class="bg-primary text-white">
+                        <tr style="letter-spacing: 1.4px;">
+                            <th>ID</th>
+                            <th>TITLE</th>
+                            <th>DATE ADDED</th>
+                            <th>LAST MODIFIED</th>
+                            <th>ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-middle">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Reminder Modal -->
+<div class="modal fade" id="reminderModal" tabindex="-1" aria-labelledby="reminderModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-24" id="reminderModalLabel">View Reminder</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="reminderModalBodyDiv">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/reminder-clinic.js"></script>

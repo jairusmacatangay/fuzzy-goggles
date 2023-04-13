@@ -1,0 +1,78 @@
+﻿.box {
+    border: 1px solid;
+    height: 20px;
+}
+
+tr.pb > * {
+    padding-bottom: 30px;
+}
+
+tr.pt > * {
+    padding-top: 30px;
+}
+
+tr.ps > * {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+tr.ps-print > * {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.polygon {
+    stroke: black;
+    stroke-width: 1;
+}
+
+svg:hover .polygon {
+    stroke: gray;
+    stroke-width: 4;
+    cursor: pointer;
+}
+
+.form-tooth .form-polygon {
+    stroke: black;
+    stroke-width: 5;
+    shape-rendering: crispEdges;
+    stroke-linejoin: round;
+}
+
+.unmarked {
+    fill: white;
+}
+
+.red {
+    fill: red;
+}
+
+.blue {
+    fill: blue;
+}
+
+.dark-gray {
+    fill: darkgray;
+}
+
+.light-green {
+    fill: lightgreen;
+}
+
+.purple {
+    fill: purple;
+}
+
+.dark-blue {
+    fill: darkblue;
+}
+
+#dental-chart {
+    text-align: center;
+}
+
+@media only screen and (max-width: 1700px) {
+    #dental-chart {
+        overflow-x: scroll;
+    }
+}

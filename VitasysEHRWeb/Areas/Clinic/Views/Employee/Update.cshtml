@@ -1,0 +1,139 @@
+﻿@model VitasysEHR.Models.ViewModels.EmployeeVM
+
+<div class="card mt-3">
+    <div class="card-body">
+        <form method="post" asp-action="Update" enctype="multipart/form-data" asp-route-id="@Model.ApplicationUser.Id">
+            <div class="row">
+                <label asp-for="ApplicationUser.Id" for="ApplicationUser_Id" hidden></label>
+                <input asp-for="ApplicationUser.Id" value="@Model.ApplicationUser.Id" hidden />
+                <label asp-for="ApplicationUser.ProfPicUrl" for="ApplicationUser_ProfPicUrl" hidden></label>
+                <input asp-for="ApplicationUser.ProfPicUrl" value="@Model.ApplicationUser.ProfPicUrl" hidden />
+
+                <div class=col>
+                    <div class="row">
+                        <div class="col">
+                            <h1 class="fs-24 fw-bolder">Edit Employee</h1>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <!--First Name-->
+                                    <div class="mb-3">
+                                        <label asp-for="ApplicationUser.FirstName" class="form-label" for="ApplicationUser_FirstName"></label>
+                                        <input asp-for="ApplicationUser.FirstName" class="form-control" />
+                                        <span asp-validation-for="ApplicationUser.FirstName" class="text-danger"></span>
+                                    </div>
+
+                                    <!--Middle Name-->
+                                    <div class="mb-3">
+                                        <div class="d-flex">
+                                            <label asp-for="ApplicationUser.MiddleName" class="form-label"></label>
+                                            <div class="text-muted ms-1">(optional)</div>
+                                        </div>
+                                        <input asp-for="ApplicationUser.MiddleName" class="form-control" />
+                                        <span asp-validation-for="ApplicationUser.MiddleName" class="text-danger"></span>
+                                    </div>
+
+                                    <!--Last Name-->
+                                    <div class="mb-3">
+                                        <label asp-for="ApplicationUser.LastName" class="form-label" for="ApplicationUser_LastName"></label>
+                                        <input asp-for="ApplicationUser.LastName" class="form-control" />
+                                        <span asp-validation-for="ApplicationUser.LastName" class="text-danger"></span>
+                                    </div>
+
+                                    <!--ProfPic-->
+                                    <div class="mb-3">
+                                        <div class="d-flex">
+                                            <label asp-for="ApplicationUser.ProfPicUrl" class="form-label" for="file"></label>
+                                            <div class="text-muted ms-1">(optional)</div>
+                                        </div>
+                                        <input type="file" name="file" class="form-control" accept="image/*" id="file" />
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <!--DOB-->
+                                    <div class="mb-3">
+                                        <label asp-for="ApplicationUser.DOB" class="form-label"></label>
+                                        <div class="input-group date">
+                                            <input type="text" asp-for="ApplicationUser.DOB" class="form-control" data-provide="datepicker" placeholder="MM/DD/YYYY" />
+                                        </div>
+                                        <span asp-validation-for="ApplicationUser.DOB" class="text-danger"></span>
+                                    </div>
+
+                                    <!--Role-->
+                                    <div class="mb-3">
+                                        <label asp-for="Role" class="form-label"></label>
+                                        <select asp-for="Role" class="form-select" asp-items="@Model.RoleList"></select>
+                                    </div>
+
+                                    <!--Gender-->
+                                    <div class="mb-3">
+                                        <label asp-for="ApplicationUser.Gender" class="form-label"></label>
+                                        <select asp-for="ApplicationUser.Gender" class="form-select">
+                                            <option selected disabled>Select Gender</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="LGBTQIA+">LGBTQIA+</option>
+                                            <option value="Prefer not to say">Prefer not to say</option>
+                                        </select>
+                                        <span asp-validation-for="ApplicationUser.Gender" class="text-danger"></span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <!--Address-->
+                                    <div class="mb-3">
+                                        <label asp-for="ApplicationUser.Address" class="form-label"></label>
+                                        <input asp-for="ApplicationUser.Address" class="form-control" />
+                                        <span asp-validation-for="ApplicationUser.Address" class="text-danger"></span>
+                                    </div>
+
+                                    <!--City-->
+                                    <div class="mb-3">
+                                        <label asp-for="ApplicationUser.City" class="form-label"></label>
+                                        <input asp-for="ApplicationUser.City" class="form-control" />
+                                        <span asp-validation-for="ApplicationUser.City" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <!--Province-->
+                                    <div class="mb-3">
+                                        <label asp-for="ApplicationUser.Province" class="form-label"></label>
+                                        <input asp-for="ApplicationUser.Province" class="form-control" />
+                                        <span asp-validation-for="ApplicationUser.Province" class="text-danger"></span>
+                                    </div>
+
+                                    <!--ZipCode-->
+                                    <div class="mb-3">
+                                        <label asp-for="ApplicationUser.ZipCode" class="form-label"></label>
+                                        <input asp-for="ApplicationUser.ZipCode" maxlength="4" class="form-control" />
+                                        <span asp-validation-for="ApplicationUser.ZipCode" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" id="updateBtn"><i class="fas fa-save me-2"></i>Save</button>
+        </form>
+
+    </div>
+</div>
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.1/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation/dist/additional-methods.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    $("#datepicker").datepicker({
+        endDate: new Date()
+    });
+</script>

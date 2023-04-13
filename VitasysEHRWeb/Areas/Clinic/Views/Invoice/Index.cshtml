@@ -1,0 +1,111 @@
+﻿@{
+    ViewData["Title"] = "Invoice";
+}
+
+<div class="card mt-3 shadow-sm">
+    <div class="card-body">
+
+        <div class="d-flex justify-content-between flex-wrap mb-4">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-file-invoice me-2" style="font-size: 2rem"></i>
+                <h1 class="m-0 fw-bolder">Invoice List</h1>
+                @if (@ViewData["filter"] != null)
+                {
+                    <div class="ms-3">Filter: <span class="badge bg-primary rounded-pill">@ViewData["filter"]</span></div>
+                }
+            </div>
+
+            <div class="d-flex">
+                <div>
+                    <button class="btn btn-success me-2" onclick="loadCreateInvoiceForm()">
+                        <i class="fas fa-plus me-2"></i> Create Invoice Draft
+                    </button>
+                </div>
+
+                <div class="dropdown">
+                    <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-filter me-2"></i>Filter by
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><div class="dropdown-header">Record Status</div></li>
+                        <li><a class="dropdown-item" asp-Controller="Invoice" asp-action="Index" asp-route-status="Active">Active</a></li>
+                        <li><a class="dropdown-item" asp-Controller="Invoice" asp-action="Index" asp-route-status="Archived">Archived</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><div class="dropdown-header">Payment Status</div></li>
+                        <li><a class="dropdown-item" asp-Controller="Invoice" asp-action="Index" asp-route-status="Paid">Paid</a></li>
+                        <li><a class="dropdown-item" asp-Controller="Invoice" asp-action="Index" asp-route-status="Pending">Pending</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><div class="dropdown-header">Invoice Status</div></li>
+                        <li><a class="dropdown-item" asp-Controller="Invoice" asp-action="Index" asp-route-status="Created">Created</a></li>
+                        <li><a class="dropdown-item" asp-Controller="Invoice" asp-action="Index" asp-route-status="Draft">Draft</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive-sm">
+            <table id="myTable" class="table table-striped table-borderless w-100 table-rounded">
+                <thead class="bg-primary text-white">
+                    <tr class="th-letter-spacing">
+                        <th>ID</th>
+                        <th>PATIENT</th>
+                        <th>DATE</th>
+                        <th>INVOICE STATUS</th>
+                        <th>PAYMENT STATUS</th>
+                        <th>TOTAL AMOUNT</th>
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+                <tbody class="align-middle">
+                </tbody>
+            </table>
+        </div>
+
+        <!--View Invoice Modal-->
+        <div class="modal fade" id="viewInvoiceModal" tabindex="-1" aria-labelledby="viewInvoiceModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-24" id="viewInvoiceModalLabel">View Invoice Details</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="viewInvoiceModalBody">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Create Invoice Modal-->
+        <div class="modal fade" id="createInvoiceModal" tabindex="-1" aria-labelledby="createInvoiceModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-24" id="createInvoiceModalLabel">Create Invoice</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="createInvoiceModalBody">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Collect Payment Modal-->
+        <div class="modal fade" id="collectPaymentModal" tabindex="-1" aria-labelledby="collectPaymentModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-24" id="collectPaymentModalLabel">Collect Payment</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="collectPaymentModalBody">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+<script src="~/js/invoice.js"></script>
+}

@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - VitasysEHRWeb</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootswatch-cosmos.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/landing-page.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/VitasysEHRWeb.styles.css" asp-append-version="true" />
+    <script src="https://kit.fontawesome.com/df6d866fec.js" crossorigin="anonymous"></script>
+</head>
+<body style="background-color:gainsboro;">
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="Clinic" asp-action="Index" asp-controller="Home"><img  src="~/img/resources/logo-2.png" style="height: 28px;" alt="VitaSys EHR Logo" /> VitaSys EHR</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+
+                <div class="collapse navbar-collapse" id="navbarColor03">
+                    <div class="auto-ml">
+                        <partial name="_LoginPartial" />
+                    </div>
+                </div>
+
+
+            </div>
+        </nav>
+    </header>
+
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    <footer class="text-white text-opacity-75 p-4 bg-secondary" style="position:absolute; bottom: 0; width: 100%; ">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="footer-link">
+                    <a href="/Clinic/Home/Privacy" target="_blank" class="footer-a">Privacy Policy</a> |
+                    <a href="/Clinic/Home/TermsConditions" target="_blank" class="footer-a">Terms and Conditions</a>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="footer-link">
+                    <p class="m-0 text-center">&copy; 2022 - VitasysEHR. All rights reserved</p>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div>
+                    <p class="m-0 text-end">For all inquiries and concerns, please email: vitasysehrapp@gmail.com</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

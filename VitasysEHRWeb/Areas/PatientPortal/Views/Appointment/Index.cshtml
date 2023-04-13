@@ -1,0 +1,70 @@
+﻿@{
+    ViewData["Title"] = "Appointments";
+    Layout = "/Areas/PatientPortal/Views/_PatientPortalLayout.cshtml";
+}
+
+<div class="d-flex justify-content-center">
+    <div class="card shadow-sm mt-3 pp-card-75-100">
+        <div class="card-body">
+
+            @if (TempData["AppointmentSuccess"] != null)
+            {
+                <div class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
+                    <i class="far fa-check-circle me-3" style="font-size: 32px;"></i>
+                    <div>
+                        @TempData["AppointmentSuccess"]
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger d-flex align-items-center alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-circle me-3" style="font-size: 32px;"></i>
+                    <div>
+                        @TempData["ErrorMessage"]
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            <div class="d-flex justify-content-between align-items-center mb-5">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-calendar-check me-3" style="font-size: 2rem"></i>
+                    <h1 class="m-0 fw-bolder">Appointments</h1>
+                </div>
+
+                <div>
+                    <a asp-action="Create" class="btn btn-success">
+                        <i class="fas fa-calendar-check me-2"></i>
+                        Book an Appointment
+                    </a>
+                </div>
+            </div>
+
+            <div class="table-responsive-sm mt-3">
+                <table id="appointmentTable" class="table table-striped table-borderless w-100 table-rounded">
+                    <thead class="bg-primary text-white">
+                        <tr class="th-letter-spacing">
+                            <th>ID</th>
+                            <th>DATE</th>
+                            <th>TimeId</th>
+                            <th>TIME</th>
+                            <th>CLINIC</th>
+                            <th>STATUS</th>
+                            <th>ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-middle"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section Scripts {
+<script src="~/js/portal-appointment.js"></script>
+}

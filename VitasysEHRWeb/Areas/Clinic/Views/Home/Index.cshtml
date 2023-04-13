@@ -1,0 +1,138 @@
+﻿@{
+    Layout = "_LandingPageLayout";
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="showcase bg-primary" id="RegisterNow">
+    <div class="showcase-content">
+
+        <div class="d-flex flex-row" style="margin-top: 200px;">
+            <img src="~/img/resources/logo-2.png" alt="VitaSys EHR Logo" class="logo" />
+            <h1 class="display-1 text-white">VitaSys EHR</h1>
+        </div>
+        <h2 class="text-white sub-heading">Start managing your dental practice and records online</h2>
+        <a class="btn btn-success btn-lg mt-3" asp-area="Identity" asp-page="/Account/Register">REGISTER NOW<i class="fas fa-chevron-circle-right ms-2"></i></a>
+    </div>
+</div>
+
+<div class="bg-danger">
+    <div class="container pt-5 pb-5">
+        <h3 class="text-center text-white">
+            <i class="fas fa-exclamation-circle me-2 text-warning"></i>
+            Get a <span class="badge bg-warning text-dark rounded-pill">20%</span> discount on your subscription plan's first month!
+            <i class="fas fa-exclamation-circle ms-2 text-warning"></i>
+        </h3>
+    </div>
+</div>
+
+<div class="bg-light">
+    <div class="container" style="padding-top: 150px; padding-bottom: 150px;">
+
+        <h1 class="display-1 text-center mb-5">Features</h1>
+
+        <div class="row icon-row">
+            <div class="col-md-3 icon-box">
+                <i class="fas fa-users text-primary icon d-flex justify-content-center mb-3"></i>
+                <h2 class="text-center text-success icon-title">PATIENT MANAGEMENT</h2>
+                <p class="text-center">
+                    View and manage all of your patients' medical records.
+                </p>
+            </div>
+            <div class="col-md-3 icon-box">
+                <i class="fas fa-tooth text-primary icon d-flex justify-content-center mb-3"></i>
+                <h2 class="text-center text-success icon-title">DENTAL CHARTING</h2>
+                <p class="text-center">
+                    Use our interactive dental chart to create a dental chart record for your patient.
+                </p>
+            </div>
+            <div class="col-md-3 icon-box">
+                <i class="fas fa-notes-medical text-primary icon d-flex justify-content-center mb-3"></i>
+                <h2 class="text-center text-success icon-title">MEDICAL HISTORY</h2>
+                <p class="text-center">
+                    Capture and save your patient's medical history.
+                </p>
+            </div>
+            <div class="col-md-3 icon-box">
+                <i class="fas fa-prescription text-primary icon d-flex justify-content-center mb-3"></i>
+                <h2 class="text-center text-success icon-title">PRESCRIPTION MANAGEMENT</h2>
+                <p class="text-center">
+                    Create, save, and print prescriptions for your patients.
+                </p>
+            </div>
+        </div>
+
+        <div class="row icon-row">
+            <div class="col-md-3 icon-box">
+                <i class="fas fa-file-invoice-dollar text-primary icon d-flex justify-content-center mb-3"></i>
+                <h2 class="text-center text-success icon-title">INVOICE MANAGEMENT</h2>
+                <p class="text-center">
+                    Manage and track all invoice and cash transactions at your clinic.
+                </p>
+            </div>
+            <div class="col-md-3 icon-box">
+                <i class="fas fa-user-nurse text-primary icon d-flex justify-content-center mb-3"></i>
+                <h2 class="text-center text-success icon-title">EMPLOYEE MANAGEMENT</h2>
+                <p class="text-center">
+                    Include your employees in your EHR account to get more help managing your practice.
+                </p>
+            </div>
+            <div class="col-md-3 icon-box">
+                <i class="fas fa-folder-open text-primary icon d-flex justify-content-center mb-3"></i>
+                <h2 class="text-center text-success icon-title">DOCUMENT & IMAGE MANAGEMENT</h2>
+                <p class="text-center">
+                    Keep and view all of your patients' documents, images, and radiographs.
+                </p>
+            </div>
+            <div class="col-md-3 icon-box">
+                <i class="fas fa-calendar-check text-primary icon d-flex justify-content-center mb-3"></i>
+                <h2 class="text-center text-success icon-title">APPOINTMENT MANAGEMENT</h2>
+                <p class="text-center">
+                    Keep track of your appointments.. Accept or deny appointment requests as needed.
+                </p>
+            </div>
+        </div>
+
+        <div class="row icon-row">
+            <div class="col-md-3 icon-box">
+                <i class="fas fa-file-medical text-primary icon d-flex justify-content-center mb-3"></i>
+                <h2 class="text-center text-success icon-title">TREATMENT RECORDS</h2>
+                <p class="text-center">
+                    Keep track of all treatments given to your patients.
+                </p>
+            </div>
+            <div class="col-md-3 icon-box">
+                <i class="fas fa-laptop-medical text-primary icon d-flex justify-content-center mb-3"></i>
+                <h2 class="text-center text-success icon-title">PATIENT PORTAL</h2>
+                <p class="text-center">
+                    A website that allows your patients to engage with and interact with your dental clinic.
+                </p>
+            </div>
+            <div class="col-md-3 icon-box">
+                <i class="fas fa-file-pdf text-primary icon d-flex justify-content-center mb-3"></i>
+                <h2 class="text-center text-success icon-title">REPORT GENERATION</h2>
+                <p class="text-center">
+                    Create reports for you to analyze based on specific data in your clinic.
+                </p>
+            </div>
+            <div class="col-md-3 icon-box">
+                <i class="fas fa-shield-alt text-primary icon d-flex justify-content-center mb-3"></i>
+                <h2 class="text-center text-success icon-title">AUDIT LOGS</h2>
+                <p class="text-center">
+                    A detailed list of recorded events performed by app users. Keep an eye on what's going on in your EHR account.
+                </p>
+            </div>
+        </div>
+
+    </div> <!--End of Container-->
+</div> <!--End of Section-->
+
+<div class="pt-5 pb-5 bg-primary">
+    <div class="container" style="padding-top: 150px; padding-bottom: 150px;">
+
+        <div class="text-center">
+            <h1 class="display-1 text-white">Start managing your practice and patient records online</h1>
+            <a href="#RegisterNow" class="btn btn-success btn-lg mt-3">REGISTER NOW<i class="fas fa-chevron-circle-right ms-2"></i></a>
+        </div>
+
+    </div> <!--End of Container-->
+</div> <!--End of Section-->

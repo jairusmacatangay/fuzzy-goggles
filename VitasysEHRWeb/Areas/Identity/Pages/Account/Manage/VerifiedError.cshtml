@@ -1,0 +1,17 @@
+﻿@page
+@model ErrorModel
+@{
+    ViewData["Title"] = "Error";
+    Layout = "/Views/Shared/_Registration_Layout.cshtml";
+}
+
+<div class="card message-card mx-auto mt-3 shadow-sm">
+    <div class="card-body">
+        <h1 class="text-center" style="font-size: 100px;"><i class="fas fa-info-circle text-info"></i></h1>
+        <h1 class="text-center fw-bolder">Your EHR account is being verified</h1>
+        <hr />
+        <p class="m-0 text-center">
+            We need to confirm that your clinic is legitimate. Before you can use your EHR account, please wait for the verification confirmation.
+        </p>
+    </div>
+</div>

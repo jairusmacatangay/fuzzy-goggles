@@ -1,0 +1,170 @@
+﻿@using System.Globalization
+@model VitasysEHR.Models.ViewModels.PrescriptionVM
+
+@if (Model != null && Model.Prescription != null)
+{
+    <div class="row">
+        <div class="col-lg-6">
+            <ul class="list-unstyled">
+                <!--Drug-->
+                <li class="mb-2">
+                    <div class="row">
+                        <div class="col-2 d-flex align-items-center justify-content-end">
+                            <i class="fas fa-pills p-2 bg-light fs-20 text-muted"></i>
+                        </div>
+                        <div class="col-10">
+                            <div class="d-flex flex-column">
+                                <p class="m-0 text-muted fw-bold">Drug</p>
+                                <p class="m-0">@Model.Prescription.Drug</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <!--Dose-->
+                <li class="mb-2">
+                    <div class="row">
+                        <div class="col-2 d-flex align-items-center justify-content-end">
+                            <i class="fas fa-pills p-2 bg-light fs-20 text-muted"></i>
+                        </div>
+                        <div class="col-10">
+                            <div class="d-flex flex-column">
+                                <p class="m-0 text-muted fw-bold">Dose</p>
+                                <p class="m-0">@Model.Prescription.Dose</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <!--Dosage-->
+                <li class="mb-2">
+                    <div class="row">
+                        <div class="col-2 d-flex align-items-center justify-content-end">
+                            <i class="fas fa-eye-dropper p-2 bg-light fs-20 text-muted"></i>
+                        </div>
+                        <div class="col-10">
+                            <div class="d-flex flex-column">
+                                <p class="m-0 text-muted fw-bold">Dosage</p>
+                                <p class="m-0">@Model.Prescription.Dosage</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <!--Sig-->
+                <li class="mb-2">
+                    <div class="row">
+                        <div class="col-2 d-flex align-items-center justify-content-end">
+                            <i class="fas fa-notes-medical p-2 bg-light fs-20 text-muted"></i>
+                        </div>
+                        <div class="col-10">
+                            <div class="d-flex flex-column">
+                                <p class="m-0 text-muted fw-bold">Sig</p>
+                                <p class="m-0">@Model.Prescription.Sig</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <!--Provider-->
+                <li class="mb-2">
+                    <div class="row">
+                        <div class="col-2 d-flex align-items-center justify-content-end">
+                            <i class="fas fa-user p-2 bg-light fs-20 text-muted"></i>
+                        </div>
+                        <div class="col-10">
+                            <div class="d-flex flex-column">
+                                <p class="m-0 text-muted fw-bold">Provider</p>
+                                <p class="m-0">Dr. @Model.FirstName @Model.LastName</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <!--Quantity-->
+                <li class="mb-2">
+                    <div class="row">
+                        <div class="col-2 d-flex align-items-center justify-content-end">
+                            <i class="fas fa-hashtag p-2 bg-light fs-20 text-muted"></i>
+                        </div>
+                        <div class="col-10">
+                            <div class="d-flex flex-column">
+                                <p class="m-0 text-muted fw-bold">Quantity</p>
+                                <p class="m-0">@Model.Prescription.Quantity</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="col-lg-6">
+            <ul class="list-unstyled">
+                <!--Start Date-->
+                <li class="mb-2">
+                    <div class="row">
+                        <div class="col-2 d-flex align-items-center justify-content-end">
+                            <i class="fas fa-calendar p-2 bg-light fs-20 text-muted"></i>
+                        </div>
+                        <div class="col-10">
+                            <div class="d-flex flex-column">
+                                <p class="m-0 text-muted fw-bold">Start Date</p>
+                                <p class="m-0">@(Model.StartDate != null ? Model.StartDate : "N/A")</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <!--End Date-->
+                <li class="mb-2">
+                    <div class="row">
+                        <div class="col-2 d-flex align-items-center justify-content-end">
+                            <i class="fas fa-calendar p-2 bg-light fs-20 text-muted"></i>
+                        </div>
+                        <div class="col-10">
+                            <div class="d-flex flex-column">
+                                <p class="m-0 text-muted fw-bold">End Date</p>
+                                <p class="m-0">@(Model.EndDate != null ? Model.EndDate : "N/A")</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <!--Other Notes-->
+                <li class="mb-2">
+                    <div class="row">
+                        <div class="col-2 d-flex align-items-center justify-content-end">
+                            <i class="fas fa-notes-medical p-2 bg-light fs-20 text-muted"></i>
+                        </div>
+                        <div class="col-10">
+                            <div class="d-flex flex-column">
+                                <p class="m-0 text-muted fw-bold">Other Notes</p>
+                                <p class="m-0">@(Model.Prescription.OtherNotes != null ? Model.Prescription.OtherNotes : "N/A")</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <!--Date Added-->
+                <li class="mb-2">
+                    <div class="row">
+                        <div class="col-2 d-flex align-items-center justify-content-end">
+                            <i class="fas fa-calendar-plus p-2 bg-light fs-20 text-muted"></i>
+                        </div>
+                        <div class="col-10">
+                            <div class="d-flex flex-column">
+                                <p class="m-0 text-muted fw-bold">Date Added</p>
+                                <p class="m-0">@Convert.ToDateTime(Model.Prescription.DateAdded).ToString("MM/dd/yyyy hh:mm tt")</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <!--Last Modified-->
+                <li class="mb-2">
+                    <div class="row">
+                        <div class="col-2 d-flex align-items-center justify-content-end">
+                            <i class="fas fa-history p-2 bg-light fs-20 text-muted"></i>
+                        </div>
+                        <div class="col-10">
+                            <div class="d-flex flex-column">
+                                <p class="m-0 text-muted fw-bold">Last Modified</p>
+                                <p class="m-0">@(Model.Prescription.LastModified != null ? @Convert.ToDateTime(Model.Prescription.LastModified).ToString("MM/dd/yyyy hh:mm tt") : "N/A")</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+}

@@ -1,0 +1,36 @@
+﻿@model List<ApplicationUser>?
+
+<input type="hidden" value="@ViewData["Id"]" id="recordId" />
+
+@foreach (ApplicationUser user in Model)
+{
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="Dr. @user.FirstName @user.LastName" id="checkboxDentist">
+        <label class="form-check-label" for="checkboxDentist">Dr. @user.FirstName @user.LastName</label>
+    </div>
+}
+
+<button class="btn btn-primary mt-3" id="btnAdd"><i class="fas fa-plus me-2"></i>Add</button>
+
+<script>
+    const id = document.getElementById('recordId').value
+
+    const btnAdd = document.getElementById('btnAdd');
+    
+    btnAdd.addEventListener('click', () => {
+        const checkboxes = document.querySelectorAll('#checkboxDentist');
+        const selectedDentists = [];
+
+        checkboxes.forEach(item => {
+            if (item.checked == true) {
+                selectedDentists.push(item.value)
+            }
+        });
+
+        $.post( "/Clinic/Invoice/AddDentists", { id: id, data: selectedDentists }, () => {
+            location.reload()
+        });
+    });
+
+
+</script>

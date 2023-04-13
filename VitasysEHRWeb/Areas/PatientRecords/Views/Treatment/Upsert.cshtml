@@ -1,0 +1,154 @@
+﻿@model TreatmentRecord
+
+@{
+    Layout = "_SideNavLayout";
+    ViewData["Title"] = "Encounter";
+}
+
+<div class="d-flex justify-content-center">
+    <div class="card mt-3 shadow-sm pp-card-75-100">
+        <div class="card-body">
+
+            <h1 class="fw-bolder">Treatment Record</h1>
+
+            <div class="d-flex align-items-center mt-4  mb-2">
+                <i class="fas fa-hand-holding-medical me-2"></i>
+                <h2 class="fs-24 fw-bold mb-0">Treatment</h2>
+            </div>
+
+            @if (Model.Treatment == null)
+            {
+                <p>No treatment added.</p>
+                <button class="btn btn-success" onclick="loadAddTreatmentForm(@Model.Id)"><i class="fas fa-plus me-2"></i>Add</button>
+            }
+            else
+            {
+                <table class="table table-borderless table-sm">
+                    <tr>
+                        <td style="width:8%"><b>Name:</b></td>
+                        <td>@Model.Treatment.Name</td>
+                    </tr>
+                    <tr>
+                        <td><b>Type:</b></td>
+                        <td>@Model.Treatment.TreatmentType.Type</td>
+                    </tr>
+                    <tr>
+                        <td><b>Price:</b></td>
+                        <td>&#8369; @Model.TotalPrice</td>
+                    </tr>
+                    <tr>
+                        <td><b><label for="inputQty">Quantity:</label></b></td>
+                        <td class="d-flex">
+                            <input type="number" id="inputQty" class="form-control" style="width: 50px;" disabled value="@Model.Quantity" />
+                            <button class="btn btn-success ms-2" onclick="decrementQuantity(@Model.Id)"><i class="fas fa-minus me-2"></i>Subtract</button>
+                            <button class="btn btn-success ms-2" onclick="incrementQuantity(@Model.Id)"><i class="fas fa-plus me-2"></i>Add</button>
+                        </td>
+                    </tr>
+                </table>
+                <button class="btn btn-primary" onclick="loadAddTreatmentForm(@Model.Id)"><i class="fas fa-pen me-2"></i>Edit</button>
+            }
+
+            <hr />
+
+            <div class="d-flex align-items-center mb-2">
+                <i class="fas fa-tooth me-2"></i>
+                <h2 class="fs-24 fw-bold mb-0">Tooth No./s</h2>
+            </div>
+
+            @if (Model.ToothNumbers == null)
+            {
+                <p>No tooth added.</p>
+                <button class="btn btn-success" onclick="loadAddToothForm(@Model.Id)"><i class="fas fa-plus me-2"></i>Add</button>
+            }
+            else
+            {
+                <p>@Model.ToothNumbers</p>
+                <button class="btn btn-primary" onclick="loadAddToothForm(@Model.Id)"><i class="fas fa-pen me-2"></i>Edit</button>
+            }
+
+            <hr />
+
+            <div class="d-flex align-items-center mb-2">
+                <i class="fas fa-user me-2"></i>
+                <h2 class="fs-24 fw-bold mb-0">Dentist/s</h2>
+            </div>
+
+            @if (Model.Dentists == null)
+            {
+                <p>No dentist added.</p>
+                <button class="btn btn-success" onclick="loadAddDentistForm(@Model.Id)"><i class="fas fa-plus me-2"></i>Add</button>
+            }
+            else
+            {
+                <p>@Model.Dentists</p>
+                <button class="btn btn-primary" onclick="loadAddDentistForm(@Model.Id)"><i class="fas fa-pen me-2"></i>Edit</button>
+            }
+
+            @if (Model.DateCreated == null)
+            {
+                <div class="mt-3 d-flex">
+                    <form method="post" asp-action="AddToInvoice">
+                        <input type="hidden" value="@Model.Id" name="recordId" />
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save</button>
+                    </form>
+                    <form method="post" asp-action="DiscardTreatmentRecord">
+                        <input type="hidden" value="@Model.Id" name="recordId" />
+                        <button type="submit" class="btn btn-secondary ms-2"><i class="fas fa-trash me-2"></i>Discard</button>
+                    </form>
+                </div>
+            }
+            else
+            {
+                <div class="mt-3">
+                    <a class="btn btn-secondary" asp-action="Index" asp-route-id="@Model.PatientId"><i class="fas fa-arrow-left me-2"></i>Back</a>
+                </div>
+            }
+
+            <!--Create Treatment Modal-->
+            <div class="modal fade" id="createTreatmentModal" tabindex="-1" aria-labelledby="createTreatmentModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="createTreatmentModalLabel">Add Treatment</h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="createTreatmentModalBody">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Add Dentist Modal-->
+            <div class="modal fade" id="addDentistModal" tabindex="-1" aria-labelledby="addDentistModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="addDentistModalLabel">Add Dentist/s</h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="addDentistModalBody">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Add Tooth Modal-->
+            <div class="modal fade" id="addToothModal" tabindex="-1" aria-labelledby="addToothModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="addToothModalLabel">Add Tooth No./s</h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="addToothModalBody">
+                        </div> <!--End of Modal Body-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script src="~/js/upsert-treatment-record.js"></script>
+}

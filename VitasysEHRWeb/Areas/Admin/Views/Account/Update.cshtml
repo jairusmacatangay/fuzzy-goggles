@@ -1,0 +1,129 @@
+﻿@model ApplicationUser
+
+<div class="card mt-3 shadow-sm">
+    <div class="card-body">
+        <form method="post" asp-action="Update" enctype="multipart/form-data" id="editForm">
+            <h3 class="fs-24 fw-bolder">Edit User Account</h3>
+            <div class="row">
+                <label asp-for="Id" class="form-label" hidden></label>
+                <input asp-for="Id" hidden />
+                <label asp-for="ProfPicUrl" class="form-label" hidden></label>
+                <input asp-for="ProfPicUrl" hidden />
+
+                <div class="col-sm-6">
+                    <!--First Name-->
+                    <div class="mb-3">
+                        <label asp-for="FirstName" class="form-label"></label>
+                        <input asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+
+                    <!--Middle Name-->
+                    <div class="mb-3">
+                        <div class="d-flex">
+                            <label asp-for="MiddleName" class="form-label"></label>
+                            <div class="text-muted ms-1">(optional)</div>
+                        </div>
+                        <input asp-for="MiddleName" class="form-control" />
+                        <span asp-validation-for="MiddleName" class="text-danger"></span>
+                    </div>
+
+                    <!--Last Name-->
+                    <div class="mb-3">
+                        <label asp-for="LastName" class="form-label"></label>
+                        <input asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+
+                    <!--DOB-->
+                    <div class="mb-3">
+                        <label asp-for="DOB" class="form-label"></label>
+                        <div class="input-group date">
+                            <input type="text" asp-for="DOB" class="form-control" data-provide="datepicker" data-date-start-date="-100y" data-date-end-date="-22y" placeholder="mm/dd/yyyy" />
+                        </div>
+                        <span asp-validation-for="DOB" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="col-sm-6">
+                    <!--Email-->
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label"></label>
+                        <input asp-for="Email" class="form-control" disabled />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <!--Phone No-->
+                    <div class="mb-3">
+                        <label asp-for="PhoneNumber" class="form-label">Mobile Number</label>
+                        <input asp-for="PhoneNumber" class="form-control" required pattern="^(09|\+639)\d{9}$" title="Please follow the format: 09XXXXXXXXX or +639XXXXXXXXX" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+
+                    <!--Gender-->
+                    <div class="mb-3">
+                        <label asp-for="Gender" class="form-label"></label>
+                        <select asp-for="Gender" class="form-select">
+                            <option selected disabled>Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="LGBTQIA+">LGBTQIA+</option>
+                            <option value="Prefer not to say">Prefer not to say</option>
+                        </select>
+                        <span asp-validation-for="Gender" class="text-danger"></span>
+                    </div>
+
+                    <!--ProfPic-->
+                    <div class="mb-3">
+                        <div class="d-flex">
+                            <label asp-for="ProfPicUrl" class="form-label" for="profPic"></label>
+                            <div class="text-muted ms-1">(optional)</div>
+                        </div>
+                        <input type="file" name="file" class="form-control" id="profPic" />
+                    </div>
+
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-sm-6">
+                    <!--Address-->
+                    <div class="mb-3">
+                        <label asp-for="Address" class="form-label"></label>
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <!--City-->
+                    <div class="mb-3">
+                        <label asp-for="City" class="form-label"></label>
+                        <input asp-for="City" class="form-control" />
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <!--Province-->
+                    <div class="mb-3">
+                        <label asp-for="Province" class="form-label"></label>
+                        <input asp-for="Province" class="form-control" />
+                        <span asp-validation-for="Province" class="text-danger"></span>
+                    </div>
+                    <!--ZipCode-->
+                    <div class="mb-3">
+                        <label asp-for="ZipCode" class="form-label"></label>
+                        <input asp-for="ZipCode" class="form-control" />
+                        <span asp-validation-for="ZipCode" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-3"><i class="fas fa-save me-2"></i>Save</button>
+        </form>
+
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.1/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation/dist/additional-methods.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>

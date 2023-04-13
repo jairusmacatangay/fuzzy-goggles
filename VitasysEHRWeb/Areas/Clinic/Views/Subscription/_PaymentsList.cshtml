@@ -1,0 +1,43 @@
+﻿<div class="table-responsive-sm">
+    <table id="paymentsTable" class="table table-striped table-borderless w-100 table-rounded">
+        <thead class="bg-primary text-white">
+            <tr class="th-letter-spacing">
+                <th>DATE</th>
+                <th>AMOUNT</th>
+                <th>STATUS</th>
+            </tr>
+        </thead>
+        <tbody class="align-middle">
+        </tbody>
+    </table>
+</div>
+
+<script>
+let paymentsDataTable
+
+$(document).ready(function () {
+    loadPaymentsDataTable()
+})
+
+let loadPaymentsDataTable = () => {
+    paymentsDataTable = $('#paymentsTable').DataTable({
+        "ajax": {
+            "url": "/Clinic/Subscription/GetAllPayments",
+            "dataSrc": ""
+        },
+        "oLanguage": {
+            "sSearch": '<i class="fa fa-search me-1"></i>Search:',
+        },
+        "columns": [
+            { "data": "DateAdded" },
+            {
+                "data": "Amount",
+                "render": (Amount) => {
+                    return `&#8369; ${$.fn.dataTable.render.number(',', '.', 2).display(Amount )}`
+                }
+            },
+            { "data": "Status" },
+        ]
+    })
+}
+</script>

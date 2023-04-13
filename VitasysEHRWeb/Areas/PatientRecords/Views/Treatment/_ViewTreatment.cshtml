@@ -1,0 +1,138 @@
+﻿@model VitasysEHR.Models.ViewModels.TreatmentRecordVM
+
+<div class="row">
+    <div class="col-lg-6">
+        <ul class="list-unstyled">
+            <!--Id-->
+            <li class="mb-2">
+                <div class="row">
+                    <div class="col-2 d-flex align-items-center justify-content-end">
+                        <i class="fas fa-hashtag p-2 bg-light fs-20 text-muted"></i>
+                    </div>
+                    <div class="col-10">
+                        <div class="d-flex flex-column">
+                            <p class="m-0 text-muted fw-bold">Id</p>
+                            <p class="m-0">@Model.TreatmentRecord.Id</p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <!--Invoice Id-->
+            <li class="mb-2">
+                <div class="row">
+                    <div class="col-2 d-flex align-items-center justify-content-end">
+                        <i class="fas fa-hashtag p-2 bg-light fs-20 text-muted"></i>
+                    </div>
+                    <div class="col-10">
+                        <div class="d-flex flex-column">
+                            <p class="m-0 text-muted fw-bold">Invoice Id</p>
+                            <p class="m-0">@Model.TreatmentRecord.InvoiceId</p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <!--Treatment-->
+            <li class="mb-2">
+                <div class="row">
+                    <div class="col-2 d-flex align-items-center justify-content-end">
+                        <i class="fas fa-hand-holding-medical p-2 bg-light fs-20 text-muted"></i>
+                    </div>
+                    <div class="col-10">
+                        <div class="d-flex flex-column">
+                            <p class="m-0 text-muted fw-bold">Treatment</p>
+                            <p class="m-0">@Model.TreatmentRecord.Treatment.Name</p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <!--ToothNumbers-->
+            <li class="mb-2">
+                <div class="row">
+                    <div class="col-2 d-flex align-items-center justify-content-end">
+                        <i class="fas fa-tooth p-2 bg-light fs-20 text-muted"></i>
+                    </div>
+                    <div class="col-10">
+                        <div class="d-flex flex-column">
+                            <p class="m-0 text-muted fw-bold">Tooth No./s</p>
+                            <p class="m-0">@Model.TreatmentRecord.ToothNumbers</p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <!--Dentists-->
+            <li class="mb-2">
+                <div class="row">
+                    <div class="col-2 d-flex align-items-center justify-content-end">
+                        <i class="fas fa-users p-2 bg-light fs-20 text-muted"></i>
+                    </div>
+                    <div class="col-10">
+                        <div class="d-flex flex-column">
+                            <p class="m-0 text-muted fw-bold">Dentist/s</p>
+                            <p class="m-0">@Model.TreatmentRecord.Dentists</p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="col-lg-6">
+        <ul class="list-unstyled">
+            <!--Quantity-->
+            <li class="mb-2">
+                <div class="row">
+                    <div class="col-2 d-flex align-items-center justify-content-end">
+                        <i class="fas fa-hashtag p-2 bg-light fs-20 text-muted"></i>
+                    </div>
+                    <div class="col-10">
+                        <div class="d-flex flex-column">
+                            <p class="m-0 text-muted fw-bold">Quantity</p>
+                            <p class="m-0">@Model.TreatmentRecord.Quantity</p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <!--Price-->
+            <li class="mb-2">
+                <div class="row">
+                    <div class="col-2 d-flex align-items-center justify-content-end">
+                        <i class="fas fa-money-bill p-2 bg-light fs-20 text-muted"></i>
+                    </div>
+                    <div class="col-10">
+                        <div class="d-flex flex-column">
+                            <p class="m-0 text-muted fw-bold">Price</p>
+                            <p class="m-0">@Model.TreatmentRecord.TotalPrice</p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <!--Date Created-->
+            <li class="mb-2">
+                <div class="row">
+                    <div class="col-2 d-flex align-items-center justify-content-end">
+                        <i class="fas fa-calendar-plus p-2 bg-light fs-20 text-muted"></i>
+                    </div>
+                    <div class="col-10">
+                        <div class="d-flex flex-column">
+                            <p class="m-0 text-muted fw-bold">Date Created</p>
+                            <p class="m-0">@Model.DateCreated</p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <!--Last Modified-->
+            <li class="mb-2">
+                <div class="row">
+                    <div class="col-2 d-flex align-items-center justify-content-end">
+                        <i class="fas fa-history p-2 bg-light fs-20 text-muted"></i>
+                    </div>
+                    <div class="col-10">
+                        <div class="d-flex flex-column">
+                            <p class="m-0 text-muted fw-bold">Last Modified</p>
+                            <p class="m-0">@Model.LastModified</p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

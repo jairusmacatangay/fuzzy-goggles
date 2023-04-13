@@ -1,0 +1,30 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<div class="card message-card-sm mx-auto mt-3 shadow-sm">
+    <div class="card-body">
+        <h1 class="text-center" style="font-size: 100px;"><i class="fas fa-times-circle text-danger"></i></h1>
+        @if(ViewData["ErrorCode"] == null) {
+            <h1 class="text-center">Error</h1>
+        }
+        else
+        {
+            <h1 class="text-center">Error @ViewData["ErrorCode"]</h1>
+        }
+        
+        <hr />
+        @if(ViewData["ErrorMessage"] == null) {
+            <p class="m-0 text-center">
+                Oops! An error occurred while processing your request.
+            </p>
+        } 
+        else 
+        {
+            <p class="m-0 text-center">
+                @ViewData["ErrorMessage"]
+            </p>
+        }
+    </div>
+</div>

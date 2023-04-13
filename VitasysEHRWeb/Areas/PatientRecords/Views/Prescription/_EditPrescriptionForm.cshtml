@@ -1,0 +1,116 @@
+﻿@model VitasysEHR.Models.ViewModels.PrescriptionFormVM
+
+<form method="post" asp-action="Update">
+    <div class="row">
+        <label asp-for="Id" hidden></label>
+        <input asp-for="Id" hidden />
+        <div class="row">
+            <div class="col-sm-6">
+                <!--Drug-->
+                <div class="mb-3">
+                    <label asp-for="Drug" class="form-label"></label>
+                    <input asp-for="Drug" class="form-control" minlength="2" />
+                    <span asp-validation-for="Drug" class="text-danger"></span>
+                </div>
+                <!--Dose-->
+                <div class="mb-3">
+                    <label asp-for="Dose" class="form-label"></label>
+                    <input asp-for="Dose" class="form-control" minlength="2" />
+                    <span asp-validation-for="Dose" class="text-danger"></span>
+                </div>
+                <!--Dosage-->
+                <div class="mb-3">
+                    <label asp-for="Dosage" class="form-label"></label>
+                    <input asp-for="Dosage" class="form-control" minlength="2" />
+                    <span asp-validation-for="Dosage" class="text-danger"></span>
+                </div>
+                <!--Sig-->
+                <div class="mb-3">
+                    <label asp-for="Sig" class="form-label"></label>
+                    <input asp-for="Sig" class="form-control" minlength="2" />
+                    <span asp-validation-for="Sig" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <!--Quantity-->
+                <div class="mb-3">
+                    <label asp-for="Quantity" class="form-label"></label>
+                    <input asp-for="Quantity" class="form-control" min="1" />
+                    <span asp-validation-for="Quantity" class="text-danger"></span>
+                </div>
+                <!--Start Date-->
+                <div class="mb-3">
+                    <div class="d-flex">
+                        <label asp-for="StartDate" class="form-label" for="startDate"></label>
+                        <div class="text-muted ms-1">(optional)</div>
+                    </div>
+                    <input asp-for="StartDate" type="date" id="updateStartDate" class="form-control" placeholder="mm/dd/yyyy" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
+                <!--End Date-->
+                <div class="mb-3">
+                    <div class="d-flex">
+                        <label asp-for="EndDate" class="form-label" for="endDate"></label>
+                        <div class="text-muted ms-1">(optional)</div>
+                    </div>
+                    <input asp-for="EndDate" type="date" id="updateEndDate" class="form-control" placeholder="mm/dd/yyyy" />
+                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                </div>
+                <!--Other Notes-->
+                <div class="mb-3">
+                    <div class="d-flex">
+                        <label asp-for="OtherNotes" class="form-label"></label>
+                        <div class="text-muted ms-1">(optional)</div>
+                    </div>
+                    <textarea asp-for="OtherNotes" class="form-control" rows="1"></textarea>
+                    <span asp-validation-for="OtherNotes" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between mt-2">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times me-2"></i>Cancel</button>
+        <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save</button>
+    </div>
+</form>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.1/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    var dtToday = new Date();
+
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if (month < 10)
+        month = '0' + month.toString();
+    if (day < 10)
+        day = '0' + day.toString();
+
+    var maxDate = year + '-' + month + '-' + day;
+
+    $('#updateStartDate').attr('min', maxDate);
+    $('#updateEndDate').attr('min', maxDate);
+
+$("#updateStartDate").change(function() {
+    var startDate = document.getElementById("updateStartDate").value;
+    var dateStart = new Date(startDate);
+
+    var endMonth = dateStart.getMonth() + 1;
+    var endDay = dateStart.getDate() + 1;
+    var endYear = dateStart.getFullYear();
+
+    if(endMonth < 10)
+        endMonth = '0' + endMonth.toString();
+    if(endDay < 10)
+        endDay = '0' + endDay.toString();
+
+    var maxEndDate = endYear + '-' + endMonth + '-' + endDay;
+
+    var endDate = document.getElementById("updateEndDate").value;
+    $('#updateEndDate').attr('min', maxEndDate);
+    if (Date.parse(endDate) <= Date.parse(startDate)) {
+        document.getElementById("updateEndDate").value = "";
+    }
+});
+  </script>

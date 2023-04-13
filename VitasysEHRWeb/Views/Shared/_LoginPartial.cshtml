@@ -1,0 +1,47 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using VitasysEHR.Utility
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        var getUser = @UserManager.FindByIdAsync(UserManager.GetUserId(User));
+        var firstName = AesOperation.DecryptString(getUser.Result.FirstName);
+        var lastName = AesOperation.DecryptString(getUser.Result.LastName);
+        var profPic = AesOperation.DecryptString(getUser.Result.ProfPicUrl);
+
+        <li class="nav-item">
+            <div class="d-flex align-items-center">
+                @if (profPic != null)
+                {
+                    <img src="@profPic" width="30" height="30" alt="User profile picture" class="rounded-circle" />
+                }
+                else
+                {
+                    <img src="~/img/user-profile-pics/prof-pic-placeholder.png" alt="UserProfPic" width="30" height="30" class="rounded-circle" />
+                }
+                <a id="manage" class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Account Settings">
+                    @firstName @lastName
+                </a>
+            </div>
+        </li>
+        <li class="nav-item">
+            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button id="logout" type="submit" class="nav-link btn btn-link"><i class="fas fa-sign-out-alt me-1"></i>Logout</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link" asp-area="PatientPortal" asp-controller="Account" asp-action="Login"><i class="fas fa-hospital-user me-1"></i>Patient Portal</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="register" asp-area="Identity" asp-page="/Account/Register"><i class="fas fa-user-edit me-1"></i>Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="login" asp-area="Identity" asp-page="/Account/Login"><i class="fas fa-sign-in-alt me-1"></i>Login</a>
+        </li>
+    }
+</ul>

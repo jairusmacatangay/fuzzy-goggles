@@ -1,0 +1,62 @@
+﻿<input type="hidden" value="@ViewData["Id"]" id="treatmentRecordId" />
+
+<div class="table-responsive-sm">
+    <table id="treamentTable" class="table table-striped table-borderless w-100 table-rounded">
+        <thead class="bg-primary text-white">
+            <tr class="th-letter-spacing">
+                <th>TREATMENT</th>
+                <th>TYPE</th>
+                <th>PRICE</th>
+                <th>ACTION</th>
+            </tr>
+        </thead>
+        <tbody class="align-middle">
+        </tbody>
+    </table>
+</div>
+
+<script>
+let dataTable
+
+$(document).ready(function () {
+    loadDataTable()
+})
+
+let loadDataTable = (status) => {
+    dataTable = $('#treamentTable').DataTable({
+        "ajax": {
+            "url": "/Clinic/Invoice/GetAllTreatments"
+        },
+        "oLanguage": {
+            "sSearch": '<i class="fa fa-search me-1"></i>Search:',
+        },
+        "columns": [
+            { "data": "name" },
+            { "data": "treatmentType.type" },
+            {
+                "data": "price",
+                "render": (price) => {
+                    return `&#8369; ${price}`
+                }
+            },
+            {
+                "data": "id",
+                "render": (data) => {
+                    return `
+                        <button class="btn btn-outline-success rounded-3" onclick="addTreatment(${data})">
+                            <i class="fas fa-plus me-2"></i>Select
+                        </button>                        
+                        `
+                }
+            }
+        ]
+    })
+}
+
+let addTreatment = (id) => {
+    const treatmentRecordId = document.getElementById("treatmentRecordId").value;
+    $.post("/Clinic/Invoice/AddTreatment", { treatmentRecordId: treatmentRecordId, treatmentId: id }, () => {
+        location.reload()
+    });
+};
+</script>

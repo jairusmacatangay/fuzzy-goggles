@@ -1,0 +1,286 @@
+﻿@model VitasysEHR.Models.ViewModels.ClinicAccountVM
+@{
+    ViewData["Title"] = "Clinic Account";
+
+    var splitStartTime = Model.Clinic.StartTime.Split("-");
+    var startTimeIndex = splitStartTime[0];
+    var startTimeValue = splitStartTime[1];
+
+    var splitEndTime = Model.Clinic.EndTime.Split("-");
+    var endTimeIndex = splitEndTime[0];
+    var endTimeValue = splitEndTime[1];
+}
+
+<div class="card shadow-sm mt-3">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-2">
+                @if (Model.Clinic.LogoUrl != null)
+                {
+                    <img src="@Model.Clinic.LogoUrl" class="rounded rd-image border border-5" alt="Clinic logo" />
+                }
+                else
+                {
+                    <img src="~/img/clinic-logos/placeholder.jpg" class="rounded rd-image" alt="Clinic logo" />
+                }
+            </div>
+
+            <div class="col-sm-10 align-self-end" style="margin-bottom: -8px;">
+                <div class="row rd-mb-3-sm rd-mt-3">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 rd-text-center h1-font-lg fw-bolder">@(Model.Clinic.Name != null ? Model.Clinic.Name: "-")</h1>
+                    </div>
+                    <div class="col-sm-6 text-end">
+                        <button class="btn btn-success rd-btn-center successcolor-button me-1" onclick="editClinicLogo()">
+                            <i class="fas fa-image me-2"></i> Change Logo
+                        </button>
+                        <button class="btn btn-success rd-btn-center successcolor-button" onclick="editClinicAccount()">
+                            <i class="fas fa-edit me-2"></i> Edit Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+
+        <h2 class="rd-ml-5">Details</h2>
+
+        <div class="rd-margin-left">
+            <ul class="list-unstyled">
+                <li class="mb-2">
+                    <div class="row">
+                        <div class="col-1 d-flex align-items-center justify-content-end">
+                            <i class="fas fa-envelope p-2 bg-light fs-20 text-muted"></i>
+                        </div>
+                        <div class="col-11">
+                            <div class="d-flex flex-column">
+                                <p class="m-0 text-muted fw-bold">Email Address</p>
+                                <p class="m-0">@Model.Clinic.EmailAddress</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="mb-2">
+                    <div class="row">
+                        <div class="col-1 d-flex align-items-center justify-content-end">
+                            <i class="fas fa-phone p-2 bg-light fs-20 text-muted"></i>
+                        </div>
+                        <div class="col-11">
+                            <div class="d-flex flex-column">
+                                <p class="m-0 text-muted fw-bold">Mobile Phone</p>
+                                <p class="m-0">@Model.Clinic.MobilePhone</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="mb-2">
+                    <div class="row">
+                        <div class="col-1 d-flex align-items-center justify-content-end">
+                            <i class="fas fa-phone p-2 bg-light fs-20 text-muted"></i>
+                        </div>
+                        <div class="col-11">
+                            <div class="d-flex flex-column">
+                                <p class="m-0 text-muted fw-bold">Office Phone</p>
+                                <p class="m-0">@(Model.Clinic.OfficePhone != null ? Model.Clinic.OfficePhone : "N/A")</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="mb-2">
+                    <div class="row">
+                        <div class="col-1 d-flex align-items-center justify-content-end">
+                            <i class="fas fa-map-marker-alt p-2 bg-light fs-20 text-muted"></i>
+                        </div>
+                        <div class="col-11">
+                            <div class="d-flex flex-column">
+                                <p class="m-0 text-muted fw-bold">Address</p>
+                                <p class="m-0">@Model.Clinic.Address, @Model.Clinic.City, @Model.Clinic.Province, @Model.Clinic.ZipCode</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="mb-2">
+                    <div class="row">
+                        <div class="col-1 d-flex align-items-center justify-content-end">
+                            <i class="fas fa-clock p-2 bg-light fs-20 text-muted"></i>
+                        </div>
+                        <div class="col-11">
+                            <div class="d-flex flex-column">
+                                <p class="m-0 text-muted fw-bold">Clinic Hours</p>
+                                <p class="m-0">@startTimeValue - @endTimeValue</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <hr />
+
+        <h2 class="rd-ml-5">Subscription</h2>
+
+        @if (TempData["SubscriptionAlertMessage"] != null)
+        {
+            <div class="alert alert-danger rd-ml-5 d-flex align-items-center" role="alert">
+                <i class="fas fa-exclamation-circle me-3" style="font-size: 32px;"></i>
+                @TempData["SubscriptionAlertMessage"]
+            </div>
+        }
+
+        <div class="rd-margin-left">
+            <ul class="list-unstyled">
+                <li class="mb-2">
+                    <div class="row">
+                        <div class="col-1 d-flex align-items-center justify-content-end">
+                            <i class="fas fa-file-alt p-2 bg-light fs-20 text-muted"></i>
+                        </div>
+                        <div class="col-11">
+                            <div class="d-flex flex-column">
+                                <p class="m-0 text-muted fw-bold">Plan</p>
+                                <p class="m-0">@Model.Subscription.Type</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                @if (@Model.Subscription.Type != "Free")
+                {
+                    <li class="mb-2">
+                        <div class="row">
+                            <div class="col-1 d-flex align-items-center justify-content-end">
+                                <i class="fas fa-envelope-open-text p-2 bg-light fs-20 text-muted"></i>
+                            </div>
+                            <div class="col-11">
+                                <div class="d-flex flex-column">
+                                    <p class="m-0 text-muted fw-bold">Billing Mode</p>
+                                    <p class="m-0">@Model.Subscription.PaymentMode</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="mb-2">
+                        <div class="row">
+                            <div class="col-1 d-flex align-items-center justify-content-end">
+                                <i class="fas fa-calendar-alt p-2 bg-light fs-20 text-muted"></i>
+                            </div>
+                            <div class="col-11">
+                                <div class="d-flex flex-column">
+                                    <p class="m-0 text-muted fw-bold">Next Billing Date:</p>
+                                    <p class="m-0">@Model.BillingDate</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+
+            @if (@Model.Subscription.Type == "Free")
+            {
+                <a asp-controller="Subscription" class="btn btn-primary rd-margin-left mb-3" asp-action="Upgrade">
+                    <i class="fas fa-arrow-circle-up me-2"></i>Upgrade
+                </a>
+            }
+            else
+            {
+                <div class="d-flex flex-wrap rd-margin-left mb-3">
+                    <a asp-controller="Subscription" asp-action="Change" class="btn btn-primary me-1 mt-1">
+                        <i class="fas fa-edit me-2"></i>Change Subscription
+                    </a>
+                    @if (Model.IsDueForPayment == true)
+                    {
+                        <form asp-action="PayWithGCash" asp-controller="subscription" method="post">
+                            <button type="submit" class="btn btn-primary me-1 mt-1">
+                                <i class="fas fa-money-bill-wave me-2"></i>Pay with GCash
+                            </button>
+                        </form>
+                    }
+                    <button class="btn btn-primary me-1 mt-1" onclick="viewPayments()"><i class="fas fa-search-plus me-2"></i>View List of Payments</button>
+                    <button type="button" onClick="cancelSubscription()" class="btn btn-secondary mt-1">
+                        <i class="fas fa-times me-2"></i>Cancel Subscription
+                    </button>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
+
+<!--View List of Payments-->
+<div class="modal fade" id="viewPaymentsModal" tabindex="-1" aria-labelledby="viewPaymentsModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-24 m-0" id="viewPaymentsModal">View List of Payments</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="viewPaymentsModalBodyDiv">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Edit Clinic Account Modal-->
+<div class="modal fade" id="editClinicAccountModal" tabindex="-1" aria-labelledby="editClinicAccountModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-24 m-0" id="editClinicAccountModal">Edit Clinic Details</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="editClinicAccountModalBodyDiv">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Edit Logo Modal-->
+<div class="modal fade" id="editClinicLogoModal" tabindex="-1" aria-labelledby="editClinicLogoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-24 m-0" id="editClinicLogoModalLabel">Change Logo</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="editClinicLogoModalBodyDiv">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+    <partial name="_ValidationScriptsPartial" />
+    }
+<script src="~/js/clinic-account.js"></script>
+
+<script>
+    let cancelSubscription = () => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Your subscription will be reverted back to Free!",
+            icon: 'warning',
+            showCancelButton: true,
+                confirmButtonColor: '#1A5599',
+            cancelButtonColor: '#373a3c',
+            confirmButtonText: 'Yes, cancel it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "/Clinic/Subscription/Cancel",
+                    type: 'POST',
+                    success: function (data) {
+                        if (data.success) {
+                            window.location.reload();
+                        }
+                        else {
+                            toastr.options = { "positionClass": "toast-bottom-center" }
+                            toastr.error(data.message);
+                        }
+                    }
+                })
+            }
+        })
+    }
+</script>
+
+}

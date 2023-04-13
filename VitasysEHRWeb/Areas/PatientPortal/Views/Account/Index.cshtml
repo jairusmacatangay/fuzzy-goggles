@@ -1,0 +1,127 @@
+﻿@model VitasysEHR.Models.Patient
+
+@{
+    Layout = "/Areas/PatientPortal/Views/_PatientPortalLayout.cshtml";
+}
+
+<div class="d-flex justify-content-center">
+    <div class="card shadow-sm mt-3 pp-card-50-75-100">
+        <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between mb-5">
+                <h1 class="m-0 fw-bolder">Patient Profile</h1>
+                <div>
+                    <a asp-controller="Account" asp-action="Update" class="btn btn-success">
+                        <i class="fas fa-edit me-1"></i> Edit
+                    </a>
+                </div>
+            </div>
+
+            <div class="text-center">
+                @if (Model.ProfPicUrl != null)
+                {
+                    <img src="@Model.ProfPicUrl" class="img-fluid w-25 rounded-3 shadow" alt="Patient profile picture" />
+                }
+                else
+                {
+                    <img src="~/img/patients/prof-pic-placeholder.png" class="img-fluid w-25 rounded-3 shadow-sm" alt="Patient profile picture" />
+                }
+            </div>
+
+            <h2 class="mt-3 mb-5 fw-bolder text-center">@Model.FirstName @(Model.MiddleName != null ? Model.MiddleName : "") @Model.LastName</h2>
+
+            <div class="row">
+                <div class="col-md-6">
+
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <div class="row">
+                                <div class="col-2 d-flex align-items-center justify-content-end">
+                                    <i class="fas fa-venus-mars p-2 bg-light fs-20 text-muted"></i>
+                                </div>
+                                <div class="col-10">
+                                    <div class="d-flex flex-column">
+                                        <p class="m-0 text-muted fw-bold">Gender</p>
+                                        <p class="m-0">@Model.Gender</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="mb-2">
+                            <div class="row">
+                                <div class="col-2 d-flex align-items-center justify-content-end">
+                                    <i class="fas fa-birthday-cake p-2 bg-light fs-20 text-muted"></i>
+                                </div>
+                                <div class="col-10">
+                                    <div class="d-flex flex-column">
+                                        <p class="m-0 text-muted fw-bold">Date of Birth</p>
+                                        <p class="m-0">@Model.DOB</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="mb-2">
+                            <div class="row">
+                                <div class="col-2 d-flex align-items-center justify-content-end">
+                                    <i class="fas fa-map-marker-alt p-2 bg-light fs-20 text-muted"></i>
+                                </div>
+                                <div class="col-10">
+                                    <div class="d-flex flex-column">
+                                        <p class="m-0 text-muted fw-bold">Address</p>
+                                        <p class="m-0">@Model.Address, @Model.City, @Model.Province, @Model.ZipCode</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+                <div class="col-md-6">
+
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <div class="row">
+                                <div class="col-2 d-flex align-items-center justify-content-end">
+                                    <i class="fas fa-envelope p-2 bg-light fs-20 text-muted"></i>
+                                </div>
+                                <div class="col-10">
+                                    <div class="d-flex flex-column">
+                                        <p class="m-0 text-muted fw-bold">Email Address</p>
+                                        <p class="m-0">@Model.Email</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="mb-2">
+                            <div class="row">
+                                <div class="col-2 d-flex align-items-center justify-content-end">
+                                    <i class="fas fa-phone p-2 bg-light fs-20 text-muted"></i>
+                                </div>
+                                <div class="col-10">
+                                    <div class="d-flex flex-column">
+                                        <p class="m-0 text-muted fw-bold">Mobile Number</p>
+                                        <p class="m-0">@Model.MobileNumber</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="mb-2">
+                            <div class="row">
+                                <div class="col-2 d-flex align-items-center justify-content-end">
+                                    <i class="fas fa-phone p-2 bg-light fs-20 text-muted"></i>
+                                </div>
+                                <div class="col-10">
+                                    <div class="d-flex flex-column">
+                                        <p class="m-0 text-muted fw-bold">Home Number</p>
+                                        <p class="m-0">@(Model.HomeNumber != null ? Model.HomeNumber : "N/A")</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

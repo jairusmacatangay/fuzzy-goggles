@@ -1,0 +1,150 @@
+﻿@model VitasysEHR.Models.ViewModels.EmployeeVM
+
+<form method="post" asp-action="Create" enctype="multipart/form-data">
+    <div class="row">
+        <div class=col>
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 class="fs-24 fw-bolder">Personal Information</h3>
+                    <div class="row">
+                        <!--First Name-->
+                        <div class="mb-3">
+                            <label asp-for="ApplicationUser.FirstName" class="form-label"></label>
+                            <input asp-for="ApplicationUser.FirstName" class="form-control" />
+                            <span asp-validation-for="ApplicationUser.FirstName" class="text-danger"></span>
+                        </div>
+
+                        <!--Middle Name-->
+                        <div class="mb-3">
+                            <div class="d-flex">
+                                <label asp-for="ApplicationUser.MiddleName" class="form-label"></label>
+                                <div class="text-muted ms-1">(optional)</div>
+                            </div>
+                            <input asp-for="ApplicationUser.MiddleName" class="form-control" />
+                            <span asp-validation-for="ApplicationUser.MiddleName" class="text-danger"></span>
+                        </div>
+
+                        <!--Last Name-->
+                        <div class="mb-3">
+                            <label asp-for="ApplicationUser.LastName" class="form-label"></label>
+                            <input asp-for="ApplicationUser.LastName" class="form-control" />
+                            <span asp-validation-for="ApplicationUser.LastName" class="text-danger"></span>
+                        </div>
+
+                         <!--DOB-->
+                        <div class="mb-3">
+                            <label asp-for="ApplicationUser.DOB" class="form-label"></label>
+                            <div class="input-group date" >
+                                <input type="text" asp-for="ApplicationUser.DOB" class="form-control" data-provide="datepicker" data-date-start-date="-100y" data-date-end-date="-22y" placeholder="MM/DD/YYYY"/>
+                            </div>
+                            <span asp-validation-for="ApplicationUser.DOB" class="text-danger"></span>
+                        </div>
+
+                        <!--Gender-->
+                        <div class="mb-3">
+                            <label asp-for="ApplicationUser.Gender" class="form-label"></label>
+                            <select asp-for="ApplicationUser.Gender" class="form-select">
+                                <option selected disabled>Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="LGBTQIA+">LGBTQIA+</option>
+                                <option value="Prefer not to say">Prefer not to say</option>
+                            </select>
+                            <span asp-validation-for="ApplicationUser.Gender" class="text-danger"></span>
+                        </div>
+
+                        <!--ProfPic-->
+                        <div class="mb-3">
+                            <div class="d-flex">
+                                <label asp-for="ApplicationUser.ProfPicUrl" class="form-label" for="file"></label>
+                                <div class="text-muted ms-1">(optional)</div>
+                            </div>
+                            <input type="file" name="file" class="form-control" accept="image/*" id="file" />
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <h3 class="fs-24 fw-bolder">Account Information</h3>
+                    <!--Email-->
+                    <div class="mb-3">
+                        <label asp-for="ApplicationUser.Email" class="form-label"></label>
+                        <input asp-for="ApplicationUser.Email" type="email" class="form-control" required />
+                        <span asp-validation-for="ApplicationUser.Email" class="text-danger"></span>
+                    </div>
+
+                    <!--Password-->
+                    <div class="mb-3">
+                        <label asp-for="Password" class="form-label"></label>
+                        <input asp-for="Password" type="password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <!--Confirm Password-->
+                    <div class="mb-3">
+                        <label asp-for="ConfirmPassword" class="form-label"></label>
+                        <input asp-for="ConfirmPassword" type="password" class="form-control" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+
+                    <!--Role-->
+                    <div class="mb-3">
+                        <label asp-for="Role" class="form-label"></label>
+                        <select asp-for="Role" class="form-select" asp-items="@Model.RoleList">
+                            <option selected disabled>Select Role</option>
+                        </select>
+                        <span asp-validation-for="Role" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col">
+                    <h3 class="fs-24 fw-bolder">Address</h3>
+                    <div class="row">  
+                        <div class="col-md-6">
+                            <!--Address-->
+                            <div class="mb-3">
+                                <label asp-for="ApplicationUser.Address" class="form-label"></label>
+                                <input asp-for="ApplicationUser.Address" class="form-control" />
+                                <span asp-validation-for="ApplicationUser.Address" class="text-danger"></span>
+                            </div>
+
+                            <!--City-->
+                            <div class="mb-3">
+                                <label asp-for="ApplicationUser.City" class="form-label"></label>
+                                <input asp-for="ApplicationUser.City" class="form-control" />
+                                <span asp-validation-for="ApplicationUser.City" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                             <!--Province-->
+                            <div class="mb-3">
+                                <label asp-for="ApplicationUser.Province" class="form-label"></label>
+                                <input asp-for="ApplicationUser.Province" class="form-control" />
+                                <span asp-validation-for="ApplicationUser.Province" class="text-danger"></span>
+                            </div>
+
+                            <!--ZipCode-->
+                            <div class="mb-3">
+                                <label asp-for="ApplicationUser.ZipCode" class="form-label"></label>
+                                <input asp-for="ApplicationUser.ZipCode" maxlength="4" class="form-control" />
+                                <span asp-validation-for="ApplicationUser.ZipCode" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="d-flex justify-content-between mt-2">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times me-2"></i>Cancel</button>
+        <button type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save</button>
+    </div>
+</form>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.1/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation/dist/additional-methods.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>

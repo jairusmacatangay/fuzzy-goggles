@@ -1,0 +1,102 @@
+﻿<div class="table-responsive-lg">
+    <table class="table table-striped table-borderless w-100 table-rounded" id="treatmentRecordsReportTable">
+        <thead class="bg-primary text-white">
+            <tr class="th-letter-spacing">
+                <th>INVOICE ID</th>
+                <th>TREATMENT</th>
+                <th>TOOTH NO./S</th>
+                <td>CLINIC</td>
+                <th>DENTIST/S</th>
+                <th>QUANTITY</th>
+                <th>PRICE</th>
+                <th>DATE CREATED</th>
+                <th>LAST MODIFIED</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+<script>
+    var table = $('#treatmentRecordsReportTable').DataTable({
+        "ajax": {
+            "url": "/Clinic/Report/GetAllTreatmentRecords",
+            "dataSrc": ""
+        }, 
+        "oLanguage": {
+            "sSearch": '<i class="fa fa-search me-1"></i>Search:',
+        },
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                "extend": "print",
+                "text": '<i class="fas fa-print"></i> Print',
+                "title": "Treatment Records - VitaSys EHR",
+                "autoPrint": "false",
+                "messageBottom": function(){
+                    var rows = table.page.info();
+                    return `Total number of treatment records: <b> ${rows.recordsDisplay} </b>`;
+                },
+                "customize": function(win){
+                    $(win.document.body).find('h1').css('text-align', 'center');
+                }
+            }
+        ],
+        "columns": [
+            { "data": "InvoiceId" },
+            { 
+                "data": "Treatment.Name",
+                "render": (TreatmentName) => {
+                    if (TreatmentName == null)
+                        return 'N/A'
+                    else
+                        return `${TreatmentName}`
+                }
+            },
+            { 
+                "data": "ToothNumbers",
+                "render": (ToothNumbers) => {
+                    if (ToothNumbers == null)
+                        return 'N/A'
+                    else
+                        return `${ToothNumbers}`
+                }
+            },
+            { 
+                "data": "Clinic.Name",
+                "render": (ClinicName) => {
+                    if (ClinicName == null)
+                        return 'N/A'
+                    else
+                        return `${ClinicName}`
+                }
+            },
+            { 
+                "data": "Dentists",
+                "render": (Dentists) => {
+                    if (Dentists == null)
+                        return 'N/A'
+                    else
+                        return `${Dentists}`
+                }
+            },
+            { "data": "Quantity" },
+            {
+                "data": "TotalPrice",
+                "render": (data) => {
+                    return `&#8369; ${$.fn.dataTable.render.number(',', '.', 2).display(data)}`
+                }
+            },
+            { "data": "DateCreated" },
+            {
+                "data": "LastModified",
+                "render": (LastModified) => {
+                    if (LastModified == null) {
+                        return 'N/A'
+                    } else {
+                        return `${LastModified}`
+                    }
+                }
+            }
+        ]
+    });
+</script>

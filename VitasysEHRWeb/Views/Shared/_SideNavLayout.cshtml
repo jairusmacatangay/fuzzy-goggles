@@ -1,0 +1,297 @@
+﻿@using VitasysEHR.Utility
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    string? profPicUrl = HttpContextAccessor.HttpContext.Session.GetString(SD.SessionKeyPatientProfPicUrl);
+    string? patientName = HttpContextAccessor.HttpContext.Session.GetString(SD.SessionKeyPatientName);
+    int? patientId = HttpContextAccessor.HttpContext.Session.GetInt32(SD.SessionKeyPatientId);
+    string? subscriptionType = HttpContextAccessor.HttpContext.Session.GetString(SD.SessionKeySubscriptionType);
+    string? subscriptionIsLockout = HttpContextAccessor.HttpContext.Session.GetString(SD.SessionKeySubscriptionIsLockout);
+
+    var page = ViewData["CurrentPage"];
+
+    string dashboard = "";
+    string reminders = "";
+    string medicalHistory = "";
+    string dentalChart = "";
+    string prescription = "";
+    string document = "";
+    string treatmentRecord = "";
+
+    switch (page)
+    {
+        case "reminders":
+            reminders = "text-white";
+            break;
+        case "medicalHistory":
+            medicalHistory = "text-white";
+            break;
+        case "dentalChart":
+            dentalChart = "text-white";
+            break;
+        case "prescription":
+            prescription = "text-white";
+            break;
+        case "document":
+            document = "text-white";
+            break;
+        case "treatmentRecord":
+            treatmentRecord = "text-white";
+            break;
+        default:
+            dashboard = "text-white";
+            break;
+    }
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - VitasysEHRWeb</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootswatch-cosmos.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <link rel="stylesheet" href="~/VitasysEHRWeb.styles.css" asp-append-version="true" />
+    <script src="https://kit.fontawesome.com/df6d866fec.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body style="background-color:#e9eff1;">
+    <header>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm" style="z-index: 2;">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="Clinic" asp-action="Index" asp-controller="Patient"><img src="~/img/resources/logo-2.png" style="height: 28px;" alt="VitaSys EHR logo" /> VitaSys EHR</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarColor03">
+                    <ul class="navbar-nav me-auto">
+                        <!--Dropdown items for patient records-->
+                        <li class="nav-item dropdown rd-dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">@patientName's Records</a>
+                            <div class="dropdown-menu">
+                                <a asp-area="PatientRecords" asp-controller="Dashboard" asp-action="Index" asp-route-id="@patientId" class="dropdown-item">Dashboard</a>
+                                @if (User.IsInRole(SD.Role_Owner) || User.IsInRole(SD.Role_Dentist))
+                                {
+                                    <a asp-area="PatientRecords" asp-controller="DentalChart" asp-action="Index" asp-route-id="@patientId" class="dropdown-item">Dental Chart</a>
+                                }
+                                <a asp-area="PatientRecords" asp-controller="MedicalHistory" asp-action="Index" asp-route-id="@patientId" class="dropdown-item">Medical History</a>
+                                @if (User.IsInRole(SD.Role_Owner) || User.IsInRole(SD.Role_Dentist))
+                                {
+                                    <a asp-area="PatientRecords" asp-controller="Treatment" asp-action="Index" asp-route-id="@patientId" class="dropdown-item">Treatment Records</a>
+                                    <a asp-area="PatientRecords" asp-controller="Prescription" asp-action="Index" asp-route-patientId="@patientId" class="dropdown-item">Prescriptions</a>
+                                }
+                                @if (subscriptionIsLockout == "false")
+                                {
+                                    if (subscriptionType == "Basic" || subscriptionType == "Pro")
+                                    {
+                                        <a asp-area="PatientRecords" asp-controller="Document" asp-action="Index" asp-route-id="@patientId" class="dropdown-item">Documents</a>
+                                        <a asp-area="PatientRecords" asp-controller="Reminder" asp-action="Index" asp-route-id="@patientId" class="dropdown-item">Reminders</a>
+                                    }
+                                }
+                            </div>
+                        </li>
+                        @if (User.IsInRole(SD.Role_Owner) || User.IsInRole(SD.Role_Dentist) || User.IsInRole(SD.Role_Assistant))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-clinic-medical me-2"></i>Clinic Management</a>
+                                <div class="dropdown-menu">
+                                    <a asp-area="Clinic" asp-controller="Patient" asp-action="Index" class="dropdown-item text-muted">
+                                        <div class="row">
+                                            <div class="col-sm-2"><i class="fas fa-user-plus"></i></div>
+                                            <div class="col-sm-10">Patients</div>
+                                        </div>
+                                    </a>
+                                    @if (subscriptionIsLockout == "false")
+                                    {
+                                        if (subscriptionType == "Pro")
+                                        {
+                                            <a asp-area="Clinic" asp-controller="Appointment" asp-action="Index" class="dropdown-item text-muted">
+                                                <div class="row">
+                                                    <div class="col-sm-2"><i class="fas fa-calendar-check me-2"></i></div>
+                                                    <div class="col-sm-10">Appointments</div>
+                                                </div>
+                                            </a>
+                                            <a asp-area="Clinic" asp-controller="Invoice" asp-action="Index" class="dropdown-item text-muted">
+                                                <div class="row">
+                                                    <div class="col-sm-2"><i class="fas fa-file-invoice me-2"></i></div>
+                                                    <div class="col-sm-10">Invoices</div>
+                                                </div>
+                                            </a>
+                                        }
+                                    }
+                                    @if (User.IsInRole(SD.Role_Owner))
+                                    {
+                                        <a asp-area="Clinic" asp-controller="Service" asp-action="Index" class="dropdown-item text-muted">
+                                            <div class="row">
+                                                <div class="col-sm-2"><i class="fas fa-hand-holding-medical me-2"></i></div>
+                                                <div class="col-sm-10">Services</div>
+                                            </div>
+                                        </a>
+                                        @if (subscriptionIsLockout == "false")
+                                        {
+                                            if (subscriptionType == "Basic" || subscriptionType == "Pro")
+                                            {
+                                                <a asp-area="Clinic" asp-controller="Report" asp-action="Index" class="dropdown-item text-muted">
+                                                    <div class="row">
+                                                        <div class="col-sm-2"><i class="fas fa-file-alt me-2"></i></div>
+                                                        <div class="col-sm-10">Reports</div>
+                                                    </div>
+                                               </a> 
+                                            }
+                                        }
+                                    }
+                                </div>
+                            </li>
+                        }
+                        @if (User.IsInRole(SD.Role_Owner))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-users me-2"></i>Account Management
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a asp-area="Clinic" asp-controller="Account" asp-action="Index" class="dropdown-item text-muted">
+                                        <div class="row">
+                                            <div class="col-sm-2"><i class="fas fa-clinic-medical me-2"></i></div>
+                                            <div class="col-sm-10">Clinic Account</div>
+                                        </div>
+                                    </a>
+                                    @if (subscriptionIsLockout == "false")
+                                    {
+                                        @if (subscriptionType == "Basic" || subscriptionType == "Pro")
+                                        {
+                                            <a asp-area="Clinic" asp-controller="Employee" asp-action="Index" class="dropdown-item text-muted">
+                                                <div class="row">
+                                                    <div class="col-sm-2"><i class="fas fa-users me-2"></i></div>
+                                                    <div class="col-sm-10">Employees</div>
+                                                </div>
+                                            </a>
+                                            <a asp-area="Admin" asp-controller="AuditLog" asp-action="Index" class="dropdown-item text-muted">
+                                                <div class="row">
+                                                    <div class="col-sm-2"><i class="fas fa-list-alt me-2"></i></div>
+                                                    <div class="col-sm-10">Audit Logs</div>
+                                                </div>
+                                            </a>
+                                        }
+                                    }
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+
+    </header>
+
+    <div class="sidenav shadow-sm bg-primary">
+
+        <div class="pe-4 ps-4 mb-4">
+            <div class="card border-0" style="background-color: #991A55!important; border-radius: 10%;">
+                <div class="card-body">
+                    <div class="ps-4 pe-4">
+                        <img src="@profPicUrl" class="img-fluid shadow-sm" style="border-radius: 50%;" alt="Patient profile picture" />
+                    </div>
+                    <h6 class="text-white text-center mt-3">@patientName</h6>
+                </div>
+            </div>
+        </div>
+
+
+        <ul class="sidenav-list">
+            <li>
+                <a asp-area="PatientRecords" asp-controller="Dashboard" asp-action="Index" asp-route-id="@patientId" class="@dashboard">
+                    <div class="row">
+                        <div class="col-sm-2"><i class="fas fa-columns"></i></div>
+                        <div class="col-sm-10">Dashboard</div>
+                    </div>
+                </a>
+            </li>
+            @if (User.IsInRole(SD.Role_Owner) || User.IsInRole(SD.Role_Dentist))
+            {
+                <li>
+                    <a asp-area="PatientRecords" asp-controller="DentalChart" asp-action="Index" asp-route-id="@patientId" class="@dentalChart">
+                        <div class="row">
+                            <div class="col-sm-2"><i class="fas fa-tooth"></i></div>
+                            <div class="col-sm-10">Dental Chart</div>
+                        </div>
+                    </a>
+                </li>
+            }
+            <li>
+                <a asp-area="PatientRecords" asp-controller="MedicalHistory" asp-action="Index" asp-route-id="@patientId" class="@medicalHistory">
+                    <div class="row">
+                        <div class="col-sm-2"><i class="fas fa-notes-medical"></i></div>
+                        <div class="col-sm-10">Medical History</div>
+                    </div>
+                </a>
+            </li>
+
+            @if (User.IsInRole(SD.Role_Owner) || User.IsInRole(SD.Role_Dentist))
+            {
+                <li>
+                    <a asp-area="PatientRecords" asp-controller="Treatment" asp-action="Index" asp-route-id="@patientId" class="@treatmentRecord">
+                        <div class="row">
+                            <div class="col-sm-2"><i class="fas fa-file-medical"></i></div>
+                            <div class="col-sm-10">Treatment Records</div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="PatientRecords" asp-controller="Prescription" asp-action="Index" asp-route-patientId="@patientId" class="@prescription">
+                        <div class="row">
+                            <div class="col-sm-2"><i class="fas fa-pills"></i></div>
+                            <div class="col-sm-10">Prescriptions</div>
+                        </div>
+                    </a>
+                </li>
+            }
+
+            @if (subscriptionIsLockout == "false")
+            {
+                if (subscriptionType == "Basic" || subscriptionType == "Pro")
+                {
+                    <li>
+                        <a asp-area="PatientRecords" asp-controller="Document" asp-action="Index" asp-route-id="@patientId" class="@document">
+                            <div class="row">
+                                <div class="col-sm-2"><i class="fas fa-folder"></i></div>
+                                <div class="col-sm-10">Documents</div>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a asp-area="PatientRecords" asp-controller="Reminder" asp-action="Index" asp-route-id="@patientId" class="@reminders">
+                            <div class="row">
+                                <div class="col-sm-2"><i class="fas fa-bell"></i></div>
+                                <div class="col-sm-10">Reminders</div>
+                            </div>
+                        </a>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+
+    <div class="page-content">
+        <main role="main" class="pb-3">
+            <partial name="_Notification" />
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

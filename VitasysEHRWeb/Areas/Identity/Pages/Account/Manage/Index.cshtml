@@ -1,0 +1,139 @@
+﻿@page
+@model IndexModel
+@{
+    Layout = "_Layout.cshtml";
+    ViewData["Title"] = "Profile";
+    ViewData["ActivePage"] = ManageNavPages.Index;
+}
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <div class="d-flex align-items-center mb-4">
+            <i class="fas fa-user me-2" style="font-size: 2rem;"></i>
+            <h1 class="fw-bolder m-0">@ViewData["Title"]</h1>
+        </div>
+        
+        <partial name="_StatusMessage" for="StatusMessage" />
+        <div class="row">
+            <div class="col-md-6">
+                <form id="profile-form" enctype="multipart/form-data" method="post">
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Username" class="form-label"></label>
+                        <input asp-for="Username" class="form-control" disabled />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.PhoneNumber" class="form-label"></label>
+                        <input asp-for="Input.PhoneNumber" class="form-control" />
+                        <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.FirstName" class="form-label"></label>
+                        <input asp-for="Input.FirstName" class="form-control" />
+                        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="d-flex">
+                            <label asp-for="Input.MiddleName" class="form-label"></label>
+                            <div class="text-muted ms-1">(optional)</div>
+                        </div>
+                        
+                        <input asp-for="Input.MiddleName" class="form-control" />
+                        <span asp-validation-for="Input.MiddleName" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.LastName" class="form-label"></label>
+                        <input asp-for="Input.LastName" class="form-control" />
+                        <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-flex">
+                            <label asp-for="Input.ProfPicUrl" class="form-label"></label>
+                            <div class="text-muted ms-1">(optional)</div>
+                        </div>
+                        <input type="file" name="file" asp-for="Input.ProfPicUrl" class="form-control" />
+                        <div class="text-muted">Please upload .jpg .jpeg .png files only.</div>
+                        <span asp-validation-for="Input.ProfPicUrl" class="text-danger"></span>
+                    </div>
+                    
+                    <!--Gender-->
+                    <div class="mb-3">
+                        <label asp-for="Input.Gender" class="form-label"></label>
+                        <select asp-for="Input.Gender" class="form-select">
+                            <option selected disabled>Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="LGBTQIA+">LGBTQIA+</option>
+                            <option value="Prefer not to say">Prefer not to say</option>
+                        </select>
+                        <span asp-validation-for="Input.Gender" class="text-danger"></span>
+                    </div>
+
+                    <!--DOB-->
+                    <div class="mb-3">
+                        <label asp-for="Input.DOB" class="form-label"></label>
+                        <div class="input-group date">
+                            <input type="text" asp-for="Input.DOB" class="form-control" data-provide="datepicker" data-date-start-date="-100y" data-date-end-date="-22y" placeholder="mm/dd/yyyy"/>
+                        </div>
+                        <span asp-validation-for="Input.DOB" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.Address" class="form-label"></label>
+                        <input asp-for="Input.Address" class="form-control" />
+                        <span asp-validation-for="Input.Address" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.City" class="form-label"></label>
+                        <input asp-for="Input.City" class="form-control" />
+                        <span asp-validation-for="Input.City" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.Province" class="form-label"></label>
+                        <input asp-for="Input.Province" class="form-control" />
+                        <span asp-validation-for="Input.Province" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.ZipCode" class="form-label"></label>
+                        <input asp-for="Input.ZipCode" maxlength="4" class="form-control" />
+                        <span asp-validation-for="Input.ZipCode" class="text-danger"></span>
+                    </div>
+
+                    <button id="update-profile-button" type="submit" class="btn btn-primary"><i class="fas fa-save me-2"></i>Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+    <script>
+    $(function(){
+    var dtToday = new Date();
+    
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+    
+    var maxDate = year + '-' + month + '-' + day;
+
+    $('#date').attr('Max', maxDate);
+
+});
+</script>
+
+}

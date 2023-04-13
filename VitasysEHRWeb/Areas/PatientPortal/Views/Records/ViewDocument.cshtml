@@ -1,0 +1,56 @@
+﻿@model VitasysEHR.Models.ViewModels.DocumentsFolderVM
+@{
+    Layout = "/Areas/PatientPortal/Views/_PatientPortalLayout.cshtml";
+}
+
+<div class="d-flex justify-content-center">
+    <div class="card shadow-sm mt-3 pp-card-75-100">
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between mb-5">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-folder me-2" style="font-size: 2rem"></i>
+                    <h1 class="m-0 fw-bolder">@Model.Folder.Name.Substring(0, Model.Folder.Name.Length - 33)</h1>
+                </div>
+
+                <div>
+                    <a asp-action="Documents" class="btn btn-secondary"><i class="fas fa-arrow-left me-2"></i>Back</a>
+                </div>
+            </div>
+
+            <div class="table-responsive-sm">
+                <table id="folderTable" class="table table-striped border w-100 table-rounded">
+                    <thead class="bg-primary text-white">
+                        <tr class="th-letter-spacing">
+                            <th>DOCUMENT NAME</th>
+                            <th>DATE ADDED</th>
+                            <th>LAST MODIFIED</th>
+                            <th>ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-middle"></tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- View Document Modal -->
+<div class="modal fade" id="viewDocumentModal" tabindex="-1" aria-labelledby="viewDocumentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-24" id="viewDocumentModalLabel">View Document</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="viewDocumentModalBodyDiv">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    
+    <script src="~/js/portal-document.js"></script>
+}

@@ -1,0 +1,62 @@
+﻿<input type="hidden" value="@ViewData["Id"]" id="treatmentRecordId" />
+
+<div class="table-responsive-sm">
+    <table id="treamentTable" class="table table-striped table-borderless w-100 table-rounded">
+        <thead class="bg-primary text-white">
+            <tr class="th-letter-spacing">
+                <th>TREATMENT</th>
+                <th>TYPE</th>
+                <th>PRICE</th>
+                <th>ACTION</th>
+            </tr>
+        </thead>
+        <tbody class="align-middle">
+        </tbody>
+    </table>
+</div>
+
+<script>
+    let treatmentDatatable;
+
+    $(document).ready(function () {
+        loadTreatmentDatatable();
+    });
+
+    let loadTreatmentDatatable = () => {
+        treatmentDatatable = $('#treamentTable').DataTable({
+            "ajax": {
+                "url": "/PatientRecords/Treatment/GetAllTreatments"
+            },
+            "oLanguage": {
+                "sSearch": '<i class="fa fa-search me-1"></i>Search:',
+            },
+            "columns": [
+                { "data": "name" },
+                { "data": "treatmentType.type" },
+                {
+                    "data": "price",
+                    "render": (price) => {
+                        return `&#8369; ${price}`
+                    }
+                },
+                {
+                    "data": "id",
+                    "render": (data) => {
+                        return `
+                            <button class="btn btn-outline-success rounded-3" onclick="addTreatment(${data})">
+                                <i class="fas fa-plus me-2"></i> Select
+                            </button>                        
+                            `
+                    }
+                }
+            ]
+        })
+    }
+
+    let addTreatment = (id) => {
+        const treatmentRecordId = document.getElementById("treatmentRecordId").value;
+        $.post("/PatientRecords/Treatment/AddTreatment", { treatmentRecordId: treatmentRecordId, treatmentId: id }, () => {
+            location.reload()
+        });
+    };
+</script>

@@ -1,0 +1,41 @@
+﻿<style>
+    .ui-autocomplete {
+        max-height: 100px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+</style>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+
+<script>
+    $(document).ready(function () {
+        $("#patientName").autocomplete({
+            source: function (request, response) {
+                $.getJSON("/Clinic/Report/GetPatients", request, function (data) {
+                    response($.map(data, function (item) {
+                        return {
+                            label: item.name,
+                            value: item.id
+                        }
+                    }))
+                })
+            },
+            select: function (event, ui) {
+                document.getElementById("patientName").value = ui.item.label;
+                document.getElementById("patientId").value = ui.item.value;
+                return false;
+            }
+        });
+    });
+</script>
+
+<div class="row mt-3">
+    <div class="col-sm-3">
+
+        <label for="patientName" class="form-label">Patient Name</label>
+        <input type="text" class="form-control" id="patientName" placeholder="Search patient">
+        <span class="text-danger" id="patientInputError"></span>
+
+        <input type="hidden" class="form-control" id="patientId">
+    </div>
+</div>

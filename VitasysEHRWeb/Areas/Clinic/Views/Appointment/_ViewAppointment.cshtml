@@ -1,0 +1,102 @@
+﻿@model VitasysEHR.Models.ViewModels.AppointmentVM
+
+<ul class="list-unstyled">
+    <li class="mb-2">
+        <div class="row">
+            <div class="col-2 d-flex align-items-center justify-content-end">
+                <i class="fas fa-hashtag p-2 bg-light fs-20 text-muted"></i>
+            </div>
+            <div class="col-10">
+                <div class="d-flex flex-column">
+                    <p class="m-0 text-muted fw-bold">Id</p>
+                    <p class="m-0">@Model.Appointment.Id</p>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="mb-2">
+        <div class="row">
+            <div class="col-2 d-flex align-items-center justify-content-end">
+                <i class="fas fa-calendar-alt p-2 bg-light fs-20 text-muted"></i>
+            </div>
+            <div class="col-10">
+                <div class="d-flex flex-column">
+                    <p class="m-0 text-muted fw-bold">Date of Appointment</p>
+                    <p class="m-0">@Model.AppointmentDate</p>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="mb-2">
+        <div class="row">
+            <div class="col-2 d-flex align-items-center justify-content-end">
+                <i class="fas fa-clock p-2 bg-light fs-20 text-muted"></i>
+            </div>
+            <div class="col-10">
+                <div class="d-flex flex-column">
+                    <p class="m-0 text-muted fw-bold">Time Slot</p>
+                    <p class="m-0">@Model.Appointment.AppointmentTime.TimeSlot</p>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="mb-2">
+        <div class="row">
+            <div class="col-2 d-flex align-items-center justify-content-end">
+                <i class="fas fa-info-circle p-2 bg-light fs-20 text-muted"></i>
+            </div>
+            <div class="col-10">
+                <div class="d-flex flex-column">
+                    <p class="m-0 text-muted fw-bold">Status</p>
+                    <p class="m-0">@Model.Appointment.AppointmentStatus.Status</p>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="mb-2">
+        <div class="row">
+            <div class="col-2 d-flex align-items-center justify-content-end">
+                <i class="fas fa-file-alt p-2 bg-light fs-20 text-muted"></i>
+            </div>
+            <div class="col-10">
+                <div class="d-flex flex-column">
+                    <p class="m-0 text-muted fw-bold">Description</p>
+                    <p class="m-0">@Model.Appointment.Description</p>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="mb-2">
+        <div class="row">
+            <div class="col-2 d-flex align-items-center justify-content-end">
+                <i class="fas fa-history p-2 bg-light fs-20 text-muted"></i>
+            </div>
+            <div class="col-10">
+                <div class="d-flex flex-column">
+                    <p class="m-0 text-muted fw-bold">Last Modified</p>
+                    <p class="m-0">@Model.LastModified</p>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>
+
+@if (Model.Appointment.AppointmentStatus.Status.Contains("Pending"))
+{
+    <div>
+        <form asp-action="ApproveDeny" method="post">
+            <input type="hidden" name="id" value="@Model.Appointment.Id" />
+            <input type="hidden" name="status" id="status" />
+
+            <label class="form-label">Notes</label>
+            <textarea asp-for="Appointment.Notes" id="apptNotes" name="notes" class="form-control" rows="3" minlength="2" ></textarea>
+            <span asp-validation-for="Appointment.Notes" class="text-danger"></span>
+            <br>
+            <div class="d-flex justify-content-between">
+                <button type="submit" onclick="denyAppt()" class="btn btn-secondary"><i class="fas fa-times me-2"></i>Deny</button>
+                <button type="submit" onclick="approveAppt()" class="btn btn-primary"><i class="fas fa-check me-2"></i>Approve</button>
+            </div>
+        </form>
+    </div>
+}
+

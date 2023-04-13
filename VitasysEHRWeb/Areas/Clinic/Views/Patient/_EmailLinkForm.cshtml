@@ -1,0 +1,19 @@
+﻿@model Patient
+
+<form asp-action="SendPortalRegistrationLink" method="post">
+    <label asp-for="Id" for="Id" hidden></label>
+    <input asp-for="Id" hidden />
+    <label asp-for="FirstName" for="FirstName" hidden></label>
+    <input asp-for="FirstName" hidden />
+    <label asp-for="LastName" for="LastName" hidden></label>
+    <input asp-for="LastName" hidden />
+
+    <p><span class="fw-bold text-muted">Patient Name:</span> @Model.FirstName @Model.LastName</p>
+
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label"></label>
+        <input type="email" asp-for="Email" class="form-control" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane me-2"></i>Send Registration Link</button>
+</form>

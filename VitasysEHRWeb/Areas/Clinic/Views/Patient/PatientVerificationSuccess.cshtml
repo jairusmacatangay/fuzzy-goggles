@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Patient Verification Success";
+}
+
+<div class="card message-card-sm mx-auto mt-3 shadow-sm">
+    <div class="card-body">
+        <i class="fas fa-check-circle text-success d-flex justify-content-center mb-3" style="font-size: 100px;"></i>
+        <h1 class="text-center">Verified</h1>
+        <hr />
+        <p class="m-0 text-center">
+            You may now use your Patient Portal account. You may now <a asp-action="Login" asp-controller="Account" asp-area="PatientPortal">login</a> to  to your account.
+        </p>
+    </div>
+</div>

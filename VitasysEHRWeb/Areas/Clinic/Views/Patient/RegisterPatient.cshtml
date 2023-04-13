@@ -1,0 +1,62 @@
+﻿@model VitasysEHR.Models.ViewModels.RegisterPatientVM
+
+<div class="card mt-3 shadow-sm mx-auto message-card">
+    <div class="card-body">
+        <h1 class="fw-bolder text-center mt-3 mb-3">Patient Portal Registration</h1>
+        <div class="alert alert-info d-flex align-items-center" role="alert">
+            <i class="fas fa-info-circle me-3 fs-24"></i>
+            <p class="m-0">
+                <strong>Notice!</strong> Please fill in the details below to get registered on our patient portal. Your email address will be used as your username.
+            </p>
+        </div>
+
+        <form method="post" asp-action="RegisterPatient">
+            <label asp-for="Id" for="Id" hidden></label>
+            <input hidden asp-for="Id" />
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" type="text" class="form-control" value="@Model.Name" disabled/>
+            </div>
+             <div class="mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" type="text" class="form-control" value="@Model.Email" disabled/>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ConfirmDOB" class="form-label"></label>
+                <div class="input-group date">
+                    <input type="text" asp-for="ConfirmDOB" class="form-control" data-provide="datepicker" placeholder="MM/DD/YYYY"/>
+                </div>
+                <span asp-validation-for="ConfirmDOB" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label"></label>
+                <input asp-for="Password" id="Password"  class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="ConfirmPassword" class="form-label"></label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <div>
+                    <input type="checkbox" onchange="document.getElementById('registerPatientSubmit').disabled = !this.checked;" id="inputAgree" />
+                    <label for="inputAgree" hidden>Agree</label>
+                    <span>
+                        I agree to the <a href="/Clinic/Home/Privacy" target="_blank">Privacy Policy</a> and 
+                        <a href="/Clinic/Home/TermsConditions" target="_blank">Terms and Conditions</a>
+                    </span>
+                </div>
+            </div>
+            <button id="registerPatientSubmit" type="submit" class="w-100 btn btn-primary" disabled>Register</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<script>
+    $('.datepicker').datepicker();
+</script>
+}

@@ -1,0 +1,211 @@
+﻿@{
+    Layout = "_SideNavLayout";
+    ViewData["Title"] = "Dental Chart";
+
+    var status = Context.Request.Query["status"];
+    var archived = "text-primary";
+    var active = "text-primary";
+
+    switch (status)
+    {
+        case "archived":
+            archived = "active text-white";
+            break;
+        default:
+            active = "active text-white";
+            break;
+    }
+}
+
+<div class="d-flex justify-content-center">
+    <div class="card shadow-sm mt-3 pp-card-75-100">
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between flex-wrap mb-4">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-tooth me-2" style="font-size: 2rem"></i>
+                    <h1 class="m-0 fw-bolder">Dental Chart</h1>
+                </div>
+                <div class="d-flex">
+                    <form asp-action="Create" method="post">
+                        <input type="hidden" name="patientId" value="@ViewData["PatientID"]" id="patientId" />
+                        <button type="submit" class="btn btn-success me-2">
+                            <i class="fas fa-plus me-1"></i> Create
+                        </button>
+                    </form>
+
+                    <ul class="list-group list-group-horizontal">
+                        <a style="text-decoration: none;" asp-Controller="DentalChart" asp-action="Index" asp-route-status="active">
+                        <li class="list-group-item @active list-group-rounded-left"><i class="fas fa-check me-2"></i>Active</li>
+                        </a>
+                        <a style="text-decoration: none;" asp-Controller="DentalChart" asp-action="Index" asp-route-status="archived">
+                        <li class="list-group-item @archived list-group-rounded-right"><i class="fas fa-archive me-2"></i>Archived</li>
+                        </a>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="table-responsive-sm">
+                <table class="table table-striped table-borderless w-100 table-rounded" id="dentalChartTable">
+                    <thead class="bg-primary text-white">
+                        <tr style="letter-spacing: 1.4px;">
+                            <th>ID</th>
+                            <th>DATE OF ENCOUNTER</th>
+                            <th>STATUS</th>
+                            <th>LAST MODIFIED</th>
+                            <th>ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-middle">
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    let dataTable
+
+    $(document).ready(function () {
+        const id = document.getElementById("patientId").value;
+        let url = window.location.search;
+
+        if (url.includes("archived")) {
+            loadDataTable(id, "archived")
+        }
+        else {
+            loadDataTable(id, "active")
+        }
+    })
+
+    let loadDataTable = (id, status) => {
+        dataTable = $('#dentalChartTable').DataTable({
+            "ajax": {
+                "url": `/PatientRecords/DentalChart/GetEncounters?id=${id}&status=${status}`,
+                "dataSrc": ""
+            },
+            "columns": [
+                { "data": "Id" },
+                { "data": "EncounterDate" },
+                { "data": "Status" },
+                {
+                    "data": "LastModified",
+                    "render": (LastModified) => {
+                        if (LastModified == null)
+                            return 'N/A'
+                        return `${LastModified}`
+                    }
+                },
+                {
+                    "data": null,
+                    "render": (data, type, row) => {
+                        if (data.IsArchived == true) {
+                            return `
+                                    <div class="dropdown">
+                                        <button class="btn btn-outline-primary dropdown-toggle rounded-3" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fas fa-hand-pointer me-2"></i>Action
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="/PatientRecords/DentalChart/View?dentalChartId=${data.Id}" class="dropdown-item text-muted"><div class="row"><div class="col-2"><i class="fas fa-search-plus"></i></div><div class="col-10">Details</div></div></a></li>
+                                            <li><hr class="dropdown-divider" /></li>
+                                            <li><a href="#" onClick=deleteDentalChart('/PatientRecords/DentalChart/Delete/${data.Id}') class="dropdown-item text-muted"><div class="row"><div class="col-2"><i class="fas fa-trash"></i></div><div class="col-10">Delete</div></div></a></li>
+                                        </ul>
+                                    </div>`
+                        } else if (data.Status == "Completed") {
+                            return `
+                                    <div class="dropdown">
+                                        <button class="btn btn-outline-primary dropdown-toggle rounded-3" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fas fa-hand-pointer me-2"></i>Action
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="/PatientRecords/DentalChart/View?dentalChartId=${data.Id}" class="dropdown-item text-muted"><div class="row"><div class="col-2"><i class="fas fa-search-plus"></i></div><div class="col-10">Details</div></div></a></li>
+                                            <li><hr class="dropdown-divider" /></li>
+                                            <li><a href="#" onClick=archiveDentalChart('/PatientRecords/DentalChart/Archive/${data.Id}') class="dropdown-item text-muted"><div class="row"><div class="col-2"><i class="fas fa-archive"></i></div><div class="col-10">Archive</div></div></a></li>
+                                        </ul>
+                                    </div>`
+                        } else {
+                            return `
+                                    <div class="dropdown">
+                                        <button class="btn btn-outline-primary dropdown-toggle rounded-3" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fas fa-hand-pointer me-2"></i>Action
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="/PatientRecords/DentalChart/View?dentalChartId=${data.Id}" class="dropdown-item text-muted"><div class="row"><div class="col-2"><i class="fas fa-edit"></i></div><div class="col-10">Edit</div></div></a></li>
+                                            <li><hr class="dropdown-divider" /></li>
+                                            <li><a href="#" onClick=archiveDentalChart('/PatientRecords/DentalChart/Archive/${data.Id}') class="dropdown-item text-muted"><div class="row"><div class="col-2"><i class="fas fa-archive"></i></div><div class="col-10">Archive</div></div></a></li>
+                                        </ul>
+                                    </div>`
+                        }
+
+                    }
+                }
+            ]
+        })
+    }
+
+    let archiveDentalChart = (url) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#1A5599',
+            cancelButtonColor: '#373a3c',
+            confirmButtonText: 'Yes, archive it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    success: function (data) {
+                        if (data.success) {
+                            dataTable.ajax.reload();
+
+                            toastr.options = { "positionClass": "toast-bottom-center" }
+                            toastr.success(data.message);
+                        }
+                        else {
+                            toastr.options = { "positionClass": "toast-bottom-center" }
+                            toastr.error(data.message);
+                        }
+                    }
+                })
+            }
+        })
+    }
+
+    let deleteDentalChart = (url) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "This record will be permanently deleted!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#1A5599',
+            cancelButtonColor: '#373a3c',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: url,
+                    type: 'DELETE',
+                    success: function (data) {
+                        if (data.success) {
+                            dataTable.ajax.reload();
+
+                            toastr.options = { "positionClass": "toast-bottom-center" }
+                            toastr.success(data.message);
+                        }
+                        else {
+                            toastr.options = { "positionClass": "toast-bottom-center" }
+                            toastr.error(data.message);
+                        }
+                    }
+                })
+            }
+        })
+    }
+</script>
+

@@ -1,0 +1,193 @@
+﻿@model VitasysEHR.Models.ViewModels.CreateInvoiceVM
+
+<div class="card mt-3 shadow-sm">
+    <div class="card-body">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-file-invoice me-2" style="font-size: 2rem"></i>
+                <h1 class="m-0">Create Invoice <span class="badge bg-primary rounded-pill">Draft</span></h1>
+            </div>
+
+            <form asp-action="CreateTreatment" method="post">
+                <input type="hidden" name="invoiceId" value="@Model.InvoiceId" />
+                <div class="d-flex">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-plus me-2"></i>Add Treatment
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary ms-2"><i class="fas fa-arrow-left me-2"></i>Back To List</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="d-flex align-items-center">
+            <div class="me-2">
+                <i class="fas fa-user p-2 bg-light text-muted" style="font-size:2rem;"></i>
+            </div>
+            <div>
+                <p class="m-0 text-muted fw-bold">Patient</p>
+                <p class="m-0">@Model.PatientName</p>
+            </div>
+        </div>
+
+
+        <div class="table-responsive-sm">
+            <table class="table mt-3 border border-1 w-100">
+                <thead class="bg-primary text-white border border-primary" style="border-radius: 0;">
+                    <tr class="th-letter-spacing">
+                        <th>TREATMENT</th>
+                        <th>TOOTH NO./S</th>
+                        <th>DENTISTS/S</th>
+                        <th>QUANTITY</th>
+                        <th>PRICE</th>
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (@Model.TreatmentRecordList.Count() > 0)
+                    {
+                        foreach (var item in @Model.TreatmentRecordList)
+                        {
+                            <tr class="align-middle">
+                                <td>@item.TreatmentName</td>
+                                <td>@item.ToothNumbers</td>
+                                <td>@item.Dentists</td>
+                                <td>@item.Quantity</td>
+                                <td>&#8369; @item.TotalPrice</td>
+                                <td>
+                                    <a class="btn btn-primary" asp-action="UpsertTreatment" asp-route-id="@item.TreatmentRecordId">
+                                        <i class="fas fa-pen me-1"></i> Edit
+                                    </a>
+                                    <a href="#" class="btn btn-secondary" onClick="removeTreatment('/Clinic/Invoice/RemoveTreatment/@item.TreatmentRecordId')">
+                                        <i class="fas fa-times me-1"></i> Remove
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>No records</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card rd-width d-block ms-auto">
+            <div class="card-body">
+                <p class="mb-2"><b>Total Amount:</b> &#8369; @Model.TotalAmount</p>
+
+                <form asp-action="Create" method="post">
+                    <input type="hidden" name="invoiceId" value="@Model.InvoiceId" />
+                    <input type="hidden" name="totalAmount" value="@Model.TotalAmount" />
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus me-2"></i>Create</button>
+                </form>
+            </div>
+        </div>
+
+        @if (@Model.UntaggedTreatmentRecordList.Count() > 0)
+        {
+            <hr class="mt-4" />
+            <h1 class="mt-3">Untagged Treatment Records</h1>
+            <p>You have existing treatment records that are not added to an invoice. Click the add button to add an untagged treatment record to this invoice.</p>
+            <div class="table-responsive-sm">
+                <table class="table mt-3 border border-1 w-100">
+                    <thead class="bg-primary text-white border border-primary">
+                        <tr>
+                            <th>Treatment</th>
+                            <th>Tooth No./s</th>
+                            <th>Dentist/s</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in @Model.UntaggedTreatmentRecordList)
+                        {
+                            <tr class="align-middle">
+                                <td>@item.Treatment.Name</td>
+                                <td>@item.ToothNumbers</td>
+                                <td>@item.Dentists</td>
+                                <td>@item.Quantity</td>
+                                <td>&#8369; @item.TotalPrice</td>
+                                <td>
+                                    <div class="d-flex flex-wrap">
+                                        <form asp-action="AddUntaggedTreatmentRecord" method="post">
+                                            <input type="hidden" name="treatmentId" value="@item.Id" />
+                                            <input type="hidden" name="invoiceId" value="@Model.InvoiceId" />
+                                            <button type="submit" class="btn btn-success me-1"><i class="fas fa-plus"></i></button>
+                                        </form>
+                                        <a href="#" class="btn btn-secondary" onClick="deleteTreatment('/Clinic/Invoice/DeleteTreatment/@item.Id')">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+
+    </div>
+</div>
+
+<script>
+    let deleteTreatment = (url) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "This record will be permanently deleted!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#1A5599',
+            cancelButtonColor: '#373a3c',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: url,
+                    type: 'DELETE',
+                    success: function (data) {
+                        if (data.success) {
+                            window.location.reload()
+                        }
+                        else {
+                            toastr.options = { "positionClass": "toast-bottom-center" };
+                            toastr.error(data.message);
+                        }
+                    }
+                })
+            }
+        })
+    }
+
+    let removeTreatment = (url) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#1A5599',
+            cancelButtonColor: '#373a3c',
+            confirmButtonText: 'Yes, remove it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    success: function (data) {
+                        if (data.success) {
+                            window.location.reload()
+                        }
+                        else {
+                            toastr.options = { "positionClass": "toast-bottom-center" };
+                            toastr.error(data.message);
+                        }
+                    }
+                })
+            }
+        })
+    }
+</script>
